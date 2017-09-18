@@ -6,13 +6,43 @@
     android:layout_height="match_parent"
     tools:context="csuchico.smartnap.Home">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/NewAlarm"
+        android:layout_width="198dp"
+        android:layout_height="54dp"
+        android:text="Create New Alarm"
+        android:onClick="Alarmsetup"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="-7dp" />
+
+    <TextClock
+        android:id="@+id/CurrentAlarm"
+        android:layout_width="221dp"
+        android:layout_height="65dp"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="-2dp"
+        tools:layout_editor_absoluteY="47dp" />
+
+    <Button
+        android:id="@+id/EditAlarm"
+        android:layout_width="186dp"
+        android:layout_height="58dp"
+        android:text="Edit"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-10dp" />
+
+    <Switch
+        android:id="@+id/AlarmSwitch"
+        android:layout_width="158dp"
+        android:layout_height="64dp"
+        android:checked="false"
+        android:showText="true"
+        android:splitTrack="false"
+        android:switchMinWidth="?attr/actionBarSize"
+        android:textColorLink="@color/colorPrimary"
+        tools:checked="false"
+        tools:layout_editor_absoluteX="225dp"
+        tools:layout_editor_absoluteY="47dp" />
 
 </android.support.constraint.ConstraintLayout>
