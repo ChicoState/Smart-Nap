@@ -40,12 +40,17 @@ public class Alarm extends AppCompatActivity {
     }
 
     public void onToggleClicked() {
+        /*
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
         calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
         Intent myIntent = new Intent(Alarm.this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(Alarm.this, 0, myIntent, 0);
         alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        */
+
+        Intent home = new Intent(Alarm.this, Home.class);
+        this.startActivity(home);
     }
 
     public void setAlarmText(String alarmText) {
