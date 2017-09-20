@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.EditText;
+import android.util.Log;
 
 public class Alarm extends AppCompatActivity {
 
@@ -41,12 +42,21 @@ public class Alarm extends AppCompatActivity {
 
     public void onToggleClicked(View view) {
 
+        long curTime = System.currentTimeMillis();
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
         calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
+
+        long setTime = calendar.getTimeInMillis();
+        long time = curTime - setTime;
+        Log.d("Alarm", "current variable setTime: " + setTime);
+        Log.d("Alarm", "current variable curTime: " + curTime);
+
         Intent myIntent = new Intent(Alarm.this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(Alarm.this, 0, myIntent, 0);
-        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC, setTime, pendingIntent);
+        Log.d("Alarm", "Passing time into AlarmManager: " + setTime);
 
         finish();
     }
