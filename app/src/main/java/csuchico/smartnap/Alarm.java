@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
 import android.widget.EditText;
@@ -34,26 +35,20 @@ public class Alarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
-        alarmInputText = (EditText) findViewById(R.id.alarmInputText);
         Button buttonCreateAlarm = (Button) findViewById(R.id.buttonCreateAlarm);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     }
 
-    public void onToggleClicked() {
-        /*
+    public void onToggleClicked(View view) {
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
         calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
         Intent myIntent = new Intent(Alarm.this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(Alarm.this, 0, myIntent, 0);
         alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-        */
 
-        Intent home = new Intent(Alarm.this, Home.class);
-        this.startActivity(home);
+        finish();
     }
 
-    public void setAlarmText(String alarmText) {
-        alarmInputText.setText(alarmText);
-    }
 }
