@@ -6,40 +6,48 @@
     android:layout_height="match_parent"
     tools:context="csuchico.smartnap.Alarm">
 
-    <TimePicker
-        android:id="@+id/alarmTimePicker"
-        android:layout_width="335dp"
-        android:layout_height="263dp"
-        android:timePickerMode="spinner"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="96dp" />
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
-    <Button
-        android:id="@+id/buttonCreateAlarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create"
-        android:onClick="onToggleClicked"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="407dp" />
+        <TextView
+            android:id="@+id/headerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Alarm"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            tools:layout_editor_absoluteX="109dp"
+            tools:layout_editor_absoluteY="33dp" />
 
-    <TextView
-        android:id="@+id/headerText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Alarm"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        tools:layout_editor_absoluteX="109dp"
-        tools:layout_editor_absoluteY="33dp" />
+        <TimePicker
+            android:id="@+id/alarmTimePicker"
+            android:layout_width="match_parent"
+            android:layout_height="212dp"
+            android:timePickerMode="spinner"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="96dp" />
 
-    <EditText
-        android:id="@+id/alarmInputText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Alarm text to display"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="336dp" />
+        <EditText
+            android:id="@+id/alarmInputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Alarm text to display"
+            tools:layout_editor_absoluteX="85dp"
+            tools:layout_editor_absoluteY="336dp" />
+
+        <Button
+            android:id="@+id/buttonCreateAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onToggleClicked"
+            android:text="Create"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="407dp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
