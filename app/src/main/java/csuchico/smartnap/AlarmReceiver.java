@@ -8,11 +8,14 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.util.Log;
 
 public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
+        Log.d("AlarmReceiver", "onReceive has been called!");
+
         //this will update the UI with message
         Alarm inst = Alarm.instance();
 
