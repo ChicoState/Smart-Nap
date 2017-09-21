@@ -1,21 +1,17 @@
 package csuchico.smartnap;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-//import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
-import android.widget.EditText;
-import android.widget.Toast;
 import android.util.Log;
 
+// API-24 required for 'android.icu.util.Calendar', use 'java.util.Calendar' for older API
+//import android.icu.util.Calendar;
 import java.util.Calendar;
 
 public class Alarm extends AppCompatActivity {
@@ -23,8 +19,6 @@ public class Alarm extends AppCompatActivity {
     AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     private TimePicker alarmTimePicker;
-    private static Alarm inst;
-    private EditText alarmInputText;
 
     public static Alarm instance() {
         return inst;
@@ -33,7 +27,6 @@ public class Alarm extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        inst = this;
     }
 
     @Override
