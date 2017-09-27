@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="AddQuestion"
-        android:text="Create New Question" />
+        android:text="@string/create_new_question" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="405dp"
         android:layout_height="46dp"
-        android:text="MyQuestion"
+        android:text="@string/myquestion"
         android:textAlignment="center"
         android:textSize="24sp" />
 
@@ -27,6 +27,6 @@
         android:id="@+id/editquestion"
         android:layout_width="408dp"
         android:layout_height="wrap_content"
-        android:text="Edit MyQuestion" />
+        android:text="@string/edit_myquestion" />
 
 </LinearLayout>
