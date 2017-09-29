@@ -1,6 +1,7 @@
 package csuchico.smartnap;
 
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +12,9 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 public class AlarmReceiver extends WakefulBroadcastReceiver {
-
     @Override
     public void onReceive(final Context context, Intent intent) {
+
         Log.d("AlarmReceiver", "onReceive has been called!");
 
         //this will sound the alarm tone
