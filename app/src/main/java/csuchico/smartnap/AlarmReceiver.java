@@ -17,20 +17,16 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         Log.d("AlarmReceiver", "onReceive has been called!");
 
-        //this will sound the alarm tone
-        //this will sound the alarm once, if you wish to
-        //raise alarm in loop continuously then use MediaPlayer and setLooping(true)
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null) {
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-        ringtone.play();
+        // Defining and creating a new ComponentName allows us to ensure that the proper
+        // component is defined. In our case, this component is alarmService
+        ComponentName alarmService = new ComponentName(
+                context.getPackageName(),
+                AlarmService.class.getName()
+        );
 
-        //this will send a notification message
-        ComponentName comp = new ComponentName(context.getPackageName(),
-                AlarmService.class.getName());
-        startWakefulService(context, (intent.setComponent(comp)));
+        intent.setComponent(alarmService); // attach the component to our intent
+        Log.i("AlarmReceiver", "Passing intent to startWakefulService");
+        startWakefulService(context, intent); // startWakefulService using the intent
         setResultCode(Activity.RESULT_OK);
     }
 }

@@ -1,6 +1,12 @@
 package csuchico.smartnap;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +20,8 @@ import android.view.Window;
  * status bar and navigation/system bar) with user interaction.
  */
 public class AlarmDialog extends AppCompatActivity {
+
+    private Ringtone ringtone;
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -62,6 +70,7 @@ public class AlarmDialog extends AppCompatActivity {
             mControlsView.setVisibility(View.VISIBLE);
         }
     };
+
     private boolean mVisible;
     private final Runnable mHideRunnable = new Runnable() {
         @Override
@@ -88,28 +97,32 @@ public class AlarmDialog extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Window current = getWindow();
-        current.setFlags(1,0x0008000); // set bit 15 to HIGH (which sets FLAG_SHOW_WHEN_LOCKED)
-
+        Window current = this.getWindow();
+        current.setFlags(1,0x00080000); // set flag FLAG_SHOW_WHEN_LOCKED to TRUE
+        current.setFlags(1,0x00000080); // set flag FLAG_KEEP_SCREEN_ON to TRUE
         setContentView(R.layout.activity_alarm_dialog); // window decoration is created
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        mContentView = findViewById(R.id.fullscreen_layout);
 
 
         // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
+        mContentView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        toggle();
+                    }
+                }
+        );
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.button_silenceAlarm).setOnTouchListener(mDelayHideTouchListener);
+
+        playTone(); // play the ringtone
     }
 
     @Override
@@ -120,6 +133,26 @@ public class AlarmDialog extends AppCompatActivity {
         // created, to briefly hint to the user that UI controls
         // are available.
         delayedHide(100);
+    }
+
+    private void playTone() {
+        Log.i("AlarmDialog", "AlarmDialog initialized, playing tone for alarm");
+        //this will sound the alarm tone
+        //this will sound the alarm once, if you wish to
+        //raise alarm in loop continuously then use MediaPlayer and setLooping(true)
+        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if (alarmUri == null) {
+            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+
+        ringtone = RingtoneManager.getRingtone(this, alarmUri);
+        ringtone.play();
+    }
+
+    public void onSilenceAlarm(View view) {
+        Log.i("AlarmDialog", "User has chosen to silence alarm");
+        ringtone.stop();
+        finish();
     }
 
     private void toggle() {

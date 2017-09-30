@@ -41,7 +41,7 @@
             android:id="@+id/buttonCreateAlarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onToggleClicked"
+            android:onClick="createNewAlarm"
             android:text="Create"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="407dp" />
