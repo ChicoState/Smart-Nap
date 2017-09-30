@@ -48,49 +48,4 @@ public class AlarmService extends IntentService {
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);
     }
-
-    private void sendNotification() {
-        Log.d("AlarmService", "Preparing to send notification..");
-        alarmNotificationManager = (NotificationManager) this
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, Alarm.class), 0);
-
-        NotificationCompat.Builder alarmNotificationBuilder = new NotificationCompat.Builder(
-                this).setContentTitle("Alarm").setSmallIcon(R.mipmap.ic_launcher)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("Silenced!"))
-                .setContentText("Silenced!").setAutoCancel(true);
-
-
-        alarmNotificationBuilder.setContentIntent(contentIntent);
-        alarmNotificationManager.notify(1, alarmNotificationBuilder.build());
-        Log.d("AlarmService", "Notification sent.");
-    }
-    //private void sendNotification(String msg) {
-    private void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                // data is processed here
-            }
-            else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.d("AlarmService", "Preparing to send notification..");
-                alarmNotificationManager = (NotificationManager) this
-                        .getSystemService(Context.NOTIFICATION_SERVICE);
-
-                PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                        new Intent(this, Alarm.class), 0);
-
-                NotificationCompat.Builder alarmNotificationBuilder = new NotificationCompat.Builder(
-                        this).setContentTitle("Alarm").setSmallIcon(R.mipmap.ic_launcher)
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText("Silenced!"))
-                        .setContentText("Silenced!").setAutoCancel(true);
-
-
-                alarmNotificationBuilder.setContentIntent(contentIntent);
-                alarmNotificationManager.notify(1, alarmNotificationBuilder.build());
-                Log.d("AlarmService", "Notification sent.");
-            }
-        }
-    }
 }

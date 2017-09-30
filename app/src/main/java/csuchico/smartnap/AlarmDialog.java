@@ -11,9 +11,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+
+import static android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -97,9 +101,9 @@ public class AlarmDialog extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Window current = this.getWindow();
-        current.setFlags(1,0x00080000); // set flag FLAG_SHOW_WHEN_LOCKED to TRUE
-        current.setFlags(1,0x00000080); // set flag FLAG_KEEP_SCREEN_ON to TRUE
+        // Make sure that the dialog is accessible when screen is locked by keyguard
+        this.getWindow().addFlags(FLAG_SHOW_WHEN_LOCKED | FLAG_KEEP_SCREEN_ON);
+
         setContentView(R.layout.activity_alarm_dialog); // window decoration is created
 
         mVisible = true;
