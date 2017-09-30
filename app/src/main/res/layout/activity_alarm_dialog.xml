@@ -12,7 +12,8 @@
         android:id="@+id/fullscreen_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:padding="10dp">
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
@@ -26,10 +27,11 @@
 
             <Button
                 android:id="@+id/button_silenceAlarm"
-                style="@style/Widget.AppCompat.Button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="#FF0044"
                 android:onClick="onSilenceAlarm"
                 android:text="Silence Alarm" />
 
