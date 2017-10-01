@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -15,10 +17,18 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
+// The following import statements would allow us to use simpler code below where only
+// the FLAG_* is necessary versus the full location.
+// Think about "using std::cout;" and then not having to import the entire <iostream>
+// and being able to type "cout <<" and not have to use "std::cout <<" every time
+/*
 import static android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
+*/
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -26,7 +36,11 @@ import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
  */
 public class AlarmDialog extends AppCompatActivity {
 
-    private Ringtone ringtone;
+    // Setup some private member definitions
+    private Ringtone mAlarmTone;
+    private View mContentView;
+    private View mControlsView;
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -44,8 +58,11 @@ public class AlarmDialog extends AppCompatActivity {
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
+
     private final Handler mHideHandler = new Handler();
-    private View mContentView;
+
+
+
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -63,7 +80,8 @@ public class AlarmDialog extends AppCompatActivity {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-    private View mControlsView;
+
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -102,10 +120,16 @@ public class AlarmDialog extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Make sure that the dialog is accessible when screen is locked by keyguard
+        // First we need to setup some flags on the creation of this window so that we can
+        // access it and see it appropriately even when our phone is asleep and/or locked
+
+        // FLAG_KEEP_SCREEN_ON ensures alarm dialog is visible until silenced
+        // FLAG_SHOW_WHEN_LOCKED ensured dialog is accessible when screen is locked by keyguard
         // FLAG_TURN_SCREEN_ON allows this activity to turn the screen on when its created
-        this.getWindow().addFlags(
-                FLAG_SHOW_WHEN_LOCKED | FLAG_KEEP_SCREEN_ON | FLAG_TURN_SCREEN_ON);
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+
 
         setContentView(R.layout.activity_alarm_dialog); // window decoration is created
 
@@ -142,23 +166,61 @@ public class AlarmDialog extends AppCompatActivity {
         delayedHide(100);
     }
 
+    /**
+     * @function    playTone()
+     * @desc        Starts playing the users chosen ringtone for the specified alarm
+     */
     private void playTone() {
         Log.i("AlarmDialog", "AlarmDialog initialized, playing tone for alarm");
         //this will sound the alarm tone
         //this will sound the alarm once, if you wish to
         //raise alarm in loop continuously then use MediaPlayer and setLooping(true)
+
+        // first try to get the default alarm sound
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null) {
+
+        if (alarmUri == null) {         // if default alarm sound isnt available
+
+            // then get the default notification sound
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            if (alarmUri == null) {     // if default notification sound isnt available
+
+                // then get the default ringtone sound
+                alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            }
         }
 
-        ringtone = RingtoneManager.getRingtone(this, alarmUri);
-        ringtone.play();
+        mAlarmTone = RingtoneManager.getRingtone(this, alarmUri);
+
+        // Using minSDKVersion 21 is not what we originally intended for this project, but we
+        // may be able to setup some kind of filter system that uses an older deprecated method
+        // to play the alarm tone regardless of phones ringtone volume. As of right now, the
+        // AudioAttributes method requires a minimum SDK of 21. However, there may be an older
+        // method that allows us to use setStreamMethod.
+        // See the following thread:
+        // https://stackoverflow.com/questions/15578812/troubles-play-sound-in-silent-mode-on-android
+
+        Log.i("AlarmDialog","Setting up AudioAttributes to attach to our ringtone USAGE_ALARM flag");
+        // AudioAttributes USAGE_ALARM flag allows the tone to play even if phone is silent
+        AudioAttributes alarmSound = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build();
+
+        // set the audio attributes defined as alarmSound to our ringtone object
+        mAlarmTone.setAudioAttributes(alarmSound);
+
+        // play the ringtone
+        mAlarmTone.play();
     }
 
+    /**
+     * @function    onSilenceAlarm()
+     * @desc        Called when a user interacts with the Silence Alarm button
+     */
     public void onSilenceAlarm(View view) {
         Log.i("AlarmDialog", "User has chosen to silence alarm");
-        ringtone.stop();
+        mAlarmTone.stop();
         finish();
     }
 
