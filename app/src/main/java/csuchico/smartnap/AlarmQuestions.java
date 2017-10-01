@@ -13,4 +13,12 @@ public class AlarmQuestions extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_questions);
     }
 
+    public void truefalseVisible() {
+        TrueFalseOption.setVisibility(View.VISIBLE);
+        MultipleChoiceOption.setVisibility(View.GONE);
+    }
+    public void multiplechoicemultiple() {
+        TrueFalseOption.setVisibility(View.GONE);
+        MultipleChoiceOption.setVisibility(View.VISIBLE);
+    }
 }

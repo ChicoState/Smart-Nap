@@ -75,14 +75,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="false"
-                android:text="@string/true_false" />
+                android:duplicateParentState="false"
+                android:enabled="true"
+                android:text="@string/true_false"
+                android:onClick="truefalseVisible()"/>
 
             <CheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/multiple_choice" />
+                android:text="@string/multiple_choice"
+                android:onClick="multiplechoiceVisible()"/>
 
         </LinearLayout>
 
@@ -105,7 +109,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="175dp"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -189,10 +193,11 @@
         </TableLayout>
 
         <LinearLayout
+            android:id="@+id/TrueFalseOption"
             android:layout_width="match_parent"
             android:layout_height="141dp"
             android:orientation="horizontal"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <RadioButton
                 android:id="@+id/radioButton21"
