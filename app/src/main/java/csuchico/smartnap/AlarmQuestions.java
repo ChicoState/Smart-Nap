@@ -1,9 +1,10 @@
 package csuchico.smartnap;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 
 public class AlarmQuestions extends AppCompatActivity {
 
@@ -14,11 +15,15 @@ public class AlarmQuestions extends AppCompatActivity {
     }
 
     public void truefalseVisible() {
-        TrueFalseOption.setVisibility(View.VISIBLE);
-        MultipleChoiceOption.setVisibility(View.GONE);
+        LinearLayout tfbox = (LinearLayout) findViewById(R.id.TrueFalseOption);
+        TableLayout mcbox = (TableLayout) findViewById(R.id.MultipleChoice);
+        tfbox.setVisibility(View.VISIBLE);
+        mcbox.setVisibility(View.GONE);
     }
     public void multiplechoicemultiple() {
-        TrueFalseOption.setVisibility(View.GONE);
-        MultipleChoiceOption.setVisibility(View.VISIBLE);
+        LinearLayout tfbox = (LinearLayout) findViewById(R.id.TrueFalseOption);
+        TableLayout mcbox = (TableLayout) findViewById(R.id.MultipleChoice);
+        tfbox.setVisibility(View.GONE);
+        mcbox.setVisibility(View.VISIBLE);
     }
 }
