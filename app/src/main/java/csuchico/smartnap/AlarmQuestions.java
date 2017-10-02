@@ -14,13 +14,13 @@ public class AlarmQuestions extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_questions);
     }
 
-    public void truefalseVisible() {
+    public void truefalseVisible(View view) {
         LinearLayout tfbox = (LinearLayout) findViewById(R.id.TrueFalseOption);
         TableLayout mcbox = (TableLayout) findViewById(R.id.MultipleChoice);
         tfbox.setVisibility(View.VISIBLE);
         mcbox.setVisibility(View.GONE);
     }
-    public void multiplechoicemultiple() {
+    public void multiplechoicemultiple(View view) {
         LinearLayout tfbox = (LinearLayout) findViewById(R.id.TrueFalseOption);
         TableLayout mcbox = (TableLayout) findViewById(R.id.MultipleChoice);
         tfbox.setVisibility(View.GONE);

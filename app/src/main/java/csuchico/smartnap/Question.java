@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class Questions extends AppCompatActivity {
+public class Question extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,4 +17,5 @@ public class Questions extends AppCompatActivity {
         Intent openAlarmpage = new Intent(this, AlarmQuestions.class);
         startActivity(openAlarmpage);
     }
+
 }
