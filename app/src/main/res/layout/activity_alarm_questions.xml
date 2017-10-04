@@ -75,8 +75,8 @@
                 android:checked="false"
                 android:duplicateParentState="false"
                 android:enabled="true"
-                android:text="@string/true_false"
-                android:onClick="truefalseVisible"/>
+                android:onClick="flashcardVisible"
+                android:text="@string/flashcard" />
 
             <CheckBox
                 android:id="@+id/checkBox"
@@ -192,25 +192,21 @@
         </TableLayout>
 
         <LinearLayout
-            android:id="@+id/TrueFalseOption"
+            android:id="@+id/FlashcardOption"
             android:layout_width="match_parent"
             android:layout_height="141dp"
             android:orientation="horizontal"
             android:visibility="gone">
 
-            <RadioButton
-                android:id="@+id/radioButton21"
-                android:layout_width="194dp"
-                android:layout_height="59dp"
-                android:text="@string/trueanswer"
-                android:textSize="18sp" />
-
-            <RadioButton
-                android:id="@+id/radioButton20"
-                android:layout_width="185dp"
-                android:layout_height="60dp"
-                android:text="@string/falseanswer"
-                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/editText6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/flashcard_answer"
+                tools:ignore="LabelFor" />
         </LinearLayout>
 
     </LinearLayout>

@@ -17,4 +17,6 @@
     <string name="option3">option3</string>
     <string name="option4">option4</string>
     <string name="classid">Class</string>
+    <string name="flashcard">Flashcard</string>
+    <string name="flashcard_answer">flashcard answer</string>
 </resources>
