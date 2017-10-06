@@ -62,23 +62,39 @@
             android:text="@string/classid"
             tools:ignore="LabelFor" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.07"
+            android:text="@string/question"
+            android:textSize="24sp" />
+
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.38"
+            android:layout_weight="0.37"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:text="@string/question" />
+            tools:ignore="LabelFor" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.10"
+            android:text="@string/answer"
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/editText3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.60"
+            android:layout_weight="0.39"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:text="@string/answer" />
+            tools:ignore="LabelFor" />
 
     </LinearLayout>
 
