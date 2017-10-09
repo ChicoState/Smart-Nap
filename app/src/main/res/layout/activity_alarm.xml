@@ -56,6 +56,5 @@
             android:text="Create"
             tools:layout_editor_absoluteX="148dp"
             tools:layout_editor_absoluteY="407dp" />
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

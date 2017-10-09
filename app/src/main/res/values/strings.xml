@@ -5,16 +5,10 @@
     <string name="myquestion">MyQuestion</string>
     <string name="save">Save</string>
     <string name="answer">Answer:</string>
-    <string name="classid">Class</string>
     <string name="clear">Clear</string>
-    <string name="falseanswer">False</string>
-    <string name="multiple_choice">Multiple Choice</string>
     <string name="new_question">New Question</string>
     <string name="question">Question?</string>
-    <string name="true_false">True False</string>
-    <string name="trueanswer">True</string>
-    <string name="option1">option1</string>
-    <string name="option2">option2</string>
-    <string name="option3">option3</string>
-    <string name="option4">option4</string>
+    <string name="classid">Class</string>
+    <string name="flashcard">Flashcard</string>
+    <string name="flashcard_answer">flashcard answer</string>
 </resources>
