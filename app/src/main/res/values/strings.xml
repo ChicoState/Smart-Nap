@@ -11,4 +11,5 @@
     <string name="classid">Class</string>
     <string name="flashcard">Flashcard</string>
     <string name="flashcard_answer">flashcard answer</string>
+    <string name="title_activity_alarm_dialog">AlarmDialog</string>
 </resources>
