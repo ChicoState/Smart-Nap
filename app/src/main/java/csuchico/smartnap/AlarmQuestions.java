@@ -13,17 +13,4 @@ public class AlarmQuestions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_questions);
     }
-
-    public void flashcardVisible(View view) {
-        LinearLayout fcbox = (LinearLayout) findViewById(R.id.FlashcardOption);
-        TableLayout mcbox = (TableLayout) findViewById(R.id.MultipleChoice);
-        fcbox.setVisibility(View.VISIBLE);
-        mcbox.setVisibility(View.GONE);
-    }
-    public void multiplechoiceVisible(View view) {
-        LinearLayout fcbox = (LinearLayout) findViewById(R.id.FlashcardOption);
-        TableLayout mcbox = (TableLayout) findViewById(R.id.MultipleChoice);
-        fcbox.setVisibility(View.GONE);
-        mcbox.setVisibility(View.VISIBLE);
-    }
 }
