@@ -15,18 +15,12 @@
         android:id="@+id/textView2"
         android:layout_width="405dp"
         android:layout_height="46dp"
-        android:text="@string/myquestion"
+        android:text="@string/QuestionSet"
         android:textAlignment="center"
         android:textSize="24sp" />
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="461dp" />
-
-    <Button
-        android:id="@+id/editquestion"
-        android:layout_width="408dp"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_myquestion" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

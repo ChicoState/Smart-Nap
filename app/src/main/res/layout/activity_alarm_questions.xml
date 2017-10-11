@@ -19,16 +19,8 @@
         android:id="@+id/linearLayout">
 
         <Button
-            android:id="@+id/button3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/clear"
-            tools:ignore="ButtonStyle" />
-
-        <Button
             android:id="@+id/button2"
-            android:layout_width="229dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/save"
             tools:ignore="ButtonStyle" />
@@ -77,6 +69,7 @@
             android:layout_weight="0.37"
             android:ems="10"
             android:inputType="textMultiLine"
+            android:text="@string/empty"
             tools:ignore="LabelFor" />
 
         <TextView

@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:layout_weight="1"
+                android:onClick="GotoQuestion"
                 android:text="Edit"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="-10dp" />

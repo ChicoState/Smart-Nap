@@ -2,7 +2,7 @@
     <string name="app_name">SmartNap</string>
     <string name="create_new_question">Create New Question</string>
     <string name="edit_myquestion">Edit MyQuestion</string>
-    <string name="myquestion">MyQuestion</string>
+    <string name="QuestionSet">MyQuestionSet</string>
     <string name="save">Save</string>
     <string name="answer">Answer:</string>
     <string name="clear">Clear</string>
@@ -12,4 +12,5 @@
     <string name="flashcard">Flashcard</string>
     <string name="flashcard_answer">flashcard answer</string>
     <string name="title_activity_alarm_dialog">AlarmDialog</string>
+    <string name="empty" />
 </resources>
