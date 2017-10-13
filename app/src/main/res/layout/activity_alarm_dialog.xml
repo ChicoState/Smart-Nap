@@ -27,25 +27,53 @@
             android:orientation="horizontal"
             tools:ignore="UselessParent">
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextClock
+                android:id="@+id/textClock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.16"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
+
+            <TextView
+                android:id="@+id/fc_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.37"
+                android:clickable="true"
+                android:onClick="to_answer"
+                android:text="@string/this_will_be_the_question"
+                android:textSize="22sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/fc_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.78"
+                android:clickable="true"
+                android:onClick="to_question"
+                android:text="@string/this_will_be_the_answer"
+                android:textSize="22sp"
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/button_silenceAlarm"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:background="#FF0044"
                 android:onClick="onSilenceAlarm"
-                android:text="Silence Alarm" />
-
+                android:text="@string/silence_alarm" />
         </LinearLayout>
 
-        <TextClock
-            android:id="@+id/textClock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
     </FrameLayout>
 
 </FrameLayout>

@@ -15,4 +15,7 @@
     <string name="flashcard_answer">flashcard answer</string>
     <string name="title_activity_alarm_dialog">AlarmDialog</string>
     <string name="empty" />
+    <string name="this_will_be_the_question">This Will be the Question</string>
+    <string name="silence_alarm">Silence Alarm</string>
+    <string name="this_will_be_the_answer">This Will be the Answer</string>
 </resources>

@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 // The following import statements would allow us to use simpler code below where only
 // the FLAG_* is necessary versus the full location.
@@ -265,5 +266,25 @@ public class AlarmDialog extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    /**
+     * set fcquestion TextView visibility to gone and set fcanswer TextView visibility to visible
+     */
+    public void to_answer(View view){
+        TextView answer = (TextView) findViewById(R.id.fc_answer);
+        TextView question = (TextView) findViewById(R.id.fc_question);
+        question.setVisibility(View.GONE);
+        answer.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * set fcanswer TextView visibility to gone and set fcquestion TextView visibility to visible
+     */
+    public void to_question(View view){
+        TextView answer = (TextView) findViewById(R.id.fc_answer);
+        TextView question = (TextView) findViewById(R.id.fc_question);
+        answer.setVisibility(View.GONE);
+        question.setVisibility(View.VISIBLE);
     }
 }
