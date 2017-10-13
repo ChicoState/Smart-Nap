@@ -43,10 +43,18 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
 
             <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.97"
+                android:text="TextView"
+                android:visibility="invisible" />
+
+            <TextView
                 android:id="@+id/fc_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3.37"
+                android:layout_weight="4.96"
                 android:background="@android:color/white"
                 android:clickable="true"
                 android:onClick="to_answer"
@@ -65,6 +73,14 @@
                 android:text="@string/this_will_be_the_answer"
                 android:textSize="22sp"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.99"
+                android:text="TextView"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/button_silenceAlarm"
