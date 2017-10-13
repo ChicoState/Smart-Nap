@@ -7,10 +7,13 @@ import android.view.View;
 
 public class Home extends AppCompatActivity {
 
+    AlarmClock alarm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        alarm = AlarmClock.findById(AlarmClock.class, 1);
     }
     public void Alarmsetup(View view){
         Intent openAlarmpage = new Intent(this, AlarmEdit.class);
