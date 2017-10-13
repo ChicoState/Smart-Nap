@@ -47,14 +47,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.97"
-                android:text="TextView"
+                android:text="@string/textview"
                 android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/fc_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4.96"
+                android:layout_weight="6.87"
                 android:background="@android:color/white"
                 android:clickable="true"
                 android:onClick="to_answer"
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.99"
-                android:text="TextView"
+                android:text="@string/textview1"
                 android:visibility="invisible" />
 
             <Button

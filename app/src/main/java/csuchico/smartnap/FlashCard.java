@@ -8,9 +8,9 @@ import com.orm.SugarRecord;
 
 public class FlashCard extends SugarRecord<FlashCard>{
 
-    private int FC_ID;
-    private String m_question;
-    private String m_answer;
+    int FC_ID;
+    String m_question;
+    String m_answer;
 
     public FlashCard (String question, String answer){
         m_question = question;
