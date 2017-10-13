@@ -9,9 +9,9 @@ import com.orm.SugarRecord;
  */
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
-    
+
     long alarmTime;
-    String  alarmName,
+    String  alarmName;
 
     // Note: Please retain default constructor
     public AlarmClock() {
