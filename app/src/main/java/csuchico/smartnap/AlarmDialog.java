@@ -216,7 +216,7 @@ public class AlarmDialog extends AppCompatActivity {
 
     /**
      * @function    onSilenceAlarm()
-     * @desc        Called when a user interacts with the Silence Alarm button
+     * @desc        Called when a user interacts with the Silence AlarmEdit button
      */
     public void onSilenceAlarm(View view) {
         Log.i("AlarmDialog", "User has chosen to silence alarm");

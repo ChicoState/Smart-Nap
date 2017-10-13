@@ -2,14 +2,12 @@ package csuchico.smartnap;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TimePicker;
 import android.util.Log;
 
@@ -17,13 +15,14 @@ import android.util.Log;
 //import android.icu.util.Calendar;
 import java.util.Calendar;
 
-public class Alarm extends AppCompatActivity {
+public class AlarmEdit extends AppCompatActivity {
 
     static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
     AlarmManager alarmManager;
     private PendingIntent servicePendingIntent;
     private TimePicker alarmTimePicker;
+    EditText alarmNameText;
 
     @Override
     public void onStart() {
@@ -33,18 +32,21 @@ public class Alarm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alarm);
+        setContentView(R.layout.activity_alarm_edit);
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
     }
 
     /*
         Function:   createNewalarm(View)
-        Operation:  Takes the information provided by user on the Alarm activity and creates
-                    a new alarm with the Alarm Manager.
-        Called:     When user pushes the "Create Alarm" button on the Alarm activity
+        Operation:  Takes the information provided by user on the AlarmEdit activity and creates
+                    a new alarm with the AlarmEdit Manager.
+        Called:     When user pushes the "Create AlarmEdit" button on the AlarmEdit activity
      */
     public void createNewAlarm(View view) {
+
+        String alarmName = alarmNameText.getText().toString();
 
         // Setup calendar based on the current time chosen by the user
         Calendar calendar = Calendar.getInstance();
@@ -56,21 +58,24 @@ public class Alarm extends AppCompatActivity {
         // pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, d, Intent.FLAG_ACTIVITY_NEW_TASK);
         long alarmTime = calendar.getTimeInMillis();
 
-        Intent receiverIntent = new Intent(Alarm.this, AlarmReceiver.class);
+        AlarmClock alarm = new AlarmClock(alarmTime,alarmName);
+        alarm.save(); // sugarrecord save alarm
+
+        Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
 
         // broadcast myIntent to pendingIntent
-        servicePendingIntent = PendingIntent.getBroadcast(Alarm.this, 0, receiverIntent, 0);
+        servicePendingIntent = PendingIntent.getBroadcast(AlarmEdit.this, 0, receiverIntent, 0);
 
         // sets the alarm up using our pendingIntent operation defined to retrieve broadcasts
         alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, servicePendingIntent);
-        Log.d("Alarm", "Setting alarm in AlarmManager.");
+        Log.d("AlarmEdit", "Setting alarm in AlarmManager.");
 
         finish();
     } // createNewAlarm()
 
     public void addFlashCard(View view) {
 
-        Intent editQuestion = new Intent(Alarm.this, AlarmQuestions.class);
+        Intent editQuestion = new Intent(AlarmEdit.this, AlarmQuestions.class);
         startActivityForResult(editQuestion, ADD_FLASHCARD_REQUEST);
 
     } // addFlashCard()

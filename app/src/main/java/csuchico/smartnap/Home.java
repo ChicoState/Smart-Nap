@@ -13,7 +13,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
     }
     public void Alarmsetup(View view){
-        Intent openAlarmpage = new Intent(this, Alarm.class);
+        Intent openAlarmpage = new Intent(this, AlarmEdit.class);
         startActivity(openAlarmpage);
     }
     public void GotoQuestion(View view){

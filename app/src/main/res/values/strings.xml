@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">SmartNap</string>
-    <string name="addFlashCard">Add Flash Card</string>
     <string name="setNewAlarm">Set Alarm</string>
     <string name="newAlarmHeader">Edit Alarm</string>
     <string name="create_new_question">Create New Question</string>
