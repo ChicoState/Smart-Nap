@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +18,8 @@ import android.util.Log;
 import java.util.Calendar;
 
 public class Alarm extends AppCompatActivity {
+
+    static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
     AlarmManager alarmManager;
     private PendingIntent servicePendingIntent;
@@ -63,5 +67,22 @@ public class Alarm extends AppCompatActivity {
 
         finish();
     } // createNewAlarm()
+
+    public void addFlashCard(View view) {
+
+        Intent editQuestion = new Intent(Alarm.this, AlarmQuestions.class);
+        startActivityForResult(editQuestion, ADD_FLASHCARD_REQUEST);
+
+    } // addFlashCard()
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ADD_FLASHCARD_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Uri cardUri = data.getData();
+                String question = cardUri.toString();
+            }
+        }
+    }
 
 }

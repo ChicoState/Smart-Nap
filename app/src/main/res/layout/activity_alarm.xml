@@ -6,48 +6,113 @@
     android:layout_height="match_parent"
     tools:context="csuchico.smartnap.Alarm">
 
-    <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+    <TabHost
+        android:layout_width="369dp"
+        android:layout_height="293dp"
+        tools:layout_editor_absoluteY="7dp"
+        tools:layout_editor_absoluteX="8dp">
 
-        <TextView
-            android:id="@+id/headerText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/newAlarmHeader"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textSize="30sp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="33dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TimePicker
-            android:id="@+id/alarmTimePicker"
-            android:layout_width="match_parent"
-            android:layout_height="212dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:timePickerMode="spinner"
-            android:visibility="visible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    </LinearLayout>
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="350dp">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="174dp"
-        android:layout_height="62dp"
-        android:text="@string/addFlashCard"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="317dp" />
+                <LinearLayout
+                    android:id="@+id/Time Settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="219dp"
+                        android:orientation="vertical"
+                        tools:layout_editor_absoluteX="8dp"
+                        tools:layout_editor_absoluteY="8dp">
+
+                        <TextView
+                            android:id="@+id/headerText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/newAlarmHeader"
+                            android:textAlignment="center"
+                            android:textAllCaps="false"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                            android:textSize="30sp"
+                            tools:layout_editor_absoluteX="8dp"
+                            tools:layout_editor_absoluteY="33dp" />
+
+                        <TimePicker
+                            android:id="@+id/alarmTimePicker"
+                            android:layout_width="match_parent"
+                            android:layout_height="212dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginStart="8dp"
+                            android:timePickerMode="spinner"
+                            android:visibility="visible"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            tools:layout_editor_absoluteY="0dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Questions"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/editText"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="Name"
+                            tools:layout_editor_absoluteX="42dp"
+                            tools:layout_editor_absoluteY="375dp" />
+
+                        <EditText
+                            android:id="@+id/editText4"
+                            android:layout_width="match_parent"
+                            android:layout_height="43dp"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:text="Name"
+                            tools:layout_editor_absoluteX="38dp"
+                            tools:layout_editor_absoluteY="325dp" />
+
+                        <Button
+                            android:id="@+id/button"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:text="@string/addFlashCard"
+                            tools:layout_editor_absoluteX="38dp"
+                            tools:layout_editor_absoluteY="273dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
 
     <Button
         android:id="@+id/buttonCreateAlarm"
