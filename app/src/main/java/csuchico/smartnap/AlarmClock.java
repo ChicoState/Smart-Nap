@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.orm.SugarRecord;
 
+import java.util.List;
+
 /**
  * Created by caleb on 10/12/17.
  */
@@ -19,7 +21,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   public AlarmClock() {
   }
 
-  // Constructor
+  // Constructor for alarm with single card
   public AlarmClock(long time, String name, FlashCard card) {
     Log.i("AlarmClock","Constructed alarm " + name + " for time " + time + ".");
     this.m_alarmTime = time;

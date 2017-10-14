@@ -6,47 +6,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.orm.SugarDb;
+
+import java.io.File;
 import java.util.List;
 
 public class Home extends AppCompatActivity {
 
-    private static final int ADD_ALARM_REQUEST = 1;
-    private static final long alarmID = 1;
-    AlarmClock alarm;
-    Bundle alarmInfo;
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_home);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        // causing crash because ALARM_CLOCK table doesnt exist in database
-        /*
-        List<AlarmClock> alarmClocks = AlarmClock.listAll(AlarmClock.class);
-        if ( alarmClocks.size() == 0 ) {
-            return;
-        }
-        */
-    }
+    SugarDb smartNapDB = new SugarDb(getApplicationContext());
 
-    public void Alarmsetup(View view) {
-        Intent openAlarmpage = new Intent(this, AlarmEdit.class);
-        alarmInfo = new Bundle();
+    AlarmClock.findById(AlarmClock.class, (long) 1); // Perform this for each SugarRecord  model
+    FlashCard.findById(FlashCard.class, (long) 1); // Perform this for each SugarRecord  model
+  }
 
-        startActivityForResult(openAlarmpage, ADD_ALARM_REQUEST, alarmInfo);
-    }
+  public void alarmSetup(View view) {
+    Intent openAlarmPage = new Intent(this, AlarmEdit.class);
+    startActivity(openAlarmPage);
+  }
 
-    public void GotoQuestion(View view){
-        Intent openQuestionpage = new Intent(this, Question.class);
-        startActivity(openQuestionpage);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ADD_ALARM_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Bundle alarmInfo = data.getExtras();
-            }
-        }
-    }
+  public void GotoQuestion(View view){
+    Intent openQuestionPage = new Intent(this, Question.class);
+    startActivity(openQuestionPage);
+  }
 }
-

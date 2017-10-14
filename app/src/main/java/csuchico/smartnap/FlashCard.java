@@ -12,8 +12,13 @@ public class FlashCard extends SugarRecord<FlashCard>{
     String m_question;
     String m_answer;
 
+    // Note: Please retain default constructor
+    public FlashCard() {
+
+    }
+
     public FlashCard (String question, String answer){
-        m_question = question;
-        m_answer = answer;
+        this.m_question = question;
+        this.m_answer = answer;
     }
 }

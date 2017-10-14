@@ -63,7 +63,9 @@ public class AlarmEdit extends AppCompatActivity {
         // pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, d, Intent.FLAG_ACTIVITY_NEW_TASK);
         long alarmTime = calendar.getTimeInMillis();
 
-        FlashCard card = new FlashCard("This is our question?","And then our answer!");
+        FlashCard card = new FlashCard(
+                "This is a test question built ahead of time",
+                "And then our answer or the other side of this card too!");
         card.save();
         AlarmClock alarm = new AlarmClock(alarmTime,alarmName,card);
         alarm.save();
