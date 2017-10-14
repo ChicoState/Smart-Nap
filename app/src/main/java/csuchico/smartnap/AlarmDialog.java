@@ -158,10 +158,23 @@ public class AlarmDialog extends AppCompatActivity {
     // while interacting with the UI.
     findViewById(R.id.button_silenceAlarm).setOnTouchListener(mDelayHideTouchListener);
 
+
+    Intent alarmIntent = getIntent();
+    Bundle alarmData = alarmIntent.getExtras();
+    long alarmID = (long) alarmData.getInt("alarmID");
+
+    AlarmClock alarm = AlarmClock.findById(AlarmClock.class, alarmID);
+    FlashCard card = alarm.m_flashCard;
+
+    String cardQuestion = card.m_question;
+    String cardAnswer = card.m_answer;
+
     m_cardQuestionText = (TextView) findViewById(R.id.fc_question);
     m_cardAnswerText = (TextView) findViewById(R.id.fc_answer);
 
-    loadFlashCards();
+    m_cardQuestionText.setText(cardQuestion);
+    m_cardAnswerText.setText(cardAnswer);
+
     playTone(); // play the ringtone
   }
 
@@ -173,17 +186,6 @@ public class AlarmDialog extends AppCompatActivity {
     // created, to briefly hint to the user that UI controls
     // are available.
     delayedHide(100);
-  }
-
-  private void loadFlashCards() {
-    List<FlashCard> cards = FlashCard.listAll(FlashCard.class);
-    if(!cards.isEmpty()) {
-      FlashCard currentCard = cards.get(0);
-
-      // when we have private member variables we'll need GETTERS instead
-      m_cardQuestionText.setText(currentCard.m_question);
-      m_cardAnswerText.setText(currentCard.m_answer);
-    }
   }
 
   /**

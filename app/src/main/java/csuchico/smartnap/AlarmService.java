@@ -27,9 +27,10 @@ public class AlarmService extends IntentService {
     @Override
     public void onHandleIntent(Intent intent) {
 
+
         // Any code to setup the service must be here
         // before we call completeWakefulIntent(intent)
-        startDialogActivity();
+        startDialogActivity(intent);
 
         // completeWakefulIntent() releases the CPU wake lock set by the receiver
         // This ensures that onHandleIntent() runs its code above while holding the CPU awake
@@ -43,8 +44,9 @@ public class AlarmService extends IntentService {
      *  @desc:  Launches the activity for the alarm dialog to allow users to silence the alarm.
      *
      */
-    private void startDialogActivity() {
+    private void startDialogActivity(Intent intent) {
         Intent dialogIntent = new Intent(this, AlarmDialog.class);
+        dialogIntent.putExtras(intent.getExtras());
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);
     }

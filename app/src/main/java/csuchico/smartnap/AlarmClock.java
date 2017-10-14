@@ -15,6 +15,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
 
   long m_alarmTime;
   String m_alarmName;
+
   FlashCard m_flashCard;
 
   // Note: Please retain default constructor
@@ -23,7 +24,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
 
   // Constructor for alarm with single card
   public AlarmClock(long time, String name, FlashCard card) {
-    Log.i("AlarmClock","Constructed alarm " + name + " for time " + time + ".");
+    Log.i("AlarmClock","Constructed alarm: " + name + " for time " + time + ".");
     this.m_alarmTime = time;
     this.m_alarmName = name;
     this.m_flashCard = card;

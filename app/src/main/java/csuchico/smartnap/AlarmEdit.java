@@ -17,76 +17,83 @@ import android.util.Log;
 import java.util.Calendar;
 
 public class AlarmEdit extends AppCompatActivity {
-    static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
+  static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
-    AlarmManager alarmManager;
-    private PendingIntent servicePendingIntent;
-    private TimePicker alarmTimePicker;
-    EditText alarmNameText;
+  AlarmManager alarmManager;
+  private PendingIntent servicePendingIntent;
+  private TimePicker alarmTimePicker;
+  EditText alarmNameText;
 
-    @Override
-    public void onStart() {
+  @Override
+  public void onStart() {
         super.onStart();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alarm_edit);
-        String title;
-        title = getString(R.string.editAlarmHeader);
-        if(getActionBar() != null) {
-          getActionBar().setTitle(title);
-        }
-        alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_alarm_edit);
+    String title;
+    title = getString(R.string.editAlarmHeader);
+    if(getActionBar() != null) {
+      getActionBar().setTitle(title);
     }
+    alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
+    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+    alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
+  }
 
-    /*
-        Function:   createNewAlarm(View)
-        Operation:  Takes the information provided by user on the AlarmEdit activity and creates
-                    a new alarm with the AlarmEdit Manager.
-        Called:     When user pushes the "Create AlarmEdit" button on the AlarmEdit activity
-     */
-    public void createNewAlarm(View view) {
+  /*
+    Function:   createNewAlarm(View)
+    Operation:  Takes the information provided by user on the AlarmEdit activity and creates
+                a new alarm with the AlarmEdit Manager.
+    Called:     When user pushes the "Create AlarmEdit" button on the AlarmEdit activity
+  */
+  public void createNewAlarm(View view) {
 
-        String alarmName = alarmNameText.getText().toString();
+    String alarmName = alarmNameText.getText().toString();
 
-        // Setup calendar based on the current time chosen by the user
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
-        calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
+    // Setup calendar based on the current time chosen by the user
+    Calendar calendar = Calendar.getInstance();
 
-        // Make a new intent for the broadcast
-        // Intent d = new Intent("csuchico.smartnap.AlarmDialog");
-        // pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, d, Intent.FLAG_ACTIVITY_NEW_TASK);
-        long alarmTime = calendar.getTimeInMillis();
+    calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
+    calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
 
-        FlashCard card = new FlashCard(
-                "This is a test question built ahead of time",
-                "And then our answer or the other side of this card too!");
-        card.save();
-        AlarmClock alarm = new AlarmClock(alarmTime,alarmName,card);
-        alarm.save();
+    // Make a new intent for the broadcast
+    // Intent d = new Intent("csuchico.smartnap.AlarmDialog");
+    // pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, d, Intent.FLAG_ACTIVITY_NEW_TASK);
+    long alarmTime = calendar.getTimeInMillis();
 
-        Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
+    FlashCard card = new FlashCard(
+            "This is a test question built ahead of time",
+            "And then our answer or the other side of this card too!");
+    card.save();
 
-        // broadcast myIntent to pendingIntent
-        servicePendingIntent = PendingIntent.getBroadcast(AlarmEdit.this, 0, receiverIntent, 0);
+    AlarmClock alarm = new AlarmClock(alarmTime,alarmName,card);
+    alarm.save();
 
-        // sets the alarm up using our pendingIntent operation defined to retrieve broadcasts
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, servicePendingIntent);
-        Log.d("AlarmEdit", "Setting alarm in AlarmManager.");
+    long alarmID = alarm.getId();
 
-        finish();
-    } // createNewAlarm()
+    // create a new bundle to store the ID of our alarm
+    Bundle dataBundle = new Bundle();
+    dataBundle.putInt("alarmID", (int) alarmID);
 
-    public void addFlashCard(View view) {
+    // create intent for the alarm
+    Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
+    receiverIntent.putExtras(dataBundle);
 
-        Intent editQuestion = new Intent(AlarmEdit.this, AlarmQuestions.class);
-        startActivity(editQuestion);
+    // broadcast myIntent to pendingIntent
+    servicePendingIntent = PendingIntent.getBroadcast(AlarmEdit.this, 0, receiverIntent, 0);
 
-    } // addFlashCard()
+    // sets the alarm up using our pendingIntent operation defined to retrieve broadcasts
+    alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, servicePendingIntent);
+    Log.d("AlarmEdit", "Setting alarm in AlarmManager.");
 
+    finish();
+  } // createNewAlarm()
+
+  public void addFlashCard(View view) {
+    Intent editQuestion = new Intent(AlarmEdit.this, AlarmQuestions.class);
+    startActivity(editQuestion);
+  } // addFlashCard()
 }

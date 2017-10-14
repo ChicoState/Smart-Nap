@@ -20,8 +20,8 @@ public class Home extends AppCompatActivity {
 
     SugarDb smartNapDB = new SugarDb(getApplicationContext());
 
-    AlarmClock.findById(AlarmClock.class, (long) 1); // Perform this for each SugarRecord  model
-    FlashCard.findById(FlashCard.class, (long) 1); // Perform this for each SugarRecord  model
+    //AlarmClock.findById(AlarmClock.class, (long) 1); // Perform this for each SugarRecord  model
+    //FlashCard.findById(FlashCard.class, (long) 1); // Perform this for each SugarRecord  model
   }
 
   public void alarmSetup(View view) {
