@@ -159,24 +159,31 @@ public class AlarmDialog extends AppCompatActivity {
     findViewById(R.id.button_silenceAlarm).setOnTouchListener(mDelayHideTouchListener);
 
 
-    Intent alarmIntent = getIntent();
-    Bundle alarmData = alarmIntent.getExtras();
-    long alarmID = (long) alarmData.getInt("alarmID");
 
-    AlarmClock alarm = AlarmClock.findById(AlarmClock.class, alarmID);
+    // pull alarm and associated flashcard info from database
+    AlarmClock alarm = AlarmClock.findById(AlarmClock.class, getAlarmID());
     FlashCard card = alarm.m_flashCard;
-
     String cardQuestion = card.m_question;
     String cardAnswer = card.m_answer;
 
+    updateCurrentFlashCard(cardQuestion,cardAnswer);
+
+    playTone();
+  }
+
+  private long getAlarmID() {
+    Intent alarmIntent = getIntent();
+    Bundle alarmData = alarmIntent.getExtras();
+    long alarmID = (long) alarmData.getInt("alarmID");
+    return alarmID;
+  } // getAlarmID()
+
+  private void updateCurrentFlashCard(String question, String answer) {
     m_cardQuestionText = (TextView) findViewById(R.id.fc_question);
     m_cardAnswerText = (TextView) findViewById(R.id.fc_answer);
-
-    m_cardQuestionText.setText(cardQuestion);
-    m_cardAnswerText.setText(cardAnswer);
-
-    playTone(); // play the ringtone
-  }
+    m_cardQuestionText.setText(question);
+    m_cardAnswerText.setText(answer);
+  } // updateCurrentFlashCard()
 
   @Override
   protected void onPostCreate(Bundle savedInstanceState) {
