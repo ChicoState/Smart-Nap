@@ -161,6 +161,7 @@ public class AlarmDialog extends AppCompatActivity {
         m_cardQuestionText = (TextView) findViewById(R.id.fc_question);
         m_cardAnswerText = (TextView) findViewById(R.id.fc_answer);
 
+        /*
         long blah = 1;
         m_FlashCard = FlashCard.findById(FlashCard.class,blah);
 
@@ -169,6 +170,7 @@ public class AlarmDialog extends AppCompatActivity {
 
         m_cardQuestionText.setText(question);
         m_cardAnswerText.setText(answer);
+        */
 
         playTone(); // play the ringtone
     }

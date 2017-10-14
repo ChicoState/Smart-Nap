@@ -35,7 +35,9 @@ public class AlarmEdit extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_edit);
         String title;
         title = getString(R.string.editAlarmHeader);
-        getActionBar().setTitle(title);
+        if(getActionBar() != null) {
+          getActionBar().setTitle(title);
+        }
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);

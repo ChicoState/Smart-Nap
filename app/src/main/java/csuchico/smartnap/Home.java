@@ -19,11 +19,13 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        // causing crash because alarmID doesnt exist in database
+        // causing crash because ALARM_CLOCK table doesnt exist in database
+        /*
         List<AlarmClock> alarmClocks = AlarmClock.listAll(AlarmClock.class);
         if ( alarmClocks.size() == 0 ) {
             return;
         }
+        */
     }
 
     public void Alarmsetup(View view) {
