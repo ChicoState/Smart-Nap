@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.util.Log;
 
@@ -16,7 +17,6 @@ import android.util.Log;
 import java.util.Calendar;
 
 public class AlarmEdit extends AppCompatActivity {
-
     static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
     AlarmManager alarmManager;
@@ -33,13 +33,16 @@ public class AlarmEdit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_edit);
+        String title;
+        title = getString(R.string.editAlarmHeader);
+        getActionBar().setTitle(title);
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
     }
 
     /*
-        Function:   createNewalarm(View)
+        Function:   createNewAlarm(View)
         Operation:  Takes the information provided by user on the AlarmEdit activity and creates
                     a new alarm with the AlarmEdit Manager.
         Called:     When user pushes the "Create AlarmEdit" button on the AlarmEdit activity
@@ -58,8 +61,10 @@ public class AlarmEdit extends AppCompatActivity {
         // pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, d, Intent.FLAG_ACTIVITY_NEW_TASK);
         long alarmTime = calendar.getTimeInMillis();
 
-        AlarmClock alarm = new AlarmClock(alarmTime,alarmName);
-        alarm.save(); // sugarrecord save alarm
+        FlashCard card = new FlashCard("This is our question?","And then our answer!");
+        card.save();
+        AlarmClock alarm = new AlarmClock(alarmTime,alarmName,card);
+        alarm.save();
 
         Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
 
@@ -76,18 +81,8 @@ public class AlarmEdit extends AppCompatActivity {
     public void addFlashCard(View view) {
 
         Intent editQuestion = new Intent(AlarmEdit.this, AlarmQuestions.class);
-        startActivityForResult(editQuestion, ADD_FLASHCARD_REQUEST);
+        startActivity(editQuestion);
 
     } // addFlashCard()
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == ADD_FLASHCARD_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                Uri cardUri = data.getData();
-                String question = cardUri.toString();
-            }
-        }
-    }
 
 }

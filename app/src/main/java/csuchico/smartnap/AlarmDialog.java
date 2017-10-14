@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 // The following import statements would allow us to use simpler code below where only
@@ -41,6 +42,9 @@ public class AlarmDialog extends AppCompatActivity {
     private Ringtone mAlarmTone;
     private View mContentView;
     private View mControlsView;
+    private TextView m_cardQuestionText;
+    private TextView m_cardAnswerText;
+    private FlashCard m_FlashCard;
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -153,6 +157,18 @@ public class AlarmDialog extends AppCompatActivity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.button_silenceAlarm).setOnTouchListener(mDelayHideTouchListener);
+
+        m_cardQuestionText = (TextView) findViewById(R.id.fc_question);
+        m_cardAnswerText = (TextView) findViewById(R.id.fc_answer);
+
+        long blah = 1;
+        m_FlashCard = FlashCard.findById(FlashCard.class,blah);
+
+        String question = m_FlashCard.m_question;
+        String answer = m_FlashCard.m_answer;
+
+        m_cardQuestionText.setText(question);
+        m_cardAnswerText.setText(answer);
 
         playTone(); // play the ringtone
     }

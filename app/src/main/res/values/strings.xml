@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">SmartNap</string>
     <string name="setNewAlarm">Set Alarm</string>
-    <string name="newAlarmHeader">Edit Alarm</string>
+    <string name="editAlarmHeader">Edit Alarm</string>
+    <string name="inputAlarmName">Alarm name</string>
     <string name="create_new_question">Create New Question</string>
     <string name="edit_myquestion">Edit MyQuestion</string>
     <string name="QuestionSet">MyQuestionSet</string>

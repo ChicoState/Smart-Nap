@@ -6,56 +6,74 @@
     android:layout_height="match_parent"
     tools:context="csuchico.smartnap.AlarmEdit">
 
-    <TextView
-        android:id="@+id/headerText"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/newAlarmHeader"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textSize="30sp"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="8dp" />
-
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="219dp"
+        android:id="@+id/baseLayoutContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
+
+        <TextView
+            android:id="@+id/headerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/editAlarmHeader"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textSize="30sp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp"/>
+
+        <EditText
+            android:id="@+id/alarmNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="25dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="@string/inputAlarmName"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="72dp"/>
+
+        <TimePicker
+            android:id="@+id/alarmTimePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="52dp"
+            tools:layout_editor_absoluteY="149dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <!-- android:timePickerMode="spinner" -->
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <Button
         android:id="@+id/buttonCreateAlarm"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="308dp"
-        android:layout_height="66dp"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
         android:onClick="createNewAlarm"
         android:text="@string/setNewAlarm"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="413dp" />
-
-    <TimePicker
-        android:id="@+id/alarmTimePicker"
-        android:layout_width="0dp"
-        android:layout_height="212dp"
-        android:timePickerMode="spinner"
         android:visibility="visible"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="149dp" />
-
-    <EditText
-        android:id="@+id/alarmNameEdit"
-        android:layout_width="344dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Name"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="72dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="417dp"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -10,17 +10,18 @@ import com.orm.SugarRecord;
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
 
-    long alarmTime;
-    String  alarmName;
+    long m_alarmTime;
+    String  m_alarmName;
+    FlashCard m_flashCard;
 
     // Note: Please retain default constructor
     public AlarmClock() {
     }
 
     // Constructor
-    public AlarmClock(long time, String name) {
-        this.alarmTime = time;
-        this.alarmName = name;
+    public AlarmClock(long time, String name, FlashCard card) {
+        this.m_alarmTime = time;
+        this.m_alarmName = name;
+        this.m_flashCard = card;
     }
-
 }

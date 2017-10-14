@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.List;
+
 public class Home extends AppCompatActivity {
 
     private static final int ADD_ALARM_REQUEST = 1;
@@ -17,7 +19,11 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        alarm = AlarmClock.findById(AlarmClock.class, alarmID);
+        // causing crash because alarmID doesnt exist in database
+        List<AlarmClock> alarmClocks = AlarmClock.listAll(AlarmClock.class);
+        if ( alarmClocks.size() == 0 ) {
+            return;
+        }
     }
 
     public void Alarmsetup(View view) {
