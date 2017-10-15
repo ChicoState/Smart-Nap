@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,10 +20,25 @@ import java.util.Calendar;
 public class AlarmEdit extends AppCompatActivity {
   static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
+  private boolean ALARM_NAME_SET;
+
   AlarmManager alarmManager;
   private PendingIntent servicePendingIntent;
   private TimePicker alarmTimePicker;
   EditText alarmNameText;
+
+  private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+      if (!ALARM_NAME_SET) {
+        ALARM_NAME_SET = true;
+        alarmNameText.getText().clear();
+        alarmNameText.setFocusable(true);
+        alarmNameText.requestFocus();
+      }
+      return false;
+    }
+  };
 
   @Override
   public void onStart() {
@@ -48,6 +64,8 @@ public class AlarmEdit extends AppCompatActivity {
     alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
     alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
+
+    alarmNameText.setOnTouchListener(editAlarmNameListener);
   }
 
   /*

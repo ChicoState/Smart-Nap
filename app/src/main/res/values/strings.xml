@@ -16,7 +16,7 @@
     <string name="flashcard">Flashcard</string>
     <string name="flashcard_answer">flashcard answer</string>
     <string name="title_activity_alarm_dialog">AlarmDialog</string>
-    <string name="empty" />
+    <string name="empty"></string>
     <string name="DEFAULT_flashCardQuestionText">This Will be the Question</string>
     <string name="silence_alarm">Silence Alarm</string>
     <string name="DEFAULT_flashCardAnswerText">This Will be the Answer</string>
