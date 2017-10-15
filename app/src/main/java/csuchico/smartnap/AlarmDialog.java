@@ -178,8 +178,8 @@ public class AlarmDialog extends AppCompatActivity {
 
   /*
     @function: alarmInit()
-    @returns: The SugarRecord database ID of the current Alarm
    */
+
   private void alarmInit() {
     Intent alarmIntent = getIntent();
     Bundle alarmData = alarmIntent.getExtras();
@@ -188,7 +188,7 @@ public class AlarmDialog extends AppCompatActivity {
 
     String alarmName = (String) alarmData.getString("alarmName");
     m_alarmNameText.setText(alarmName);
-  } // getAlarmID()
+  } // alarmInit()
 
   private void updateCurrentFlashCard(String question, String answer) {
     m_cardQuestionText.setText(question);
