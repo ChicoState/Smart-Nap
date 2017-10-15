@@ -73,7 +73,7 @@
                     android:background="@android:color/white"
                     android:clickable="true"
                     android:onClick="to_question"
-                    android:text="@string/this_will_be_the_answer"
+                    android:text="@string/DEFAULT_flashCardAnswerText"
                     android:textSize="22sp"
                     android:visibility="gone"/>
 
@@ -81,16 +81,16 @@
                     android:id="@+id/fc_question"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginBottom="50dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="25dp"
                     android:layout_weight="6.87"
                     android:background="@android:color/white"
                     android:clickable="true"
                     android:onClick="to_answer"
                     android:padding="15dp"
-                    android:text="@string/this_will_be_the_question"
+                    android:text="@string/DEFAULT_flashCardQuestionText"
                     android:textSize="22sp"
                     android:visibility="visible"/>
 

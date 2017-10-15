@@ -43,37 +43,34 @@
             android:id="@+id/alarmTimePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
+            android:timePickerMode="spinner"
             android:visibility="visible"
             tools:layout_editor_absoluteX="52dp"
             tools:layout_editor_absoluteY="149dp"/>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/buttonAddFlashCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
+            android:text="@string/label_addFlashCard"/>
 
-            <!-- android:timePickerMode="spinner" -->
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonCreateAlarm"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:onClick="createNewAlarm"
+            android:text="@string/label_setNewAlarm"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="417dp"/>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonCreateAlarm"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:onClick="createNewAlarm"
-        android:text="@string/setNewAlarm"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:visibility="visible"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="417dp"/>
 
 </android.support.constraint.ConstraintLayout>

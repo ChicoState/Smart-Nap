@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SmartNap</string>
-    <string name="setNewAlarm">Set Alarm</string>
+    <string name="label_setNewAlarm">Set Alarm</string>
+    <string name="label_addFlashCard">Add Flash Card</string>
     <string name="editAlarmHeader">Edit Alarm</string>
     <string name="inputAlarmName">Alarm name</string>
     <string name="create_new_question">Create New Question</string>
@@ -16,8 +17,8 @@
     <string name="flashcard_answer">flashcard answer</string>
     <string name="title_activity_alarm_dialog">AlarmDialog</string>
     <string name="empty" />
-    <string name="this_will_be_the_question">This Will be the Question</string>
+    <string name="DEFAULT_flashCardQuestionText">This Will be the Question</string>
     <string name="silence_alarm">Silence Alarm</string>
-    <string name="this_will_be_the_answer">This Will be the Answer</string>
+    <string name="DEFAULT_flashCardAnswerText">This Will be the Answer</string>
     <string name="dialog_AlarmName">Alarm Name</string>
 </resources>

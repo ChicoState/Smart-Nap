@@ -35,8 +35,13 @@ public class AlarmEdit extends AppCompatActivity {
     setContentView(R.layout.activity_alarm_edit);
     String title;
     title = getString(R.string.editAlarmHeader);
-    if(getActionBar() != null) {
-      getActionBar().setTitle(title);
+    try {
+      if(getSupportActionBar() != null) {
+        getSupportActionBar().setTitle(title);
+      }
+    }
+    catch (NullPointerException npe) {
+      Log.e("AlarmEdit","Exception thrown while setting actionBar title",npe);
     }
     alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
     alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -64,19 +69,21 @@ public class AlarmEdit extends AppCompatActivity {
     // pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, d, Intent.FLAG_ACTIVITY_NEW_TASK);
     long alarmTime = calendar.getTimeInMillis();
 
+    /*
     FlashCard card = new FlashCard(
             "This is a test question built ahead of time",
             "And then our answer or the other side of this card too!");
     card.save();
+    */
 
     AlarmClock alarm = new AlarmClock(alarmTime,alarmName,card);
-    alarm.save();
-
+    //alarm.save();
     long alarmID = alarm.getId();
 
-    // create a new bundle to store the ID of our alarm
+    // create a new bundle to store the data of our alarm
     Bundle dataBundle = new Bundle();
     dataBundle.putInt("alarmID", (int) alarmID);
+    dataBundle.putString("alarmName", alarmName);
 
     // create intent for the alarm
     Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
@@ -92,6 +99,11 @@ public class AlarmEdit extends AppCompatActivity {
     finish();
   } // createNewAlarm()
 
+  /*
+    @function:  addFlashCard()
+    @desc:      Called when user touches "Add Flash Card" button for an alarm. Used to
+                start the process of attaching flash cards to the alarm clock.
+   */
   public void addFlashCard(View view) {
     Intent editQuestion = new Intent(AlarmEdit.this, AlarmQuestions.class);
     startActivity(editQuestion);
