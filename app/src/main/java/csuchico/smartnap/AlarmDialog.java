@@ -165,11 +165,7 @@ public class AlarmDialog extends AppCompatActivity {
     // while interacting with the UI.
     findViewById(R.id.button_silenceAlarm).setOnTouchListener(mDelayHideTouchListener);
 
-    getAlarm();
-
-    // pull alarm and associated flashcard info from database
-    String alarmName = alarm.m_alarmName;
-    m_alarmNameText.setText(alarmName);
+    alarmInit();
 
     FlashCard card = alarm.m_flashCard;
     String cardQuestion = card.m_question;
@@ -181,14 +177,17 @@ public class AlarmDialog extends AppCompatActivity {
   }
 
   /*
-    @function: getAlarmID()
+    @function: alarmInit()
     @returns: The SugarRecord database ID of the current Alarm
    */
-  private void getAlarm() {
+  private void alarmInit() {
     Intent alarmIntent = getIntent();
     Bundle alarmData = alarmIntent.getExtras();
     alarmID = (long) alarmData.getInt("alarmID");
     alarm = AlarmClock.findById(AlarmClock.class, alarmID);
+
+    String alarmName = (String) alarmData.getString("alarmName");
+    m_alarmNameText.setText(alarmName);
   } // getAlarmID()
 
   private void updateCurrentFlashCard(String question, String answer) {
