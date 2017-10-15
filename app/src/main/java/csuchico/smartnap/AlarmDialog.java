@@ -45,6 +45,7 @@ public class AlarmDialog extends AppCompatActivity {
   private Ringtone mAlarmTone;
   private View mContentView;
   private View mControlsView;
+  private TextView m_alarmNameText;
   private TextView m_cardQuestionText;
   private TextView m_cardAnswerText;
   private FlashCard m_FlashCard;
@@ -144,6 +145,9 @@ public class AlarmDialog extends AppCompatActivity {
     mControlsView = findViewById(R.id.fullscreen_content_controls);
     mContentView = findViewById(R.id.fullscreen_layout);
 
+    m_cardQuestionText = (TextView) findViewById(R.id.fc_question);
+    m_cardAnswerText = (TextView) findViewById(R.id.fc_answer);
+
     // Set up the user interaction to manually show or hide the system UI.
     mContentView.setOnClickListener(
             new View.OnClickListener() {
@@ -158,19 +162,27 @@ public class AlarmDialog extends AppCompatActivity {
     // while interacting with the UI.
     findViewById(R.id.button_silenceAlarm).setOnTouchListener(mDelayHideTouchListener);
 
-
-
-    // pull alarm and associated flashcard info from database
     AlarmClock alarm = AlarmClock.findById(AlarmClock.class, getAlarmID());
-    FlashCard card = alarm.m_flashCard;
-    String cardQuestion = card.m_question;
-    String cardAnswer = card.m_answer;
-
-    updateCurrentFlashCard(cardQuestion,cardAnswer);
-
+    processAlarm(alarm);
     playTone();
   }
 
+  private void processAlarm(AlarmClock alarm) {
+    // pull alarm and associated flashcard info from database
+    String alarmName = alarm.m_alarmName;
+    m_alarmNameText.setText(alarmName);
+
+    FlashCard card = alarm.m_flashCard;
+    String cardQuestion = card.m_question;
+    String cardAnswer = card.m_answer;
+    // update the currentFlashCard for Dialog
+    updateCurrentFlashCard(cardQuestion,cardAnswer);
+  }
+
+  /*
+    @function: getAlarmID()
+    @returns: The SugarRecord database ID of the current Alarm
+   */
   private long getAlarmID() {
     Intent alarmIntent = getIntent();
     Bundle alarmData = alarmIntent.getExtras();
@@ -179,8 +191,6 @@ public class AlarmDialog extends AppCompatActivity {
   } // getAlarmID()
 
   private void updateCurrentFlashCard(String question, String answer) {
-    m_cardQuestionText = (TextView) findViewById(R.id.fc_question);
-    m_cardAnswerText = (TextView) findViewById(R.id.fc_answer);
     m_cardQuestionText.setText(question);
     m_cardAnswerText.setText(answer);
   } // updateCurrentFlashCard()
