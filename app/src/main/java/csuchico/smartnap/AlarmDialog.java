@@ -149,6 +149,7 @@ public class AlarmDialog extends AppCompatActivity {
 
     m_cardQuestionText = (TextView) findViewById(R.id.fc_question);
     m_cardAnswerText = (TextView) findViewById(R.id.fc_answer);
+    m_alarmNameText = (TextView)  findViewById(R.id.alarmName);
 
     // Set up the user interaction to manually show or hide the system UI.
     mContentView.setOnClickListener(
