@@ -18,9 +18,10 @@ import android.util.Log;
 import java.util.Calendar;
 
 public class AlarmEdit extends AppCompatActivity {
-  static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
-  private boolean ALARM_NAME_SET;
+  //static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
+
+  private boolean ALARM_NAME_SET = false;
 
   AlarmManager alarmManager;
   private PendingIntent servicePendingIntent;
