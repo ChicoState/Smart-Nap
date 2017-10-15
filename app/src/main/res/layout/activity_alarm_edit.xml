@@ -56,6 +56,7 @@
             android:id="@+id/buttonAddFlashCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="addFlashCard"
             android:text="@string/label_addFlashCard"/>
 
         <Button

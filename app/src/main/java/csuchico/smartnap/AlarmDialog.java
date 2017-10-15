@@ -49,6 +49,8 @@ public class AlarmDialog extends AppCompatActivity {
   private TextView m_cardQuestionText;
   private TextView m_cardAnswerText;
   private FlashCard m_FlashCard;
+  private AlarmClock alarm;
+  private long alarmID;
 
   /**
    * Whether or not the system UI should be auto-hidden after
@@ -162,12 +164,8 @@ public class AlarmDialog extends AppCompatActivity {
     // while interacting with the UI.
     findViewById(R.id.button_silenceAlarm).setOnTouchListener(mDelayHideTouchListener);
 
-    AlarmClock alarm = AlarmClock.findById(AlarmClock.class, getAlarmID());
-    processAlarm(alarm);
-    playTone();
-  }
+    getAlarm();
 
-  private void processAlarm(AlarmClock alarm) {
     // pull alarm and associated flashcard info from database
     String alarmName = alarm.m_alarmName;
     m_alarmNameText.setText(alarmName);
@@ -177,17 +175,19 @@ public class AlarmDialog extends AppCompatActivity {
     String cardAnswer = card.m_answer;
     // update the currentFlashCard for Dialog
     updateCurrentFlashCard(cardQuestion,cardAnswer);
+
+    playTone();
   }
 
   /*
     @function: getAlarmID()
     @returns: The SugarRecord database ID of the current Alarm
    */
-  private long getAlarmID() {
+  private void getAlarm() {
     Intent alarmIntent = getIntent();
     Bundle alarmData = alarmIntent.getExtras();
-    long alarmID = (long) alarmData.getInt("alarmID");
-    return alarmID;
+    alarmID = (long) alarmData.getInt("alarmID");
+    alarm = AlarmClock.findById(AlarmClock.class, alarmID);
   } // getAlarmID()
 
   private void updateCurrentFlashCard(String question, String answer) {
@@ -247,6 +247,7 @@ public class AlarmDialog extends AppCompatActivity {
    */
   public void onSilenceAlarm(View view) {
     Log.i("AlarmDialog", "User has chosen to silence alarm");
+    alarm.delete(); // delete from db table
     mAlarmTone.stop();
     finish();
   }

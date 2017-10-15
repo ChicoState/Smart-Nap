@@ -33,6 +33,7 @@ public class AlarmEdit extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_alarm_edit);
+
     String title;
     title = getString(R.string.editAlarmHeader);
     try {
@@ -43,6 +44,7 @@ public class AlarmEdit extends AppCompatActivity {
     catch (NullPointerException npe) {
       Log.e("AlarmEdit","Exception thrown while setting actionBar title",npe);
     }
+
     alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
     alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
@@ -69,15 +71,13 @@ public class AlarmEdit extends AppCompatActivity {
     // pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, d, Intent.FLAG_ACTIVITY_NEW_TASK);
     long alarmTime = calendar.getTimeInMillis();
 
-    /*
     FlashCard card = new FlashCard(
             "This is a test question built ahead of time",
             "And then our answer or the other side of this card too!");
     card.save();
-    */
 
     AlarmClock alarm = new AlarmClock(alarmTime,alarmName,card);
-    //alarm.save();
+    alarm.save();
     long alarmID = alarm.getId();
 
     // create a new bundle to store the data of our alarm
@@ -105,7 +105,23 @@ public class AlarmEdit extends AppCompatActivity {
                 start the process of attaching flash cards to the alarm clock.
    */
   public void addFlashCard(View view) {
+    /*
     Intent editQuestion = new Intent(AlarmEdit.this, AlarmQuestions.class);
-    startActivity(editQuestion);
+    startActivityForResult(editQuestion, ADD_FLASHCARD_REQUEST);
+    */
+    Log.w("AlarmEdit","addFlashCard() still needs implementation! Dead Button!");
   } // addFlashCard()
+
+  /*
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == ADD_FLASHCARD_REQUEST) {
+      if (resultCode == RESULT_OK) {
+        // Flashcard was chosen and added successfully
+      }
+    }
+  }
+  */
+
 }
