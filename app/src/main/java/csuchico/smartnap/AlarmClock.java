@@ -25,10 +25,10 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   }
 
   // Constructor
-  public AlarmClock(long time, String name) {
+  public AlarmClock(long time, String name, List<FlashCard> cards) {
     this.time = time;
     this.name = name;
-    this.cards = new List<FlashCard>;
+    this.cards = cards;
 
     this.CARD_LIST_INDEX = 0; // default INDEX upon alarm construction
   }
