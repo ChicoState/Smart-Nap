@@ -78,6 +78,10 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     }
   }
 
+  public String getName() {
+    return name;
+  }
+
   // The following functions getNextCard() and getPrevCard() are designed to be used
   // to flip through flash cards while on the alarm dialog page.
 
