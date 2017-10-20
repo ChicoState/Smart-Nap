@@ -5,7 +5,7 @@ import android.util.Log;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by caleb on 10/12/17.
@@ -15,7 +15,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
 
   private long time;
   private String name;
-  private List<FlashCard> cards;
+  private ArrayList<Integer> cards; // will store database ID reference
 
   @Ignore // do not store in database
   private int CARD_LIST_INDEX;
@@ -25,7 +25,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   }
 
   // Constructor
-  public AlarmClock(long time, String name, List<FlashCard> cards) {
+  public AlarmClock(long time, String name, ArrayList<Integer> cards) {
     this.time = time;
     this.name = name;
     this.cards = cards;
@@ -81,6 +81,8 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   public String getName() {
     return name;
   }
+
+  public long getTime() { return time; }
 
   // The following functions getNextCard() and getPrevCard() are designed to be used
   // to flip through flash cards while on the alarm dialog page.

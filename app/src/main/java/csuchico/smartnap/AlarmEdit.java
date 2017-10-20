@@ -3,38 +3,36 @@ package csuchico.smartnap;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.util.Log;
 
 // API-24 required for 'android.icu.util.Calendar', use 'java.util.Calendar' for older API
 //import android.icu.util.Calendar;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class AlarmEdit extends AppCompatActivity {
 
   //static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
-  private boolean ALARM_NAME_SET = false;
+  private boolean mAlarmNameSet = false;
 
   AlarmManager alarmManager;
   private PendingIntent servicePendingIntent;
   private TimePicker alarmTimePicker;
   EditText alarmNameText;
-  List<FlashCard> alarmCards;
+  ArrayList<Integer> alarmCards;
 
   private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-      if (!ALARM_NAME_SET) {
-        ALARM_NAME_SET = true;
+      if (!mAlarmNameSet) {
+        mAlarmNameSet = true;
         alarmNameText.getText().clear();
         alarmNameText.setFocusable(true);
         alarmNameText.requestFocus();
@@ -53,6 +51,7 @@ public class AlarmEdit extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_alarm_edit);
 
+    // setup action bar to reflect title of activity
     String title;
     title = getString(R.string.editAlarmHeader);
     try {
@@ -64,6 +63,8 @@ public class AlarmEdit extends AppCompatActivity {
       Log.e("AlarmEdit","Exception thrown while setting actionBar title",npe);
     }
 
+    checkIfEditingExistingAlarm();
+
     alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
     alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
@@ -71,6 +72,33 @@ public class AlarmEdit extends AppCompatActivity {
     alarmNameText.setOnTouchListener(editAlarmNameListener);
   }
 
+  private void checkIfEditingExistingAlarm() {
+    // check whether this is a new alarm being created, or a current one being modified
+    Intent currentIntent = this.getIntent();
+    Bundle intentData = currentIntent.getExtras(); // grab any extras available
+    if (intentData == null) {
+      return;
+    }
+    else {
+      int currentAlarmID = intentData.getInt("alarmID");
+      processCurrentAlarmData(currentAlarmID);
+    }
+  }
+
+  private void processCurrentAlarmData(int id) {
+    AlarmClock clock = AlarmClock.findById(AlarmClock.class,id);
+
+    String name = clock.getName();
+    long time = clock.getTime();
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTimeInMillis(time);
+    int currentHour = calendar.get(Calendar.HOUR);
+    int currentMinute = calendar.get(Calendar.MINUTE);
+
+    alarmNameText.setText(name);
+    alarmTimePicker.setHour(currentHour);
+    alarmTimePicker.setMinute(currentMinute);
+  }
   /*
     Function:   createNewAlarm(View)
     Operation:  Takes the information provided by user on the AlarmEdit activity and creates
@@ -93,6 +121,9 @@ public class AlarmEdit extends AppCompatActivity {
     alarmName = alarmNameText.getText().toString();
     alarmTime = calendar.getTimeInMillis();
 
+    // need code here to populate alarmCards with an array of number ID's for flash cards added
+    // to this AlarmClock
+
     alarm = new AlarmClock(alarmTime,alarmName,alarmCards);
     alarm.save(); // save to database
     alarmID = alarm.getId();
@@ -104,7 +135,12 @@ public class AlarmEdit extends AppCompatActivity {
     receiverIntent.putExtras(dataBundle);
 
     // setup PendingIntent to broadcast receiverIntent
-    servicePendingIntent = PendingIntent.getBroadcast(AlarmEdit.this, 0, receiverIntent, 0);
+    servicePendingIntent = PendingIntent.getBroadcast(
+            AlarmEdit.this,
+            (int) alarmID,
+            receiverIntent,
+            0);
+
     // finalizes setting up the alarm by passing the servicePendingIntent
     alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, servicePendingIntent);
 
