@@ -21,4 +21,6 @@
     <string name="silence_alarm">Silence Alarm</string>
     <string name="DEFAULT_flashCardAnswerText">This Will be the Answer</string>
     <string name="dialog_AlarmName">Alarm Name</string>
+    <string name="next_question">Next Question</string>
+    <string name="textview">TextView</string>
 </resources>

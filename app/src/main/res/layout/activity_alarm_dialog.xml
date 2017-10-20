@@ -58,13 +58,12 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="40dp"
-                    android:layout_weight="2.78"
                     android:background="@android:color/white"
                     android:clickable="true"
                     android:onClick="to_question"
                     android:text="@string/DEFAULT_flashCardAnswerText"
                     android:textSize="22sp"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/fc_question"
@@ -74,38 +73,31 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="25dp"
-                    android:layout_weight="6.87"
                     android:background="@android:color/white"
                     android:clickable="true"
                     android:onClick="to_answer"
                     android:padding="15dp"
                     android:text="@string/DEFAULT_flashCardQuestionText"
                     android:textSize="22sp"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
             </FrameLayout>
 
-            <LinearLayout
-                android:id="@+id/fullscreen_content_controls"
-                style="?metaButtonBarStyle"
+            <Button
+                android:id="@+id/Next_Question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
                 android:layout_weight="0.01"
-                android:background="@color/black_overlay"
-                android:orientation="horizontal"
-                tools:ignore="UselessParent">
+                android:text="@string/next_question" />
 
-                <Button
-                    android:id="@+id/button_silenceAlarm"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#FF0044"
-                    android:onClick="onSilenceAlarm"
-                    android:text="@string/silence_alarm"/>
-            </LinearLayout>
+            <Button
+                android:id="@+id/button_silenceAlarm"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FF0044"
+                android:onClick="onSilenceAlarm"
+                android:text="@string/silence_alarm"/>
         </LinearLayout>
 
     </FrameLayout>
