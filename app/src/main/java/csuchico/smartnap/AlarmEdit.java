@@ -16,6 +16,7 @@ import android.util.Log;
 // API-24 required for 'android.icu.util.Calendar', use 'java.util.Calendar' for older API
 //import android.icu.util.Calendar;
 import java.util.Calendar;
+import java.util.List;
 
 import static csuchico.smartnap.R.layout.activity_alarm_edit;
 
@@ -32,6 +33,7 @@ public class AlarmEdit extends AppCompatActivity {
   private TimePicker alarmTimePicker;
   EditText alarmNameText;
   Button saveAlarm, deleteAlarm, addFlashCard;
+  private List<FlashCard> alarmCards;
 
   private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
     @Override
@@ -84,7 +86,7 @@ public class AlarmEdit extends AppCompatActivity {
       int currentHour, currentMinute;
       actionBarTitle = getString(R.string.header_editAlarm);
       userIsEditingExistingAlarm = true;
-      id = data.getLong("alarmID");
+      id = data.getLong(getString(R.string.key_alarmID));
       alarmClock = AlarmClock.findById(AlarmClock.class,id);
       name = alarmClock.getName();
       time = alarmClock.getTime();
@@ -138,6 +140,8 @@ public class AlarmEdit extends AppCompatActivity {
             "And then our answer or the other side of this card too!");
     card.save();
 
+    alarmCards.add(card);
+
     if(!userIsEditingExistingAlarm) {       // user is creating a new alarm
       alarmClock = new AlarmClock(alarmTime,alarmName,alarmCards);
     }
@@ -148,7 +152,7 @@ public class AlarmEdit extends AppCompatActivity {
         alarmClock.setTime(alarmTime);
       }
       catch (NullPointerException npe) {
-        Log.w("AlarmEdit","AlarmClock may not be initialized!");
+        Log.w("AlarmEdit","There was a null pointer exception while setting the Alarm Clock!");
         npe.printStackTrace();
       }
     }
@@ -159,8 +163,8 @@ public class AlarmEdit extends AppCompatActivity {
 
     // create a new bundle to store the data of our alarm
     Bundle dataBundle = new Bundle();
-    dataBundle.putInt("alarmID", (int) alarmID);
-    dataBundle.putString("alarmName", alarmName);
+    dataBundle.putInt(getString(R.string.key_alarmID), (int) alarmID);
+    dataBundle.putString(getString(R.string.key_alarmName), alarmName);
 
     // create intent for the alarm
     Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);

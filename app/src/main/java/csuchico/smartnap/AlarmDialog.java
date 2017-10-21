@@ -87,7 +87,7 @@ public class AlarmDialog extends AppCompatActivity {
   private void alarmInit() {
     Intent alarmIntent = getIntent();
     Bundle alarmData = alarmIntent.getExtras();
-    alarmID = (long) alarmData.getInt("alarmID");
+    alarmID = (long) alarmData.getInt(getString(R.string.key_alarmID));
     alarm = AlarmClock.findById(AlarmClock.class, alarmID);
     String name = alarm.getName();
     m_FlashCard = alarm.getNextCard();
