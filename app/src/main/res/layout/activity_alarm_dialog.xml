@@ -18,18 +18,6 @@
         android:padding="10dp">
 
         <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -59,6 +47,7 @@
                 android:id="@+id/flashCardBox"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginBottom="30dp"
                 android:layout_weight="0.16">
 
                 <TextView
@@ -80,7 +69,7 @@
                     android:id="@+id/fc_question"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="50dp"
+                    android:layout_marginBottom="25dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="25dp"
@@ -109,7 +98,6 @@
                 android:background="#FF0044"
                 android:onClick="onSilenceAlarm"
                 android:text="@string/silence_alarm"/>
-
         </LinearLayout>
 
     </FrameLayout>

@@ -2,7 +2,9 @@
     <string name="app_name">SmartNap</string>
     <string name="label_setNewAlarm">Set Alarm</string>
     <string name="label_addFlashCard">Add Flash Card</string>
-    <string name="editAlarmHeader">Edit Alarm</string>
+    <string name="label_deleteAlarm">Delete Alarm</string>
+    <string name="header_editAlarm">Edit Alarm</string>
+    <string name="header_createAlarm">Create Alarm</string>
     <string name="inputAlarmName">Alarm name</string>
     <string name="create_new_question">Create New Question</string>
     <string name="edit_myquestion">Edit MyQuestion</string>
