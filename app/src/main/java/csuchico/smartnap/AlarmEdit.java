@@ -23,8 +23,10 @@ public class AlarmEdit extends AppCompatActivity {
 
   //static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
-  private boolean ALARM_NAME_SET = false;
+  private boolean alarmNameIsNotDefault = false;
+  private boolean userIsEditingExistingAlarm;
 
+  private AlarmClock alarmClock;
   AlarmManager alarmManager;
   private PendingIntent servicePendingIntent;
   private TimePicker alarmTimePicker;
@@ -33,8 +35,8 @@ public class AlarmEdit extends AppCompatActivity {
   private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-      if (!ALARM_NAME_SET) {
-        ALARM_NAME_SET = true;
+      if (!alarmNameIsNotDefault) {
+        alarmNameIsNotDefault = true;
         alarmNameText.getText().clear();
         alarmNameText.setFocusable(true);
         alarmNameText.requestFocus();
@@ -53,8 +55,33 @@ public class AlarmEdit extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(activity_alarm_edit);
 
+    alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
+    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+    alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
+    alarmNameText.setOnTouchListener(editAlarmNameListener);
+    deleteAlarm = (Button) findViewById(R.id.button_deleteAlarm);
+    deleteAlarm.setVisibility(View.INVISIBLE);
+    Button addfc = (Button)findViewById(R.id.buttonAddFlashCard);
+    addfc.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        startActivity(new Intent(AlarmEdit.this,fcpop.class));
+      }
+    });
+
+    long id = getAlarmIfExists();
+
+    // setup action bar to reflect title of activity
     String title;
-    title = getString(R.string.editAlarmHeader);
+
+    if(userIsEditingExistingAlarm) {
+      title = getString(R.string.header_editAlarm);
+      processCurrentAlarmData(id);
+    }
+    else {
+      title = getString(R.string.header_createAlarm);
+    }
+
     try {
       if(getSupportActionBar() != null) {
         getSupportActionBar().setTitle(title);
@@ -63,19 +90,51 @@ public class AlarmEdit extends AppCompatActivity {
     catch (NullPointerException npe) {
       Log.e("AlarmEdit","Exception thrown while setting actionBar title",npe);
     }
+  }
 
-    alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
-    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-    alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
+  /*
+    @function   getAlarmIfExists()
+    @returns    long
+    @params     none
+    @desc       Sets private member boolean userIsEditingExistingAlarm depending on
+                whether current calling intent to this activity has packaged a long
+                into a data bundle or not. Should the bundle contain this extra under
+                the key "alarmID" then it is assumed the user is editing an existing alarm
+                and will return the alarm clock's ID value in the database as a long.
 
-    alarmNameText.setOnTouchListener(editAlarmNameListener);
-    Button addfc = (Button)findViewById(R.id.buttonAddFlashCard);
-    addfc.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        startActivity(new Intent(AlarmEdit.this,fcpop.class));
-      }
-    });
+                Returns alarm clock's ID in database if present in extra
+                Returns -1 iff calling intent contains no alarmID extra
+
+   */
+  private long getAlarmIfExists() {
+    // check whether this is a new alarm being created, or a current one being modified
+    long id = -1; // set default return value of -1
+    Intent currentIntent = this.getIntent();
+    Bundle intentData = currentIntent.getExtras(); // grab any extras available
+    if (intentData == null) {
+      userIsEditingExistingAlarm = false;
+    }
+    else {
+      userIsEditingExistingAlarm = true;
+      id = intentData.getLong("alarmID");
+    }
+    return id;
+  }
+
+  private void processCurrentAlarmData(long id) {
+    alarmClock = AlarmClock.findById(AlarmClock.class,id);
+    String name = alarmClock.getName();
+    long time = alarmClock.getTime();
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTimeInMillis(time);
+    int currentHour = calendar.get(Calendar.HOUR);
+    int currentMinute = calendar.get(Calendar.MINUTE);
+
+    alarmNameText.setText(name);
+    alarmTimePicker.setHour(currentHour);
+    alarmTimePicker.setMinute(currentMinute);
+
+    deleteAlarm.setVisibility(View.VISIBLE); // make delete alarm button visible
   }
 
   /*
@@ -104,9 +163,24 @@ public class AlarmEdit extends AppCompatActivity {
             "And then our answer or the other side of this card too!");
     card.save();
 
-    AlarmClock alarm = new AlarmClock(alarmTime,alarmName,card);
+    if(!mCurrentAlarm) {       // user is creating a new alarm
+      alarmClock = new AlarmClock(alarmTime,alarmName,alarmCards);
+    }
+    else {    // user is editing an existing alarm
+      // we want to update the AlarmClock fields
+      try {
+        alarmClock.setName(alarmName);
+        alarmClock.setTime(alarmTime);
+      }
+      catch (NullPointerException npe) {
+        Log.w("AlarmEdit","AlarmClock may not be initialized!");
+        npe.printStackTrace();
+      }
+    }
+
     alarm.save();
     long alarmID = alarm.getId();
+    int requestCode = (int) alarmID;
 
     // create a new bundle to store the data of our alarm
     Bundle dataBundle = new Bundle();
@@ -118,7 +192,8 @@ public class AlarmEdit extends AppCompatActivity {
     receiverIntent.putExtras(dataBundle);
 
     // broadcast myIntent to pendingIntent
-    servicePendingIntent = PendingIntent.getBroadcast(AlarmEdit.this, 0, receiverIntent, 0);
+    servicePendingIntent = PendingIntent.getBroadcast(
+            AlarmEdit.this, requestCode, receiverIntent, 0);
 
     // sets the alarm up using our pendingIntent operation defined to retrieve broadcasts
     alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, servicePendingIntent);
