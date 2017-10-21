@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/baseLayoutContainer"
-        android:layout_width="398dp"
-        android:layout_height="582dp"
+        android:layout_width="390dp"
+        android:layout_height="471dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="4dp"
         tools:layout_editor_absoluteY="16dp"
@@ -47,15 +47,7 @@
             android:id="@+id/buttonAddFlashCard"
             android:layout_width="387dp"
             android:layout_height="wrap_content"
-            android:onClick="addFlashCard"
-            android:text="@string/label_addFlashCard"/>
-
-        <fragment
-            android:id="@+id/fragment3"
-            android:name="android.support.v4.app.ListFragment"
-            android:layout_width="390dp"
-            android:layout_height="135dp"
-            tools:layout="@layout/fragment_alarm_edit" />
+            android:text="@string/label_addFlashCard" />
 
         <Button
             android:id="@+id/buttonCreateAlarm"

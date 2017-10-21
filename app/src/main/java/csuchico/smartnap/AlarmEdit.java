@@ -3,19 +3,21 @@ package csuchico.smartnap;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.util.Log;
+
 
 // API-24 required for 'android.icu.util.Calendar', use 'java.util.Calendar' for older API
 //import android.icu.util.Calendar;
 import java.util.Calendar;
+
+import static csuchico.smartnap.R.layout.activity_alarm_edit;
 
 public class AlarmEdit extends AppCompatActivity {
 
@@ -49,7 +51,7 @@ public class AlarmEdit extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_alarm_edit);
+    setContentView(activity_alarm_edit);
 
     String title;
     title = getString(R.string.editAlarmHeader);
@@ -67,6 +69,13 @@ public class AlarmEdit extends AppCompatActivity {
     alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
 
     alarmNameText.setOnTouchListener(editAlarmNameListener);
+    Button addfc = (Button)findViewById(R.id.buttonAddFlashCard);
+    addfc.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        startActivity(new Intent(AlarmEdit.this,fcpop.class));
+      }
+    });
   }
 
   /*
@@ -123,13 +132,7 @@ public class AlarmEdit extends AppCompatActivity {
     @desc:      Called when user touches "Add Flash Card" button for an alarm. Used to
                 start the process of attaching flash cards to the alarm clock.
    */
-  public void addFlashCard(View view) {
-    /*
-    Intent editQuestion = new Intent(AlarmEdit.this, AlarmQuestions.class);
-    startActivityForResult(editQuestion, ADD_FLASHCARD_REQUEST);
-    */
-    Log.w("AlarmEdit","addFlashCard() still needs implementation! Dead Button!");
-  } // addFlashCard()
+
 
   /*
   @Override
