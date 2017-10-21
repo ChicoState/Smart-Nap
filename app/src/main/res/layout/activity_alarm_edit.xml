@@ -96,34 +96,12 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/flashCardHeaderText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/baseLayoutContainer"
-            android:text="@string/label_currentCardList"/>
-
-        <ScrollView
-            android:id="@+id/cardListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/flashCardHeaderText"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <ListView
-                android:id="@+id/flashCardsList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/baseLayoutContainer"/>
-        </ScrollView>
-
         <Button
             android:id="@+id/buttonAddFlashCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@id/cardListView"
-            android:layout_below="@id/cardListView"
+            android:layout_alignRight="@id/baseLayoutContainer"
+            android:layout_below="@id/baseLayoutContainer"
             android:text="@string/label_addFlashCard"/>
 
     </RelativeLayout>
