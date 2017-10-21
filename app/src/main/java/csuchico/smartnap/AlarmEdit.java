@@ -41,8 +41,6 @@ public class AlarmEdit extends AppCompatActivity {
       if (!alarmNameIsNotDefault) {
         alarmNameIsNotDefault = true;
         alarmNameText.getText().clear();
-        alarmNameText.setFocusable(true);
-        alarmNameText.requestFocus();
       }
       return false;
     }
