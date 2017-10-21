@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.util.Log;
@@ -21,7 +22,10 @@ public class AlarmEdit extends AppCompatActivity {
   //static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
   private boolean mAlarmNameSet = false;
+  private boolean mCurrentAlarm = false; // assume alarm is new every time
 
+  private AlarmClock alarmClock;
+  private Button deleteAlarm;
   AlarmManager alarmManager;
   private PendingIntent servicePendingIntent;
   private TimePicker alarmTimePicker;
@@ -51,9 +55,24 @@ public class AlarmEdit extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_alarm_edit);
 
+    alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
+    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+    alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
+    alarmNameText.setOnTouchListener(editAlarmNameListener);
+    deleteAlarm = (Button) findViewById(R.id.button_deleteAlarm);
+    deleteAlarm.setVisibility(View.INVISIBLE);
+
+    checkIfEditingExistingAlarm();
+
     // setup action bar to reflect title of activity
     String title;
-    title = getString(R.string.editAlarmHeader);
+
+    if(mCurrentAlarm) {
+      title = getString(R.string.header_editAlarm);
+    }
+    else {
+      title = getString(R.string.header_createAlarm);
+    }
     try {
       if(getSupportActionBar() != null) {
         getSupportActionBar().setTitle(title);
@@ -63,13 +82,6 @@ public class AlarmEdit extends AppCompatActivity {
       Log.e("AlarmEdit","Exception thrown while setting actionBar title",npe);
     }
 
-    checkIfEditingExistingAlarm();
-
-    alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
-    alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-    alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
-
-    alarmNameText.setOnTouchListener(editAlarmNameListener);
   }
 
   private void checkIfEditingExistingAlarm() {
@@ -80,16 +92,16 @@ public class AlarmEdit extends AppCompatActivity {
       return;
     }
     else {
-      int currentAlarmID = intentData.getInt("alarmID");
+      long currentAlarmID = intentData.getLong("alarmID");
+      mCurrentAlarm = true;
       processCurrentAlarmData(currentAlarmID);
     }
   }
 
-  private void processCurrentAlarmData(int id) {
-    AlarmClock clock = AlarmClock.findById(AlarmClock.class,id);
-
-    String name = clock.getName();
-    long time = clock.getTime();
+  private void processCurrentAlarmData(long id) {
+    alarmClock = AlarmClock.findById(AlarmClock.class,id);
+    String name = alarmClock.getName();
+    long time = alarmClock.getTime();
     Calendar calendar = Calendar.getInstance();
     calendar.setTimeInMillis(time);
     int currentHour = calendar.get(Calendar.HOUR);
@@ -98,6 +110,8 @@ public class AlarmEdit extends AppCompatActivity {
     alarmNameText.setText(name);
     alarmTimePicker.setHour(currentHour);
     alarmTimePicker.setMinute(currentMinute);
+
+    deleteAlarm.setVisibility(View.VISIBLE); // make delete alarm button visible
   }
   /*
     Function:   createNewAlarm(View)
@@ -124,8 +138,23 @@ public class AlarmEdit extends AppCompatActivity {
     // need code here to populate alarmCards with an array of number ID's for flash cards added
     // to this AlarmClock
 
-    alarm = new AlarmClock(alarmTime,alarmName,alarmCards);
-    alarm.save(); // save to database
+    if(!mCurrentAlarm) {       // user is creating a new alarm
+      alarmClock = new AlarmClock(alarmTime,alarmName,alarmCards);
+    }
+    else {    // user is editing an existing alarm
+      // we want to update the AlarmClock fields
+      try {
+        alarmClock.setName(alarmName);
+        alarmClock.setTime(alarmTime);
+      }
+      catch (NullPointerException npe) {
+        Log.w("AlarmEdit","AlarmClock may not be initialized!");
+        npe.printStackTrace();
+      }
+    }
+
+    alarmClock.save(); // regardless if its a new record, or we updated an existing, save it
+
     alarmID = alarm.getId();
 
     // setup intent for AlarmReceiver
@@ -172,5 +201,10 @@ public class AlarmEdit extends AppCompatActivity {
     }
   }
   */
+
+  public void deleteAlarm(View view) {
+    Intent currentIntent = this.getIntent();
+
+  }
 
 }
