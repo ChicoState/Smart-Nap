@@ -5,17 +5,13 @@ import android.util.Log;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.util.ArrayList;
-
-/**
- * Created by caleb on 10/12/17.
- */
+import java.util.List;
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
 
   private long time;
   private String name;
-  private ArrayList<Integer> cards; // will store database ID reference
+  private List<FlashCard> cards;
 
   @Ignore // do not store in database
   private int CARD_LIST_INDEX;
@@ -25,7 +21,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   }
 
   // Constructor
-  public AlarmClock(long time, String name, ArrayList<Integer> cards) {
+  public AlarmClock(long time, String name, List<FlashCard> cards) {
     this.time = time;
     this.name = name;
     this.cards = cards;
