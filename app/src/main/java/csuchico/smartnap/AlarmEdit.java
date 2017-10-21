@@ -181,6 +181,9 @@ public class AlarmEdit extends AppCompatActivity {
     finish();
   } // createNewAlarm()
 
+  private void deleteAlarm() {
+
+  }
   /*
     @function:  addFlashCard()
     @desc:      Called when user touches "Add Flash Card" button for an alarm. Used to
