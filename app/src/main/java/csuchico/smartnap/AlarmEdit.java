@@ -91,7 +91,7 @@ public class AlarmEdit extends AppCompatActivity {
     long alarmTime = calendar.getTimeInMillis();
 
     FlashCard card = new FlashCard(
-            "This is a test question built ahead of time",
+            "csci430","This is a test question built ahead of time",
             "And then our answer or the other side of this card too!");
     card.save();
 
