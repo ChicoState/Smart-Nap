@@ -43,17 +43,17 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@android:color/holo_red_dark"
             android:textStyle="bold"/>
+
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/mainContainer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonBarContainer"
-        android:paddingBottom="5dp"
+        android:paddingBottom="0dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="5dp"
+        android:paddingTop="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonBarContainer">
@@ -62,7 +62,7 @@
             android:id="@+id/alarmNameEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:ems="10"
             android:inputType="text"
             android:text="@string/inputAlarmName"
@@ -87,8 +87,8 @@
                 android:id="@+id/alarmTimePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 android:timePickerMode="spinner"
                 android:visibility="visible"
                 tools:layout_editor_absoluteX="52dp"
@@ -96,11 +96,34 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonAddFlashCard"
+        <TextView
+            android:id="@+id/flashCardHeaderText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/baseLayoutContainer"
+            android:text="@string/label_currentCardList"/>
+
+        <ScrollView
+            android:id="@+id/cardListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/baseLayoutContainer"
+            android:layout_below="@+id/flashCardHeaderText"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <ListView
+                android:id="@+id/flashCardsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/baseLayoutContainer"/>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/buttonAddFlashCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/cardListView"
+            android:layout_below="@id/cardListView"
             android:text="@string/label_addFlashCard"/>
 
     </RelativeLayout>
