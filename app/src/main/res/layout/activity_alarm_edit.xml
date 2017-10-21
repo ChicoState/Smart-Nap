@@ -53,7 +53,7 @@
         <LinearLayout
             android:id="@+id/baseLayoutContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/alarmNameEdit"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -74,13 +74,15 @@
                 tools:layout_editor_absoluteX="52dp"
                 tools:layout_editor_absoluteY="149dp"/>
 
-            <Button
-                android:id="@+id/buttonAddFlashCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/label_addFlashCard"/>
-
         </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonAddFlashCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/baseLayoutContainer"
+            android:text="@string/label_addFlashCard"/>
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

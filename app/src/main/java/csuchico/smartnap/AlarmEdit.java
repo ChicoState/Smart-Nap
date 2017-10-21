@@ -31,6 +31,7 @@ public class AlarmEdit extends AppCompatActivity {
   private PendingIntent servicePendingIntent;
   private TimePicker alarmTimePicker;
   EditText alarmNameText;
+  Button saveAlarm, deleteAlarm, addFlashCard;
 
   private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
     @Override
@@ -59,82 +60,56 @@ public class AlarmEdit extends AppCompatActivity {
     alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
     alarmNameText.setOnTouchListener(editAlarmNameListener);
-    deleteAlarm = (Button) findViewById(R.id.button_deleteAlarm);
-    deleteAlarm.setVisibility(View.INVISIBLE);
-    Button addfc = (Button)findViewById(R.id.buttonAddFlashCard);
-    addfc.setOnClickListener(new View.OnClickListener() {
+    saveAlarm = (Button) findViewById(R.id.buttonCreateAlarm);
+    deleteAlarm = (Button) findViewById(R.id.buttonDeleteAlarm);
+    addFlashCard = (Button)findViewById(R.id.buttonAddFlashCard);
+    addFlashCard.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         startActivity(new Intent(AlarmEdit.this,fcpop.class));
       }
     });
 
-    long id = getAlarmIfExists();
+    Intent currentIntent = this.getIntent();
+    initActivityBasedOnIntent(currentIntent);
+  }
 
-    // setup action bar to reflect title of activity
-    String title;
-
-    if(userIsEditingExistingAlarm) {
-      title = getString(R.string.header_editAlarm);
-      processCurrentAlarmData(id);
+  private void initActivityBasedOnIntent(Intent intent) {
+    String actionBarTitle;
+    Bundle data = intent.getExtras(); // grab any extras available
+    if (data != null) {
+      Calendar calendar;
+      long id, time;
+      String name;
+      int currentHour, currentMinute;
+      actionBarTitle = getString(R.string.header_editAlarm);
+      userIsEditingExistingAlarm = true;
+      id = data.getLong("alarmID");
+      alarmClock = AlarmClock.findById(AlarmClock.class,id);
+      name = alarmClock.getName();
+      time = alarmClock.getTime();
+      calendar = Calendar.getInstance();
+      calendar.setTimeInMillis(time);
+      currentHour = calendar.get(Calendar.HOUR);
+      currentMinute = calendar.get(Calendar.MINUTE);
+      alarmNameText.setText(name);
+      alarmTimePicker.setHour(currentHour);
+      alarmTimePicker.setMinute(currentMinute);
+      deleteAlarm.setVisibility(View.VISIBLE); // make delete alarm button visible
     }
     else {
-      title = getString(R.string.header_createAlarm);
+      actionBarTitle = getString(R.string.header_createAlarm);
+      userIsEditingExistingAlarm = false;
+      deleteAlarm.setVisibility(View.GONE); // make delete alarm button invisible
     }
-
     try {
       if(getSupportActionBar() != null) {
-        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setTitle(actionBarTitle);
       }
     }
     catch (NullPointerException npe) {
       Log.e("AlarmEdit","Exception thrown while setting actionBar title",npe);
     }
-  }
-
-  /*
-    @function   getAlarmIfExists()
-    @returns    long
-    @params     none
-    @desc       Sets private member boolean userIsEditingExistingAlarm depending on
-                whether current calling intent to this activity has packaged a long
-                into a data bundle or not. Should the bundle contain this extra under
-                the key "alarmID" then it is assumed the user is editing an existing alarm
-                and will return the alarm clock's ID value in the database as a long.
-
-                Returns alarm clock's ID in database if present in extra
-                Returns -1 iff calling intent contains no alarmID extra
-
-   */
-  private long getAlarmIfExists() {
-    // check whether this is a new alarm being created, or a current one being modified
-    long id = -1; // set default return value of -1
-    Intent currentIntent = this.getIntent();
-    Bundle intentData = currentIntent.getExtras(); // grab any extras available
-    if (intentData == null) {
-      userIsEditingExistingAlarm = false;
-    }
-    else {
-      userIsEditingExistingAlarm = true;
-      id = intentData.getLong("alarmID");
-    }
-    return id;
-  }
-
-  private void processCurrentAlarmData(long id) {
-    alarmClock = AlarmClock.findById(AlarmClock.class,id);
-    String name = alarmClock.getName();
-    long time = alarmClock.getTime();
-    Calendar calendar = Calendar.getInstance();
-    calendar.setTimeInMillis(time);
-    int currentHour = calendar.get(Calendar.HOUR);
-    int currentMinute = calendar.get(Calendar.MINUTE);
-
-    alarmNameText.setText(name);
-    alarmTimePicker.setHour(currentHour);
-    alarmTimePicker.setMinute(currentMinute);
-
-    deleteAlarm.setVisibility(View.VISIBLE); // make delete alarm button visible
   }
 
   /*
@@ -163,7 +138,7 @@ public class AlarmEdit extends AppCompatActivity {
             "And then our answer or the other side of this card too!");
     card.save();
 
-    if(!mCurrentAlarm) {       // user is creating a new alarm
+    if(!userIsEditingExistingAlarm) {       // user is creating a new alarm
       alarmClock = new AlarmClock(alarmTime,alarmName,alarmCards);
     }
     else {    // user is editing an existing alarm
@@ -178,8 +153,8 @@ public class AlarmEdit extends AppCompatActivity {
       }
     }
 
-    alarm.save();
-    long alarmID = alarm.getId();
+    alarmClock.save();
+    long alarmID = alarmClock.getId();
     int requestCode = (int) alarmID;
 
     // create a new bundle to store the data of our alarm
