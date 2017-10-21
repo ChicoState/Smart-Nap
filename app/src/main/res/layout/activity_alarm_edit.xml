@@ -6,62 +6,81 @@
     android:layout_height="match_parent"
     tools:context="csuchico.smartnap.AlarmEdit">
 
-    <LinearLayout
-        android:id="@+id/baseLayoutContainer"
-        android:layout_width="390dp"
-        android:layout_height="471dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="16dp"
-        tools:ignore="MissingConstraints"
-        android:weightSum="1">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="8dp">
+
+        <Button
+            android:id="@+id/buttonDeleteAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="40dp"
+            android:text="@string/label_deleteAlarm"/>
+
+        <Button
+            android:id="@+id/buttonCreateAlarm"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="40dp"
+            android:layout_toEndOf="@id/buttonDeleteAlarm"
+            android:onClick="createNewAlarm"
+            android:text="@string/label_setNewAlarm"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"/>
 
         <EditText
             android:id="@+id/alarmNameEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_below="@id/buttonCreateAlarm"
+            android:layout_marginTop="20dp"
             android:ems="10"
             android:inputType="text"
             android:text="@string/inputAlarmName"
+            tools:ignore="LabelFor,RtlHardcoded"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="72dp"
-            tools:ignore="LabelFor,RtlHardcoded" />
+            tools:layout_editor_absoluteY="72dp"/>
 
-        <TimePicker
-            android:id="@+id/alarmTimePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="25dp"
-            android:timePickerMode="spinner"
-            android:visibility="visible"
-            tools:layout_editor_absoluteX="52dp"
-            tools:layout_editor_absoluteY="149dp"/>
+        <LinearLayout
+            android:id="@+id/baseLayoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/alarmNameEdit"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="1"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
 
-        <Button
-            android:id="@+id/buttonAddFlashCard"
-            android:layout_width="387dp"
-            android:layout_height="wrap_content"
-            android:text="@string/label_addFlashCard" />
 
-        <Button
-            android:id="@+id/buttonCreateAlarm"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="389dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:onClick="createNewAlarm"
-            android:text="@string/label_setNewAlarm"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="417dp" />
+            <TimePicker
+                android:id="@+id/alarmTimePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:timePickerMode="spinner"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="149dp"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/buttonAddFlashCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_addFlashCard"/>
+
+        </LinearLayout>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
