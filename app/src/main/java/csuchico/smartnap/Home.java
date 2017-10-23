@@ -18,6 +18,10 @@ public class Home extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
+
+    AlarmClock alarm = AlarmClock.findById(AlarmClock.class,(long) 0);
+    FlashCard cards = FlashCard.findById(FlashCard.class,(long) 0);
+
   }
 
   public void alarmSetup(View view) {

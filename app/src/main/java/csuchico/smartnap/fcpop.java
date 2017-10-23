@@ -29,9 +29,9 @@ public class fcpop extends Activity{
 
         ListView listview = findViewById(R.id.fc_list);
         ArrayList<String> list = new ArrayList<>();
-        //List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
+        List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
         //if(fc.size() == 0){
-            Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
         //}
         //else{
             //long i = 1;
