@@ -27,25 +27,27 @@ public class fcpop extends Activity{
         int height = screensize.heightPixels;
         getWindow().setLayout((int) (width * .8), (int) (height * .8));
 
-        ListView listview = findViewById(R.id.list_fc);
+        ListView listview = findViewById(R.id.fc_list);
         ArrayList<String> list = new ArrayList<>();
-        List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
-        if(fc.isEmpty()){
+        //List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
+        //if(fc.size() == 0){
             Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            long i = 1;
-            int size = fc.size();
+        //}
+        //else{
+            //long i = 1;
+            //int size = fc.size();
+        int size = 5;
             while(size > 0)
             {
-                FlashCard newe = FlashCard.findById(FlashCard.class,i);
-                list.add(newe.m_class);
+                //FlashCard newe = FlashCard.findById(FlashCard.class,i);
+                //list.add(newe.m_class);
+                list.add("hola");
                 ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,list);
                 listview.setAdapter(listAdapter);
-                i++;
+                //i++;
                 size--;
             }
-        }
+        //}
 
     }
 }
