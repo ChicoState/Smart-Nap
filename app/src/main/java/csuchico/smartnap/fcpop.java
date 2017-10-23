@@ -1,7 +1,6 @@
 package csuchico.smartnap;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +17,7 @@ import java.util.List;
  *Created by gerald on 10/21/2017.
  */
 
-public class fcpop extends ListActivity{
+public class fcpop extends Activity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +27,7 @@ public class fcpop extends ListActivity{
         int width = screensize.widthPixels;
         int height = screensize.heightPixels;
         getWindow().setLayout((int) (width * .8), (int) (height * .8));
-
+        /*
         // storing string resources into Array
         List<FlashCard> fc_list = FlashCard.listAll(FlashCard.class);
         // here you store the array of string you got from the database
@@ -55,6 +54,6 @@ public class fcpop extends ListActivity{
                 startActivity(i);
 
             }
-        });
+        });*/
     }
 }

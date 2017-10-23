@@ -9,8 +9,8 @@
     tools:context="csuchico.smartnap.AlarmQuestions">
 
     <LinearLayout
-        android:layout_width="395dp"
-        android:layout_height="match_parent"
+        android:layout_width="365dp"
+        android:layout_height="576dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -37,12 +37,13 @@
             android:text="@string/new_question"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/classname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/classid"
-            tools:ignore="LabelFor" />
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@string/classid" />
 
         <TextView
             android:id="@+id/textView"

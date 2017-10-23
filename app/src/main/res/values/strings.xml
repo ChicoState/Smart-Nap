@@ -21,14 +21,15 @@
     <string name="flashcard">Flashcard</string>
     <string name="flashcard_answer">flashcard answer</string>
     <string name="title_activity_alarm_dialog">AlarmDialog</string>
-    <string name="empty"></string>
+    <string name="empty"> </string>
     <string name="DEFAULT_flashCardQuestionText">This Will be the Question</string>
     <string name="silence_alarm">Silence Alarm</string>
     <string name="DEFAULT_flashCardAnswerText">This Will be the Answer</string>
     <string name="dialog_AlarmName">Alarm Name</string>
     <string name="next_question">Next Question</string>
     <string name="textview">TextView</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="this_is_the_pop_up_window">This is the pop-up window</string>
+    <string name="add_alarm">Add Alarm</string>
+    <string name="questions">Questions</string>
 </resources>

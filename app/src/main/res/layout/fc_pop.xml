@@ -3,6 +3,7 @@
     android:id="@+id/list_fc"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -10,5 +11,8 @@
         android:id="@+id/fc_item"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.06" />
+        android:layout_weight="0.06"
+        android:text="@string/this_is_the_pop_up_window"
+        android:textColor="#000"
+        android:textSize="22sp" />
 </LinearLayout>
