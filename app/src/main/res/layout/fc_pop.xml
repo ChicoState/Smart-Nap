@@ -7,12 +7,8 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <TextView
-        android:id="@+id/fc_item"
+    <ListView
+        android:id="@+id/fc_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.06"
-        android:text="@string/this_is_the_pop_up_window"
-        android:textColor="#000"
-        android:textSize="22sp" />
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@string/classid" />
+            android:text="@string/classid"
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/textView"

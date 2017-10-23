@@ -1,11 +1,9 @@
 package csuchico.smartnap;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
-import static android.widget.Toast.LENGTH_SHORT;
-
+import android.widget.Toast;
 
 public class AlarmQuestions extends AppCompatActivity {
 
@@ -19,9 +17,8 @@ public class AlarmQuestions extends AppCompatActivity {
         EditText question = (EditText)findViewById(R.id.fc_question);
         EditText answer = (EditText)findViewById(R.id.fc_answer);
         EditText classn = (EditText) findViewById(R.id.classname);
-        FlashCard card = new FlashCard(classn.toString(),question.toString(),answer.toString());
-        Snackbar mysnack = Snackbar.make(findViewById(R.id.myCoordinatorLayout), "new FlashCard has been made", LENGTH_SHORT);
-        mysnack.show();
+        FlashCard card = new FlashCard(classn.getText().toString(),question.getText().toString(),answer.getText().toString());
+        Toast.makeText(AlarmQuestions.this,"new FlashCard has been made!", Toast.LENGTH_SHORT).show();
         card.save();
     }
 }
