@@ -21,5 +21,6 @@ public class AlarmQuestions extends AppCompatActivity {
         FlashCard card = new FlashCard(classn.getText().toString(),question.getText().toString(),answer.getText().toString());
         Toast.makeText(AlarmQuestions.this,"new FlashCard has been made!", Toast.LENGTH_SHORT).show();
         card.save();
+        finish();
     }
 }
