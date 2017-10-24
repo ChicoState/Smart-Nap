@@ -1,0 +1,54 @@
+package csuchico.smartnap;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+/**
+ * Created by jguil on 10/18/2017.
+ */
+
+
+public class AlarmAdapter extends ArrayAdapter<AlarmClock> {
+    public AlarmAdapter(Activity context, ArrayList<AlarmClock> alarms){
+
+        super(context, 0, alarms);
+    }
+
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View listItemView = convertView;
+        if(listItemView == null) {
+            listItemView = LayoutInflater.from(getContext()).inflate(
+                    R.layout.l_item, parent, false);
+
+        }
+
+        AlarmClock currentAlarm = getItem(position);
+        TextView alarmTextView = (TextView) listItemView.findViewById(R.id.alarm_text_view);
+        Button alarmEdit = (Button) listItemView.findViewById(R.id.toggle_view);
+        alarmEdit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent I = new Intent(getContext(),AlarmEdit.class);
+                v.getContext().startActivity(I);
+            }
+        });
+        alarmTextView.setText(Long.toString((currentAlarm.getTime())));
+
+//            TextView defaultTextView = (TextView) listItemView.findViewById(R.id.index_text_view);
+//
+//            defaultTextView.setText(currentAlarm.getName());
+        return listItemView;
+    }
+}
+

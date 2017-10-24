@@ -28,5 +28,15 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     this.m_alarmTime = time;
     this.m_alarmName = name;
     this.m_flashCard = card;
+
+    m_alarmTime = time;
+    m_alarmName = name;
+  }
+  public long getTime(){
+    return m_alarmTime;
+  }
+
+  public String getName(){
+    return this.m_alarmName;
   }
 }
