@@ -72,10 +72,11 @@ public class AlarmDialog extends AppCompatActivity {
 
     alarmInit();
 
-    String cardQuestion = m_FlashCard.m_question;
-    String cardAnswer = m_FlashCard.m_answer;
+    //String cardQuestion = m_FlashCard.m_question;
+    //String cardAnswer = m_FlashCard.m_answer;
     // update the currentFlashCard for Dialog
-    updateCurrentFlashCard(cardQuestion,cardAnswer);
+    //updateCurrentFlashCard(cardQuestion,cardAnswer);
+    updateCurrentFlashCard("This is an example Flash Card Question","And this is an example answer");
 
     playTone();
   }
@@ -90,7 +91,7 @@ public class AlarmDialog extends AppCompatActivity {
     alarmID = (long) alarmData.getInt(getString(R.string.key_alarmID));
     alarm = AlarmClock.findById(AlarmClock.class, alarmID);
     String name = alarm.getName();
-    m_FlashCard = alarm.getNextCard();
+    //m_FlashCard = alarm.getNextCard();
     m_alarmNameText.setText(name);
   } // alarmInit()
 
