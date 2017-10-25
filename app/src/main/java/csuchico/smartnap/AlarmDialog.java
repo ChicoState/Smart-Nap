@@ -91,7 +91,9 @@ public class AlarmDialog extends AppCompatActivity {
     alarmID = (long) alarmData.getInt(getString(R.string.key_alarmID));
     alarm = AlarmClock.findById(AlarmClock.class, alarmID);
     String name = alarm.getName();
-    //m_FlashCard = alarm.getNextCard();
+    List<FlashCard> flashCardList = alarm.getList();
+    if (flashCardList == null) { Log.i("AlarmDialog", "FLASH CARD LIST IS NULL!"); }
+    m_FlashCard = alarm.getNextCard();
     m_alarmNameText.setText(name);
   } // alarmInit()
 

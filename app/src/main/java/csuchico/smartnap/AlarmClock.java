@@ -74,11 +74,15 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     }
   }
 
+  public List<FlashCard> getList() { return cards; }
+
   public String getName() {
     return name;
   }
 
   public long getTime() { return time; }
+
+  public void setCards(List<FlashCard> list) { this.cards = list; }
 
   public void setName(String name) {
     this.name = name;

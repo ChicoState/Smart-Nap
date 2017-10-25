@@ -1,6 +1,7 @@
 package csuchico.smartnap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
@@ -20,6 +21,10 @@ import java.util.List;
  */
 
 public class fcpop extends Activity{
+
+  ArrayList<String> selectedclasses;
+  ArrayList<String> selectedFlashCards;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +34,12 @@ public class fcpop extends Activity{
         int width = screensize.widthPixels;
         int height = screensize.heightPixels;
         getWindow().setLayout((int) (width * .8), (int) (height * .8));
-
         ListView listview = findViewById(R.id.fc_list);
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        final ArrayList<String> selectedclasses;
-        selectedclasses = new ArrayList<>();
         ArrayList<Long> list = new ArrayList<>();
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
+        selectedclasses = new ArrayList<String>();
+        selectedFlashCards = new ArrayList<String>();
         if(fc.size() == 0){
             Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
         }
@@ -48,18 +52,34 @@ public class fcpop extends Activity{
                 i++;
                 size--;
             }
-                ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, list);
-                listview.setAdapter(listAdapter);
+          ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, list);
+          listview.setAdapter(listAdapter);
         }
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedclass = ((TextView) view).getText().toString();
-                if(selectedclasses.contains(selectedclass))
-                    selectedclasses.remove(selectedclass); //remove deselected item from the list of selected items
-                else
-                    selectedclasses.add(selectedclass); //add selected item to the list of selected items
+                String selected = ((TextView) view).getText().toString();
+                List<FlashCard> cardsFoundMatchingClass = FlashCard.find(FlashCard.class, "m_class = ?", selected);
+                for(int index=0; index<cardsFoundMatchingClass.size(); index++) {
+                  FlashCard card = cardsFoundMatchingClass.get(index);
+                  Long id = card.getId();
+                  String cardID = id.toString();
+                  if(selectedFlashCards.contains(cardID))
+                    selectedFlashCards.remove(cardID); //remove deselected item from the list of selected items
+                  else
+                    selectedFlashCards.add(cardID); //add selected item to the list of selected items
+                }
             }
         });
     }
+
+  @Override
+  public void onBackPressed() {
+    //super.onBackPressed();
+    Intent returnData = new Intent();
+    returnData.putStringArrayListExtra("cards", selectedFlashCards);
+    setResult(RESULT_OK, returnData);
+    finish();
+  }
 }
