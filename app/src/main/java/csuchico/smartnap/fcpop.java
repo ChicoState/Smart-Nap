@@ -22,7 +22,6 @@ import java.util.List;
 public class fcpop extends Activity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        final ArrayList<String> selectedclasses;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fc_pop);
         DisplayMetrics screensize = new DisplayMetrics();
@@ -33,8 +32,9 @@ public class fcpop extends Activity{
 
         ListView listview = findViewById(R.id.fc_list);
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        final ArrayList<String> selectedclasses;
         selectedclasses = new ArrayList<>();
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Long> list = new ArrayList<>();
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
         if(fc.size() == 0){
             Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
@@ -44,7 +44,7 @@ public class fcpop extends Activity{
             int size = fc.size();
             while(size > 1) {
                 FlashCard newe = FlashCard.findById(FlashCard.class, i);
-                list.add(newe.m_class);
+                list.add(newe.getId());
                 i++;
                 size--;
             }
