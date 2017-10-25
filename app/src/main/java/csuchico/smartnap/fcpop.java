@@ -49,6 +49,7 @@ public class fcpop extends Activity{
             while(size > 1) {
                 FlashCard newe = FlashCard.findById(FlashCard.class, i);
                 list.add(newe.m_class);
+                long id = newe.getId();
                 i++;
                 size--;
             }
@@ -74,8 +75,7 @@ public class fcpop extends Activity{
         });
     }
 
-  @Override
-  public void onBackPressed() {
+  public void onBackPresseda() {
     //super.onBackPressed();
     Intent returnData = new Intent();
     returnData.putStringArrayListExtra("cards", selectedFlashCards);

@@ -136,7 +136,7 @@ public class AlarmEdit extends AppCompatActivity {
         }
         else {
           // alarmFlashCardIDList returned a null value
-          Log.w("AlarmEdit","onActivityResult has a null list of flash card ID")
+          Log.w("AlarmEdit","onActivityResult has a null list of flash card ID");
         }
       }
     } // ADD_FLASHCARD_REQUEST

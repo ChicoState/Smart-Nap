@@ -13,6 +13,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   private String name;
   private List<FlashCard> cards;
 
+
   @Ignore // do not store in database
   private int CARD_LIST_INDEX;
 
