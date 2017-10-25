@@ -66,12 +66,12 @@ public class Home extends AppCompatActivity {
 
     FlashCard flash = new FlashCard("a","a");
     //List of AlarmClocks stored in an ArrayList
-    List<AlarmClock> alarmz = AlarmClock.listAll(AlarmClock.class);
+    //List<AlarmClock> alarmz = AlarmClock.listAll(AlarmClock.class);
 
     ArrayList<AlarmClock> alarms = new ArrayList<AlarmClock>();
+    alarms.add(new AlarmClock(9,"Five",flash));
+    alarms.add(new AlarmClock(10,"Five",flash));
     alarms.add(new AlarmClock(11,"Five",flash));
-    alarms.add(new AlarmClock(12,"Five",flash));
-    alarms.add(new AlarmClock(13,"Five",flash));
 
 
     AlarmAdapter adapter = new AlarmAdapter(this, alarms);
