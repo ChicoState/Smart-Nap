@@ -36,7 +36,7 @@ public class fcpop extends Activity{
         getWindow().setLayout((int) (width * .8), (int) (height * .8));
         ListView listview = findViewById(R.id.fc_list);
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Long> list = new ArrayList<>();
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
         selectedclasses = new ArrayList<String>();
         selectedFlashCards = new ArrayList<String>();
@@ -48,8 +48,7 @@ public class fcpop extends Activity{
             int size = fc.size();
             while(size > 1) {
                 FlashCard newe = FlashCard.findById(FlashCard.class, i);
-                list.add(newe.m_class);
-                long id = newe.getId();
+                list.add(newe.getId());
                 i++;
                 size--;
             }
@@ -61,21 +60,15 @@ public class fcpop extends Activity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selected = ((TextView) view).getText().toString();
-                List<FlashCard> cardsFoundMatchingClass = FlashCard.find(FlashCard.class, "m_class = ?", selected);
-                for(int index=0; index<cardsFoundMatchingClass.size(); index++) {
-                  FlashCard card = cardsFoundMatchingClass.get(index);
-                  Long id = card.getId();
-                  String cardID = id.toString();
-                  if(selectedFlashCards.contains(cardID))
-                    selectedFlashCards.remove(cardID); //remove deselected item from the list of selected items
+                  if(selectedFlashCards.contains(selected))
+                    selectedFlashCards.remove(selected); //remove deselected item from the list of selected items
                   else
-                    selectedFlashCards.add(cardID); //add selected item to the list of selected items
+                    selectedFlashCards.add(selected); //add selected item to the list of selected items
                 }
-            }
         });
     }
 
-  public void onBackPresseda() {
+  public void onBackPresseda(View view) {
     //super.onBackPressed();
     Intent returnData = new Intent();
     returnData.putStringArrayListExtra("cards", selectedFlashCards);

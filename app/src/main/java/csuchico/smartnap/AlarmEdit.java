@@ -35,7 +35,8 @@ public class AlarmEdit extends AppCompatActivity {
   EditText alarmNameText;
   Button saveAlarm, deleteAlarm, addFlashCard;
   List<FlashCard> alarmCards;
-  private ArrayList<String> alarmFlashCardIDList;
+  private ArrayList<String> returnedCardList;
+  private ArrayList<Long> cardIDList;
 
   private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
     @Override
@@ -74,6 +75,8 @@ public class AlarmEdit extends AppCompatActivity {
         startActivityForResult(cardListView, ADD_FLASHCARD_REQUEST);
       }
     });
+
+    cardIDList = new ArrayList<>(); // initialize the cardIDList before processing intent
 
     Intent currentIntent = this.getIntent();
     initActivityBasedOnIntent(currentIntent);
@@ -125,17 +128,17 @@ public class AlarmEdit extends AppCompatActivity {
     if ( requestCode == ADD_FLASHCARD_REQUEST ) {
       if ( resultCode == RESULT_OK ) {
         // Flashcard was chosen and added successfully
-        alarmFlashCardIDList = data.getStringArrayListExtra( "cards" );
-        if ( alarmFlashCardIDList != null ) {
-          for( int i = 0; i < alarmFlashCardIDList.size(); i++ ) {
-            long ID = Long.parseLong(alarmFlashCardIDList.get(i));
-            FlashCard card = FlashCard.findById( FlashCard.class, ID );
-            alarmCards.add( card ); // add the card to our main list
+        returnedCardList = data.getStringArrayListExtra( "cards" );
+        if ( returnedCardList != null ) {
+          for(int i = 0; i < returnedCardList.size(); i++ ) {
+            String theid = returnedCardList.get(i);
+            long ID = Long.parseLong(theid);
+            cardIDList.add(ID);
             Log.i("AlarmEdit","onActivityResult processed another flash card!");
           }
         }
         else {
-          // alarmFlashCardIDList returned a null value
+          // returnedCardList returned a null value
           Log.w("AlarmEdit","onActivityResult has a null list of flash card ID");
         }
       }
@@ -164,7 +167,7 @@ public class AlarmEdit extends AppCompatActivity {
     long alarmTime = calendar.getTimeInMillis();
 
     if(!userIsEditingExistingAlarm) {       // user is creating a new alarm
-      alarmClock = new AlarmClock(alarmTime,alarmName,alarmCards);
+      alarmClock = new AlarmClock(alarmTime,alarmName,cardIDList);
       Log.i("AlarmEdit","Adding a new alarm clock!");
     }
     else {    // user is editing an existing alarm
@@ -172,7 +175,7 @@ public class AlarmEdit extends AppCompatActivity {
       try {
         alarmClock.setName(alarmName);
         alarmClock.setTime(alarmTime);
-        alarmClock.setCards(alarmCards);
+        alarmClock.putListOfCardIDs(cardIDList);
       }
       catch (NullPointerException npe) {
         Log.w("AlarmEdit","There was a null pointer exception while setting the Alarm Clock!");

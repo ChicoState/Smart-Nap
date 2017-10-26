@@ -5,13 +5,15 @@ import android.util.Log;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
 
   private long time;
   private String name;
-  private List<FlashCard> cards;
+  //private List<FlashCard> cards;
+  private ArrayList<Long> cardIDList;
 
 
   @Ignore // do not store in database
@@ -22,10 +24,10 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   }
 
   // Constructor
-  public AlarmClock(long time, String name, List<FlashCard> cards) {
+  public AlarmClock(long time, String name, ArrayList<Long> cardIDs) {
     this.time = time;
     this.name = name;
-    this.cards = cards;
+    this.cardIDList = new ArrayList<Long>(cardIDs);
 
     this.CARD_LIST_INDEX = 0; // default INDEX upon alarm construction
   }
@@ -36,6 +38,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     this.CARD_LIST_INDEX = 0;
   }
 
+  /*
   public void clearCards() {
     cards.clear();
     this.CARD_LIST_INDEX = 0;
@@ -74,8 +77,11 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
       ie.printStackTrace();
     }
   }
+*/
 
-  public List<FlashCard> getList() { return cards; }
+  //public List<FlashCard> getList() { return cards; }
+
+  public ArrayList<Long> getListOfCardIDs() { return this.cardIDList; }
 
   public String getName() {
     return name;
@@ -83,7 +89,9 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
 
   public long getTime() { return time; }
 
-  public void setCards(List<FlashCard> list) { this.cards = list; }
+  //public void setCards(List<FlashCard> list) { this.cards = list; }
+
+  public void putListOfCardIDs(ArrayList<Long> idList) { this.cardIDList = idList; }
 
   public void setName(String name) {
     this.name = name;
@@ -101,6 +109,8 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
       @desc         Grabs the card in the list at CARD_LIST_INDEX and then increments index. Will
                     return null value if cards list is empty.
    */
+
+  /*
   public FlashCard getNextCard() {
     if ( this.cards.isEmpty() ) {
       Log.w("AlarmClock","This alarms list of flash cards returned empty!");
@@ -113,12 +123,15 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     }
     return nextCard;
   } // getNextCard()
+  */
 
   /*
       @function     getPrevCard()
       @desc         Decrements the CARD_LIST_INDEX and then returns the card in list. Will
                     return null value if cards list is empty.
  */
+
+  /*
   public FlashCard getPrevCard() {
     if ( this.cards.isEmpty() ) {
       Log.w("AlarmClock","This alarms list of flash cards returned empty!");
@@ -130,5 +143,6 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     }
     return this.cards.get(this.CARD_LIST_INDEX);
   } // getPrevCard()
+  */
 
 } // AlarmClock
