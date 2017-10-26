@@ -38,15 +38,15 @@ public class fcpop extends Activity{
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         ArrayList<Long> list = new ArrayList<>();
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
-        selectedclasses = new ArrayList<String>();
-        selectedFlashCards = new ArrayList<String>();
+        selectedclasses = new ArrayList<>();
+        selectedFlashCards = new ArrayList<>();
         if(fc.size() == 0){
             Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
         }
         else{
             long i = 1;
             int size = fc.size();
-            while(size > 1) {
+            while(size > 0) {
                 FlashCard newe = FlashCard.findById(FlashCard.class, i);
                 list.add(newe.getId());
                 i++;
