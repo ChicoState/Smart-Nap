@@ -1,6 +1,10 @@
 package csuchico.smartnap;
 
+import com.orm.SugarRecord;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
