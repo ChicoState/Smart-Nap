@@ -92,6 +92,7 @@ public class Home extends AppCompatActivity {
   public void alarmSetup(View view) {
     Intent openAlarmPage = new Intent(this, AlarmEdit.class);
     startActivity(openAlarmPage);
+  }
 
   public void GotoQuestion(View view){
     Intent openQuestionPage = new Intent(this, Question.class);
