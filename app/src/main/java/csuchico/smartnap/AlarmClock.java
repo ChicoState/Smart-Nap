@@ -5,6 +5,10 @@ import android.util.Log;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
@@ -30,6 +34,18 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   }
 
   // All of the following functions are used to manage the list of cards attached to alarm
+
+  public String getTimeFormatted() {
+    DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+    Calendar calendar = df.getCalendar();
+    calendar.setTimeInMillis(this.time);
+    SimpleDateFormat sdf = (SimpleDateFormat) df;
+    Date date = df.getCalendar().getTime();
+
+    sdf.applyPattern("h:mm a");
+    return sdf.format(date);
+
+  }
 
   public void resetIndex() {
     this.CARD_LIST_INDEX = 0;
