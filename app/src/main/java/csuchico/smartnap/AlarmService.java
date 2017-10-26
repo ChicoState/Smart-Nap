@@ -27,7 +27,6 @@ public class AlarmService extends IntentService {
     @Override
     public void onHandleIntent(Intent intent) {
 
-
         // Any code to setup the service must be here
         // before we call completeWakefulIntent(intent)
         startDialogActivity(intent);
@@ -46,7 +45,7 @@ public class AlarmService extends IntentService {
      */
     private void startDialogActivity(Intent intent) {
         Intent dialogIntent = new Intent(this, AlarmDialog.class);
-        dialogIntent.putExtras(intent.getExtras());
+        dialogIntent.putExtras(intent.getExtras()); // pass extras along
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dialogIntent);
     }

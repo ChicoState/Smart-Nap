@@ -6,74 +6,108 @@
     android:layout_height="match_parent"
     tools:context="csuchico.smartnap.AlarmEdit">
 
-    <LinearLayout
-        android:id="@+id/baseLayoutContainer"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/buttonBarContainer"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:background="@color/colorLightBlue"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/headerText"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/buttonCreateAlarm"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/editAlarmHeader"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textSize="30sp"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp"/>
+            android:layout_marginLeft="40dp"
+            android:fontFamily="sans-serif"
+            android:onClick="createNewAlarm"
+            android:text="@string/label_setNewAlarm"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="40dp"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/buttonDeleteAlarm"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="40dp"
+            android:fontFamily="sans-serif"
+            android:onClick="deleteAlarm"
+            android:text="@string/label_deleteAlarm"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@android:color/holo_red_dark"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap,RtlHardcoded" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mainContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="0dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBarContainer">
 
         <EditText
             android:id="@+id/alarmNameEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp"
             android:ems="10"
             android:inputType="text"
             android:text="@string/inputAlarmName"
+            tools:ignore="LabelFor,RtlHardcoded"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="72dp"/>
 
-        <TimePicker
-            android:id="@+id/alarmTimePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:visibility="visible"
-            tools:layout_editor_absoluteX="52dp"
-            tools:layout_editor_absoluteY="149dp"/>
-
         <LinearLayout
+            android:id="@+id/baseLayoutContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/alarmNameEdit"
             android:orientation="vertical"
+            android:weightSum="1"
+            tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
 
-            <!-- android:timePickerMode="spinner" -->
+
+            <TimePicker
+                android:id="@+id/alarmTimePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:timePickerMode="spinner"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="52dp"
+                tools:layout_editor_absoluteY="149dp"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/buttonAddFlashCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_addFlashCard"
+            android:layout_below="@+id/baseLayoutContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp" />
 
-    <Button
-        android:id="@+id/buttonCreateAlarm"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:onClick="createNewAlarm"
-        android:text="@string/setNewAlarm"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        android:visibility="visible"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="417dp"/>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
