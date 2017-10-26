@@ -9,21 +9,6 @@
         android:layout_height="wrap_content"
         android:textSize="32dp"
         android:layout_alignParentBottom="true"/>
-    <TextView
-        android:id="@+id/min_text_view"
-        android:layout_width = "wrap_content"
-        android:layout_height="wrap_content"
-        android:text=":00"
-        android:textSize="32dp"
-        android:layout_toRightOf="@id/alarm_text_view"
-        android:layout_alignParentBottom="true"/>
-    <TextView
-        android:id="@+id/am_pm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AM"
-        android:layout_alignBottom="@id/alarm_text_view"
-        android:layout_toRightOf="@id/min_text_view"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

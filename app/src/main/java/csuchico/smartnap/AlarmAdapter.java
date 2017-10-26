@@ -2,6 +2,7 @@ package csuchico.smartnap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class AlarmAdapter extends ArrayAdapter<AlarmClock> {
 
         }
 
-        AlarmClock currentAlarm = getItem(position);
+        final AlarmClock currentAlarm = getItem(position);
         TextView alarmTextView = (TextView) listItemView.findViewById(R.id.alarm_text_view);
         Button alarmEdit = (Button) listItemView.findViewById(R.id.toggle_view);
         alarmTextView.setOnClickListener(new View.OnClickListener() {
@@ -40,10 +41,12 @@ public class AlarmAdapter extends ArrayAdapter<AlarmClock> {
             @Override
             public void onClick(View v) {
                 Intent I = new Intent(getContext(),AlarmEdit.class);
+                I.putExtra("alarmID",currentAlarm.getId());
                 v.getContext().startActivity(I);
             }
         });
-        alarmTextView.setText(Long.toString((currentAlarm.getTime())));
+        String formattedAlarmTime = currentAlarm.getTimeFormatted();
+        alarmTextView.setText(formattedAlarmTime);
 
 //            TextView defaultTextView = (TextView) listItemView.findViewById(R.id.index_text_view);
 //
