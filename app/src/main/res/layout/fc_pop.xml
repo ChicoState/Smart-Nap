@@ -7,15 +7,27 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <ListView
-        android:id="@+id/fc_list"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="358dp"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/fc_list"
+                android:layout_width="wrap_content"
+                android:layout_height="602dp" />
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onBackPresseda"
-        android:text="Button"/>
+        android:text="Button"
+        android:visibility="gone" />
 </LinearLayout>
