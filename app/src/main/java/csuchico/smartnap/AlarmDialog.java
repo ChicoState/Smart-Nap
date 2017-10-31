@@ -1,29 +1,19 @@
 package csuchico.smartnap;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
 
 // The following import statements would allow us to use simpler code below where only
 // the FLAG_* is necessary versus the full location.
@@ -103,7 +93,7 @@ public class AlarmDialog extends AppCompatActivity {
     }
     if (cardsForDialog.size() > 0) {
       FlashCard cur = cardsForDialog.get(0);
-      updateCurrentFlashCard(cur.m_question, cur.m_answer);
+      updateCurrentFlashCard(cur.question, cur.answer);
     }
     else {
       updateCurrentFlashCard("This QUESTION is a dummy because our flash card didn't load!",

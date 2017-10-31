@@ -5,144 +5,79 @@ import android.util.Log;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
 
+  private String key;
   private long time;
   private String name;
-  //private List<FlashCard> cards;
-  private ArrayList<Long> cardIDList;
+  private AlarmClockFlashCardLinker link;
 
-
-  @Ignore // do not store in database
-  private int CARD_LIST_INDEX;
+  @Ignore
+  private static final String DEFAULT_TIME_FORMAT = "h:mm a";
 
   // Note: Please retain default constructor
   public AlarmClock() {
   }
 
   // Constructor
-  public AlarmClock(long time, String name, ArrayList<Long> cardIDs) {
+  public AlarmClock(long time, String name) {
+    this.key = generateKey();
     this.time = time;
     this.name = name;
-    this.cardIDList = new ArrayList<Long>(cardIDs);
-
-    this.CARD_LIST_INDEX = 0; // default INDEX upon alarm construction
+    this.link = null;
   }
 
-  // All of the following functions are used to manage the list of cards attached to alarm
-
-  public void resetIndex() {
-    this.CARD_LIST_INDEX = 0;
+  private String generateKey() {
+    UUID uuid = UUID.randomUUID();
+    return uuid.toString();
   }
 
-  /*
-  public void clearCards() {
-    cards.clear();
-    this.CARD_LIST_INDEX = 0;
+  public List<AlarmClockFlashCardLinker> getCards() {
+    return AlarmClockFlashCardLinker.find(
+            AlarmClockFlashCardLinker.class,
+            "key = ?",
+            this.key
+    );
   }
-
-  public void pushCard(FlashCard card) {
-    try {
-      this.cards.add(card);
-    }
-    catch ( NullPointerException npe ) {
-      Log.w("AlarmClock","Cannot add null card to list!");
-      npe.printStackTrace();
-    }
-  }
-
-  public void pushCard(int index, FlashCard card) {
-    try {
-      this.cards.add(index, card);
-    }
-    catch ( NullPointerException npe ) {
-      Log.w("AlarmClock","Cannot add null card to list!");
-      npe.printStackTrace();
-    }
-    catch ( IndexOutOfBoundsException ie ) {
-      Log.w("AlarmClock","Index does not exist in list!");
-      ie.printStackTrace();
-    }
-  }
-
-  public void popCard(int index) {
-    try {
-      this.cards.remove(index);
-    }
-    catch ( IndexOutOfBoundsException ie ) {
-      Log.w("AlarmClock","Index does not exist in list!");
-      ie.printStackTrace();
-    }
-  }
-*/
-
-  //public List<FlashCard> getList() { return cards; }
-
-  public ArrayList<Long> getListOfCardIDs() { return this.cardIDList; }
 
   public String getName() {
     return name;
   }
 
-  public long getTime() { return time; }
-
-  //public void setCards(List<FlashCard> list) { this.cards = list; }
-
-  public void putListOfCardIDs(ArrayList<Long> idList) { this.cardIDList = idList; }
-
   public void setName(String name) {
     this.name = name;
+  }
+
+  public long getTime() {
+    return time;
   }
 
   public void setTime(long time) {
     this.time = time;
   }
 
-  // The following functions getNextCard() and getPrevCard() are designed to be used
-  // to flip through flash cards while on the alarm dialog page.
+  public String getTimeFormatted(String format) {
 
-  /*
-      @function     getNextCard()
-      @desc         Grabs the card in the list at CARD_LIST_INDEX and then increments index. Will
-                    return null value if cards list is empty.
-   */
+    if ( format.isEmpty() ) {
+      format = DEFAULT_TIME_FORMAT;
+    }
 
-  /*
-  public FlashCard getNextCard() {
-    if ( this.cards.isEmpty() ) {
-      Log.w("AlarmClock","This alarms list of flash cards returned empty!");
-      return null;
-    }
-    FlashCard nextCard = this.cards.get(this.CARD_LIST_INDEX);
-    this.CARD_LIST_INDEX++;
-    if(this.CARD_LIST_INDEX == this.cards.size()) {
-      this.resetIndex();
-    }
-    return nextCard;
-  } // getNextCard()
-  */
+    DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+    Calendar calendar = df.getCalendar();
+    calendar.setTimeInMillis(this.time);
+    Date date = df.getCalendar().getTime();
 
-  /*
-      @function     getPrevCard()
-      @desc         Decrements the CARD_LIST_INDEX and then returns the card in list. Will
-                    return null value if cards list is empty.
- */
+    SimpleDateFormat sdf = (SimpleDateFormat) df;
+    sdf.applyPattern(format);
+    return sdf.format(date);
 
-  /*
-  public FlashCard getPrevCard() {
-    if ( this.cards.isEmpty() ) {
-      Log.w("AlarmClock","This alarms list of flash cards returned empty!");
-      return null;
-    }
-    this.CARD_LIST_INDEX--;
-    if ( CARD_LIST_INDEX < 0 ) {
-      this.CARD_LIST_INDEX = this.cards.size() - 1;
-    }
-    return this.cards.get(this.CARD_LIST_INDEX);
-  } // getPrevCard()
-  */
+  }
 
 } // AlarmClock
