@@ -1,6 +1,7 @@
 package csuchico.smartnap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
@@ -20,9 +21,12 @@ import java.util.List;
  */
 
 public class fcpop extends Activity{
+
+  ArrayList<String> selectedclasses;
+  ArrayList<String> selectedFlashCards;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        final ArrayList<String> selectedclasses;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fc_pop);
         DisplayMetrics screensize = new DisplayMetrics();
@@ -30,36 +34,45 @@ public class fcpop extends Activity{
         int width = screensize.widthPixels;
         int height = screensize.heightPixels;
         getWindow().setLayout((int) (width * .8), (int) (height * .8));
-
         ListView listview = findViewById(R.id.fc_list);
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        selectedclasses = new ArrayList<>();
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Long> list = new ArrayList<>();
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
+        selectedclasses = new ArrayList<>();
+        selectedFlashCards = new ArrayList<>();
         if(fc.size() == 0){
             Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
         }
         else{
             long i = 1;
             int size = fc.size();
-            while(size > 1) {
+            while(size > 0) {
                 FlashCard newe = FlashCard.findById(FlashCard.class, i);
-                list.add(newe.m_class);
+                list.add(newe.getId());
                 i++;
                 size--;
             }
-                ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, list);
-                listview.setAdapter(listAdapter);
+          ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, list);
+          listview.setAdapter(listAdapter);
         }
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedclass = ((TextView) view).getText().toString();
-                if(selectedclasses.contains(selectedclass))
-                    selectedclasses.remove(selectedclass); //remove deselected item from the list of selected items
-                else
-                    selectedclasses.add(selectedclass); //add selected item to the list of selected items
-            }
+                String selected = ((TextView) view).getText().toString();
+                  if(selectedFlashCards.contains(selected))
+                    selectedFlashCards.remove(selected); //remove deselected item from the list of selected items
+                  else
+                    selectedFlashCards.add(selected); //add selected item to the list of selected items
+                }
         });
     }
+
+  public void onBackPresseda(View view) {
+    //super.onBackPressed();
+    Intent returnData = new Intent();
+    returnData.putStringArrayListExtra("cards", selectedFlashCards);
+    setResult(RESULT_OK, returnData);
+    finish();
+  }
 }

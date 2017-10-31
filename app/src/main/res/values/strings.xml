@@ -32,4 +32,5 @@
     <string name="this_is_the_pop_up_window">This is the pop-up window</string>
     <string name="add_alarm">Add Alarm</string>
     <string name="questions">Questions</string>
+    <string name="name">Name</string>
 </resources>

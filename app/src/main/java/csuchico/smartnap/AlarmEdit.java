@@ -15,6 +15,7 @@ import android.util.Log;
 
 // API-24 required for 'android.icu.util.Calendar', use 'java.util.Calendar' for older API
 //import android.icu.util.Calendar;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import static csuchico.smartnap.R.layout.activity_alarm_edit;
 
 public class AlarmEdit extends AppCompatActivity {
 
-  //static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
+  static final int ADD_FLASHCARD_REQUEST = 1; // requestCode for adding flash card
 
   private boolean alarmNameIsNotDefault = false;
   private boolean userIsEditingExistingAlarm;
@@ -33,7 +34,9 @@ public class AlarmEdit extends AppCompatActivity {
   private TimePicker alarmTimePicker;
   EditText alarmNameText;
   Button saveAlarm, deleteAlarm, addFlashCard;
-  private List<FlashCard> alarmCards;
+  List<FlashCard> alarmCards;
+  private ArrayList<String> returnedCardList;
+  private ArrayList<Long> cardIDList;
 
   private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
     @Override
@@ -66,9 +69,14 @@ public class AlarmEdit extends AppCompatActivity {
     addFlashCard.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        startActivity(new Intent(AlarmEdit.this,fcpop.class));
+        //startActivity(new Intent(AlarmEdit.this,fcpop.class));
+        // we need to startActivityForResult because we expect a return of flash cards
+        Intent cardListView = new Intent(AlarmEdit.this, fcpop.class);
+        startActivityForResult(cardListView, ADD_FLASHCARD_REQUEST);
       }
     });
+
+    cardIDList = new ArrayList<>(); // initialize the cardIDList before processing intent
 
     Intent currentIntent = this.getIntent();
     initActivityBasedOnIntent(currentIntent);
@@ -112,6 +120,31 @@ public class AlarmEdit extends AppCompatActivity {
     }
   }
 
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    // process a flashcard request
+    if ( requestCode == ADD_FLASHCARD_REQUEST ) {
+      if ( resultCode == RESULT_OK ) {
+        // Flashcard was chosen and added successfully
+        returnedCardList = data.getStringArrayListExtra( "cards" );
+        if ( returnedCardList != null ) {
+          for(int i = 0; i < returnedCardList.size(); i++ ) {
+            String theid = returnedCardList.get(i);
+            long ID = Long.parseLong(theid);
+            cardIDList.add(ID);
+            Log.i("AlarmEdit","onActivityResult processed another flash card!");
+          }
+        }
+        else {
+          // returnedCardList returned a null value
+          Log.w("AlarmEdit","onActivityResult has a null list of flash card ID");
+        }
+      }
+    } // ADD_FLASHCARD_REQUEST
+  } // onActivityResult
+
   /*
     Function:   createNewAlarm(View)
     Operation:  Takes the information provided by user on the AlarmEdit activity and creates
@@ -134,13 +167,15 @@ public class AlarmEdit extends AppCompatActivity {
     long alarmTime = calendar.getTimeInMillis();
 
     if(!userIsEditingExistingAlarm) {       // user is creating a new alarm
-      alarmClock = new AlarmClock(alarmTime,alarmName,alarmCards);
+      alarmClock = new AlarmClock(alarmTime,alarmName,cardIDList);
+      Log.i("AlarmEdit","Adding a new alarm clock!");
     }
     else {    // user is editing an existing alarm
       // we want to update the AlarmClock fields
       try {
         alarmClock.setName(alarmName);
         alarmClock.setTime(alarmTime);
+        alarmClock.putListOfCardIDs(cardIDList);
       }
       catch (NullPointerException npe) {
         Log.w("AlarmEdit","There was a null pointer exception while setting the Alarm Clock!");
@@ -175,23 +210,5 @@ public class AlarmEdit extends AppCompatActivity {
   private void deleteAlarm() {
 
   }
-  /*
-    @function:  addFlashCard()
-    @desc:      Called when user touches "Add Flash Card" button for an alarm. Used to
-                start the process of attaching flash cards to the alarm clock.
-   */
-
-
-  /*
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == ADD_FLASHCARD_REQUEST) {
-      if (resultCode == RESULT_OK) {
-        // Flashcard was chosen and added successfully
-      }
-    }
-  }
-  */
 
 }

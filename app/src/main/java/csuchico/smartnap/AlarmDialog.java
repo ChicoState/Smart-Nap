@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -44,6 +45,7 @@ public class AlarmDialog extends AppCompatActivity {
   private FlashCard m_FlashCard;
   private AlarmClock alarm;
   private long alarmID;
+  private ArrayList<FlashCard> cardsForDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +72,9 @@ public class AlarmDialog extends AppCompatActivity {
     m_cardAnswerText = (TextView) findViewById(R.id.fc_answer);
     m_alarmNameText = (TextView)  findViewById(R.id.alarmName);
 
-    alarmInit();
+    cardsForDialog = new ArrayList<FlashCard>();
 
-    //String cardQuestion = m_FlashCard.m_question;
-    //String cardAnswer = m_FlashCard.m_answer;
-    // update the currentFlashCard for Dialog
-    //updateCurrentFlashCard(cardQuestion,cardAnswer);
-    updateCurrentFlashCard("This is an example Flash Card Question","And this is an example answer");
+    alarmInit();
 
     playTone();
   }
@@ -91,7 +89,26 @@ public class AlarmDialog extends AppCompatActivity {
     alarmID = (long) alarmData.getInt(getString(R.string.key_alarmID));
     alarm = AlarmClock.findById(AlarmClock.class, alarmID);
     String name = alarm.getName();
-    //m_FlashCard = alarm.getNextCard();
+    ArrayList<Long> flashCardIDList = alarm.getListOfCardIDs();
+    if (flashCardIDList == null) {
+      Log.i("AlarmDialog", "FLASH CARD LIST IS NULL!");
+    }
+    else {
+
+      // parse all the ID's into flash cards for display
+      for ( int i = 0; i < flashCardIDList.size(); i++ ) {
+        FlashCard currentCard = FlashCard.findById(FlashCard.class, flashCardIDList.get(i));
+        cardsForDialog.add(currentCard);
+      }
+    }
+    if (cardsForDialog.size() > 0) {
+      FlashCard cur = cardsForDialog.get(0);
+      updateCurrentFlashCard(cur.m_question, cur.m_answer);
+    }
+    else {
+      updateCurrentFlashCard("This QUESTION is a dummy because our flash card didn't load!",
+              "This ANSWER is a dummy because of no flash card loading!");
+    }
     m_alarmNameText.setText(name);
   } // alarmInit()
 

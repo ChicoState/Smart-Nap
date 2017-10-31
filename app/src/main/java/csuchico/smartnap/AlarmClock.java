@@ -9,13 +9,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
 
   private long time;
   private String name;
-  private List<FlashCard> cards;
+  //private List<FlashCard> cards;
+  private ArrayList<Long> cardIDList;
+
 
   @Ignore // do not store in database
   private int CARD_LIST_INDEX;
@@ -25,10 +27,10 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   }
 
   // Constructor
-  public AlarmClock(long time, String name, List<FlashCard> cards) {
+  public AlarmClock(long time, String name, ArrayList<Long> cardIDs) {
     this.time = time;
     this.name = name;
-    this.cards = cards;
+    this.cardIDList = new ArrayList<Long>(cardIDs);
 
     this.CARD_LIST_INDEX = 0; // default INDEX upon alarm construction
   }
@@ -51,49 +53,14 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     this.CARD_LIST_INDEX = 0;
   }
 
-  public void clearCards() {
-    cards.clear();
-    this.CARD_LIST_INDEX = 0;
-  }
-
-  public void pushCard(FlashCard card) {
-    try {
-      this.cards.add(card);
-    }
-    catch ( NullPointerException npe ) {
-      Log.w("AlarmClock","Cannot add null card to list!");
-      npe.printStackTrace();
-    }
-  }
-
-  public void pushCard(int index, FlashCard card) {
-    try {
-      this.cards.add(index, card);
-    }
-    catch ( NullPointerException npe ) {
-      Log.w("AlarmClock","Cannot add null card to list!");
-      npe.printStackTrace();
-    }
-    catch ( IndexOutOfBoundsException ie ) {
-      Log.w("AlarmClock","Index does not exist in list!");
-      ie.printStackTrace();
-    }
-  }
-
-  public void popCard(int index) {
-    try {
-      this.cards.remove(index);
-    }
-    catch ( IndexOutOfBoundsException ie ) {
-      Log.w("AlarmClock","Index does not exist in list!");
-      ie.printStackTrace();
-    }
-  }
+  public ArrayList<Long> getListOfCardIDs() { return this.cardIDList; }
 
   public String getName() {
     return name;
   }
   public long getTime() { return time; }
+
+  public void putListOfCardIDs(ArrayList<Long> idList) { this.cardIDList = idList; }
 
   public void setName(String name) {
     this.name = name;
@@ -101,43 +68,4 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   public void setTime(long time) {
     this.time = time;
   }
-
-  // The following functions getNextCard() and getPrevCard() are designed to be used
-  // to flip through flash cards while on the alarm dialog page.
-
-  /*
-      @function     getNextCard()
-      @desc         Grabs the card in the list at CARD_LIST_INDEX and then increments index. Will
-                    return null value if cards list is empty.
-   */
-  public FlashCard getNextCard() {
-    if ( this.cards.isEmpty() ) {
-      Log.w("AlarmClock","This alarms list of flash cards returned empty!");
-      return null;
-    }
-    FlashCard nextCard = this.cards.get(this.CARD_LIST_INDEX);
-    this.CARD_LIST_INDEX++;
-    if(this.CARD_LIST_INDEX == this.cards.size()) {
-      this.resetIndex();
-    }
-    return nextCard;
-  } // getNextCard()
-
-  /*
-      @function     getPrevCard()
-      @desc         Decrements the CARD_LIST_INDEX and then returns the card in list. Will
-                    return null value if cards list is empty.
- */
-  public FlashCard getPrevCard() {
-    if ( this.cards.isEmpty() ) {
-      Log.w("AlarmClock","This alarms list of flash cards returned empty!");
-      return null;
-    }
-    this.CARD_LIST_INDEX--;
-    if ( CARD_LIST_INDEX < 0 ) {
-      this.CARD_LIST_INDEX = this.cards.size() - 1;
-    }
-    return this.cards.get(this.CARD_LIST_INDEX);
-  } // getPrevCard()
-
 } // AlarmClock
