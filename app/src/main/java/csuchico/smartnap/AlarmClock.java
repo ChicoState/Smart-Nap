@@ -32,7 +32,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     this.key = generateKey();
     this.time = time;
     this.name = name;
-    this.link = null;
+    //this.link = null;
   }
 
   private String generateKey() {
