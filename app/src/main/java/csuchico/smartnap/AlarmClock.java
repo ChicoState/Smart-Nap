@@ -42,8 +42,8 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   public List<AlarmClockFlashCardLinker> getCards() {
     return AlarmClockFlashCardLinker.find(
             AlarmClockFlashCardLinker.class,
-            "key = ?",
-            this.key
+            "alarm = ?",
+            Long.toString(this.getId())
     );
   }
 

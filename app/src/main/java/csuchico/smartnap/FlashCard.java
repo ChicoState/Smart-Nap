@@ -65,8 +65,8 @@ public class FlashCard extends SugarRecord<FlashCard>{
   public List<AlarmClockFlashCardLinker> getAlarms() {
       return AlarmClockFlashCardLinker.find(
               AlarmClockFlashCardLinker.class,
-              "key = ?",
-              this.key
+              "card = ?",
+              Long.toString(this.getId())
       );
   }
 }
