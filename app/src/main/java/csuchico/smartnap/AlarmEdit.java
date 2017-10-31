@@ -99,7 +99,7 @@ public class AlarmEdit extends AppCompatActivity {
       int currentHour, currentMinute;
       actionBarTitle = getString(R.string.header_editAlarm);
       userIsEditingExistingAlarm = true;
-      id = data.getLong(getString(R.string.extraKey_alarm));
+      id = (long) data.getInt("extraKey_alarm");
       alarmClock = AlarmClock.findById(AlarmClock.class,id);
       Log.i("AlarmEdit","Found AlarmClock with id: " + id + "!");
       name = alarmClock.getName();
@@ -175,7 +175,6 @@ public class AlarmEdit extends AppCompatActivity {
       // we want to update the AlarmClock fields
       try {
         alarmClock.setName(alarmName);
-
         alarmClock.setTime(alarmTime);
       }
       catch (NullPointerException npe) {
@@ -188,7 +187,8 @@ public class AlarmEdit extends AppCompatActivity {
 
     List<AlarmClockFlashCardLinker> links = buildCardLinks();
     processLinkerTable(links);
-    setAlarm(alarmTime);
+
+    enableAlarm();
 
     finish();
   } // saveAlarm()
@@ -234,8 +234,13 @@ public class AlarmEdit extends AppCompatActivity {
       links.get(i).delete();
     }
 
+    Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
 
-    servicePendingIntent.cancel(); // cancel the alarm service that was setup
+    alarmClock.initBroadcast(AlarmEdit.this,alarmClock.getId(),receiverIntent);
+
+    if ( alarmClock.getState() ) {  // if alarm is currently on
+      alarmClock.toggleState();
+    }
 
     alarmClock.delete();
 
@@ -244,28 +249,17 @@ public class AlarmEdit extends AppCompatActivity {
     finish();
   }
 
-  private void setAlarm(long time) {
+  private void enableAlarm() {
     // Process the Alarm data to be sent to the receiver and service
-
-    long alarmTime = time;
-    long alarmID = alarmClock.getId();
-    int requestCode = (int) alarmID;
-
-    // create a new bundle to store the data of our alarm
-    Bundle dataBundle = new Bundle();
-    dataBundle.putInt(getString(R.string.extraKey_alarm), (int) alarmID);
-
-    // create intent for the alarm
     Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
-    receiverIntent.putExtras(dataBundle);
-
-    // broadcast myIntent to pendingIntent
-    servicePendingIntent = PendingIntent.getBroadcast(
-            AlarmEdit.this, requestCode, receiverIntent, 0);
-
-    // sets the alarm up using our pendingIntent operation defined to retrieve broadcasts
-    alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, servicePendingIntent);
-    Log.d("AlarmEdit", "Setting alarm in AlarmManager.");
+    Bundle extras = new Bundle();
+    long id = alarmClock.getId();
+    extras.putInt("extraKey_alarm", (int) id);
+    receiverIntent.putExtras(extras);
+    alarmClock.initBroadcast(AlarmEdit.this,alarmClock.getId(),receiverIntent);
+    if( !alarmClock.getState() ) { // alarm is currently disabled
+      alarmClock.toggleState();
+    }
   }
 
   @Override

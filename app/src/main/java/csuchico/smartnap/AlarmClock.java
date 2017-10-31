@@ -72,10 +72,6 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     return this.key;
   }
 
-  public PendingIntent getPendingIntent() {
-    return this.pendingIntent;
-  }
-
   public boolean getState() {
     return this.status;
   }
@@ -90,13 +86,12 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     return this.getState();
   }
 
-  public void initBroadcast(Context context, long id) {
+  public void initBroadcast(Context context, long id, Intent receiver) {
     manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-    Intent receiverIntent = new Intent(context, AlarmReceiver.class);
     pendingIntent = PendingIntent.getBroadcast(
             context,
             (int) id,
-            receiverIntent,
+            receiver,
             0
     );
     this.broadcastInitialized = true;

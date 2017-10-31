@@ -46,7 +46,7 @@ public class AlarmAdapter extends ArrayAdapter<AlarmClock> {
         Intent intent = new Intent(getContext(),AlarmEdit.class);
         Bundle data = new Bundle();
         long alarmId = currentAlarm.getId();
-        data.putLong("extraKey_alarm",alarmId);
+        data.putInt("extraKey_alarm",(int) alarmId);
         intent.putExtras(data);
         view.getContext().startActivity(intent);
       }

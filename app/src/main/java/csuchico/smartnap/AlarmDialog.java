@@ -141,7 +141,8 @@ public class AlarmDialog extends AppCompatActivity {
    */
   public void onSilenceAlarm(View view) {
     Log.i("AlarmDialog", "User has chosen to silence alarm");
-    alarm.delete(); // delete from db table
+    //alarm.delete(); // delete from db table
+    alarm.toggleState();
     mAlarmTone.stop();
     finish();
   }
