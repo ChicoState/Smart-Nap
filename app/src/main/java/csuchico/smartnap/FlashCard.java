@@ -34,6 +34,10 @@ public class FlashCard extends SugarRecord<FlashCard>{
       return uuid.toString();
   }
 
+  public String getKey() {
+    return this.key;
+  }
+
   public String getClassName() {
     return this.className;
   }

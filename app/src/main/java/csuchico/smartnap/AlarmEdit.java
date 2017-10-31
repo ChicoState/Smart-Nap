@@ -92,7 +92,7 @@ public class AlarmEdit extends AppCompatActivity {
       int currentHour, currentMinute;
       actionBarTitle = getString(R.string.header_editAlarm);
       userIsEditingExistingAlarm = true;
-      id = data.getLong(getString(R.string.key_alarmID));
+      id = data.getLong(getString(R.string.extraKey_alarmID));
       alarmClock = AlarmClock.findById(AlarmClock.class,id);
       name = alarmClock.getName();
       time = alarmClock.getTime();
@@ -128,7 +128,7 @@ public class AlarmEdit extends AppCompatActivity {
     if ( requestCode == ADD_FLASHCARD_REQUEST ) {
       if ( resultCode == RESULT_OK ) {
         // Flashcard was chosen and added successfully
-        returnedCardList = data.getStringArrayListExtra( "cards" );
+        returnedCardList = data.getStringArrayListExtra(getString(R.string.extraKey_cards));
         if ( returnedCardList != null ) {
           for(int i = 0; i < returnedCardList.size(); i++ ) {
             String theid = returnedCardList.get(i);
@@ -189,7 +189,7 @@ public class AlarmEdit extends AppCompatActivity {
 
     // create a new bundle to store the data of our alarm
     Bundle dataBundle = new Bundle();
-    dataBundle.putInt(getString(R.string.key_alarmID), (int) alarmID);
+    dataBundle.putInt(getString(R.string.extraKey_alarmID), (int) alarmID);
     dataBundle.putString(getString(R.string.key_alarmName), alarmName);
 
     // create intent for the alarm
@@ -211,4 +211,15 @@ public class AlarmEdit extends AppCompatActivity {
 
   }
 
+  @Override
+  public void onBackPressed() {
+    if ( userIsEditingExistingAlarm ) {
+      // we want to save whatever their data was at this the time of backing up
+      Log.i("AlarmEdit","User pressed back while editing an existing alarm");
+    }
+    else {
+      // user must have decided NOT to setup a new alarm
+      Log.i("AlarmEdit","User did not finish setting up new alarm before pressing back");
+    }
+  }
 }

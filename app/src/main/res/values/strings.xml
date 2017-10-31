@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SmartNap</string>
-    <string name="key_alarmID">alarmID</string>
+    <string name="extraKey_alarmID">extraKey_alarmID</string>
+    <string name="extraKey_cards">extraKey_cards</string>
     <string name="key_alarmName">alarmName</string>
     <string name="label_setNewAlarm">Save</string>
     <string name="label_addFlashCard">Add Flash Card</string>
