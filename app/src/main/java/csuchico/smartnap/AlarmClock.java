@@ -1,5 +1,11 @@
 package csuchico.smartnap;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.orm.SugarRecord;
@@ -9,9 +15,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
 
@@ -21,6 +28,14 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
 
   @Ignore
   private static final String DEFAULT_TIME_FORMAT = "h:mm a";
+  @Ignore
+  private AlarmManager manager;
+  @Ignore
+  private PendingIntent pendingIntent;
+  @Ignore
+  private boolean status;
+  @Ignore
+  private boolean broadcastInitialized = false;
 
   // Note: Please retain default constructor
   public AlarmClock() {
@@ -31,13 +46,19 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     this.key = generateKey();
     this.time = time;
     this.name = name;
-    //this.link = null;
+    this.status = false;
   }
 
   private String generateKey() {
     UUID uuid = UUID.randomUUID();
     return uuid.toString();
   }
+
+  /*
+    Function    : getCards()
+    Description : Returns a List<> of this AlarmClock's links in the database which allows
+                  one to parse all of the associated Flash Card's to the alarm
+   */
 
   public List<AlarmClockFlashCardLinker> getCards() {
     return AlarmClockFlashCardLinker.find(
@@ -49,6 +70,54 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
 
   public String getKey() {
     return this.key;
+  }
+
+  public PendingIntent getPendingIntent() {
+    return this.pendingIntent;
+  }
+
+  public boolean getState() {
+    return this.status;
+  }
+
+  public boolean toggleState() {
+    if ( this.status ) {  // alarm is ON
+      disableAlarm();
+    }
+    else {
+      enableAlarm();
+    }
+    return this.getState();
+  }
+
+  public void initBroadcast(Context context, long id) {
+    manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+    Intent receiverIntent = new Intent(context, AlarmReceiver.class);
+    pendingIntent = PendingIntent.getBroadcast(
+            context,
+            (int) id,
+            receiverIntent,
+            0
+    );
+    this.broadcastInitialized = true;
+  }
+
+  private void enableAlarm() {
+    if ( broadcastInitialized ) {
+      this.status = true;
+      manager.set(AlarmManager.RTC_WAKEUP, this.time, pendingIntent);
+      Log.i("AlarmClock",
+              "Setting alarm (id: " + Long.toString(id) + " to be ENABLED!");
+    }
+  }
+
+  private void disableAlarm() {
+    if ( broadcastInitialized ) {
+      this.status = false;
+      manager.cancel(pendingIntent);
+      Log.d("AlarmClock",
+              "Setting alarm (id: " + Long.toString(id) + " to be DISABLED!");
+    }
   }
 
   public String getName() {

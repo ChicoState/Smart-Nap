@@ -175,6 +175,7 @@ public class AlarmEdit extends AppCompatActivity {
       // we want to update the AlarmClock fields
       try {
         alarmClock.setName(alarmName);
+
         alarmClock.setTime(alarmTime);
       }
       catch (NullPointerException npe) {

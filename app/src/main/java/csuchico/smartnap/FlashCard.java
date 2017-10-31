@@ -25,7 +25,6 @@ public class FlashCard extends SugarRecord<FlashCard>{
       this.question = question;
       this.answer = answer;
       this.className = className;
-      this.link = null;
   }
 
   private String generateKey() {
