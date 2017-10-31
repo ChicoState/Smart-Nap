@@ -210,7 +210,7 @@ public class AlarmEdit extends AppCompatActivity {
 
     for ( int i = 0; i < sizeOfReceived; i++ ) {
       AlarmClockFlashCardLinker link = receivedLinks.get(i);
-      if ( currentLinks.indexOf(link) > 0 ) { // exists in currentLinks already
+      if ( currentLinks.contains(link) ) { // exists in currentLinks already
         receivedLinks.remove(link);
       }
       else {

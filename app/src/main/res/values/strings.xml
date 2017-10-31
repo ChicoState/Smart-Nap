@@ -5,6 +5,7 @@
     <string name="key_alarmName">alarmName</string>
     <string name="label_setNewAlarm">Save</string>
     <string name="label_addFlashCard">Add Flash Card</string>
+    <string name="label_saveCardChoices">Add Selected</string>
     <string name="label_deleteAlarm">Delete</string>
     <string name="label_currentCardList">Current Flash Cards:</string>
     <string name="header_editAlarm">Edit Alarm</string>

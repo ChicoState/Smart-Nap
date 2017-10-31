@@ -7,27 +7,25 @@
     android:orientation="vertical"
     android:weightSum="1">
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onBackPresseda"
+        android:text="@string/label_saveCardChoices"
+        android:visibility="visible"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/fc_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content">
 
-            <ListView
-                android:id="@+id/fc_list"
-                android:layout_width="wrap_content"
-                android:layout_height="602dp" />
-        </LinearLayout>
+        </ListView>
+
     </ScrollView>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onBackPresseda"
-        android:text="Button"
-        android:visibility="gone" />
 </LinearLayout>
