@@ -15,14 +15,11 @@ public class Home extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
 
-    AlarmClock alarm = AlarmClock.findById(AlarmClock.class,(long) 0);
-    FlashCard cards = FlashCard.findById(FlashCard.class,(long) 0);
+    //AlarmClock alarm = AlarmClock.findById(AlarmClock.class,(long) 0);
+    //FlashCard cards = FlashCard.findById(FlashCard.class,(long) 0);
 
-    // pull list of alarms from database
     List<AlarmClock> listOfAlarms = AlarmClock.listAll(AlarmClock.class);
-    ArrayList<AlarmClock> listOfAlarmsForAdapter = new ArrayList<>(listOfAlarms);
-    // pass the casted ArrayList to the AlarmAdapter for our listview
-    AlarmAdapter adapter = new AlarmAdapter(this, listOfAlarmsForAdapter);
+    AlarmAdapter adapter = new AlarmAdapter(this, new ArrayList<>(listOfAlarms));
 
     // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
     // There should be a {@link ListView} with the view ID called list, which is declared in the

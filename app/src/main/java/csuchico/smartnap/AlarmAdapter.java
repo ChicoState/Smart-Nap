@@ -18,40 +18,42 @@ import java.util.ArrayList;
 
 
 public class AlarmAdapter extends ArrayAdapter<AlarmClock> {
-    public AlarmAdapter(Activity context, ArrayList<AlarmClock> alarms){
+  public AlarmAdapter(Activity context, ArrayList<AlarmClock> alarms) {
+    super(context, 0, alarms);
+  }
 
-        super(context, 0, alarms);
-    }
 
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+    View listItemView = convertView;
+    if(listItemView == null) {
+      listItemView = LayoutInflater.from(getContext()).inflate(
+              R.layout.l_item, parent, false);
+     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View listItemView = convertView;
-        if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.l_item, parent, false);
+    final AlarmClock currentAlarm = getItem(position);
 
-        }
+    TextView alarmTextView = (TextView) listItemView.findViewById(R.id.alarm_text_view);
+    Button alarmEdit = (Button) listItemView.findViewById(R.id.toggle_view);
 
-        final AlarmClock currentAlarm = getItem(position);
-        TextView alarmTextView = (TextView) listItemView.findViewById(R.id.alarm_text_view);
-        Button alarmEdit = (Button) listItemView.findViewById(R.id.toggle_view);
-        alarmTextView.setOnClickListener(new View.OnClickListener() {
+    String formattedAlarmTime = currentAlarm.getTimeFormatted("h:mm a");
 
-            @Override
-            public void onClick(View v) {
-                Intent I = new Intent(getContext(),AlarmEdit.class);
-                I.putExtra("alarmID",currentAlarm.getId());
-                v.getContext().startActivity(I);
-            }
-        });
-        String formattedAlarmTime = currentAlarm.getTimeFormatted();
-        alarmTextView.setText(formattedAlarmTime);
+    alarmTextView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        String key = Integer.toString(R.string.extraKey_alarm);
+        Intent intent = new Intent(getContext(),AlarmEdit.class);
+        Bundle data = new Bundle();
+        long alarmId = currentAlarm.getId();
+        data.putLong(key,alarmId);
+        intent.putExtras(data);
+        view.getContext().startActivity(intent);
+      }
+    });
 
-//            TextView defaultTextView = (TextView) listItemView.findViewById(R.id.index_text_view);
-//
-//            defaultTextView.setText(currentAlarm.getName());
-        return listItemView;
-    }
+    alarmTextView.setText(formattedAlarmTime);
+
+    return listItemView;
+  }
 }
 

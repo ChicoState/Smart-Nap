@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_weight="1"
-            android:onClick="Alarmsetup"
+            android:onClick="alarmSetup"
             android:text="Create New Alarm"
             tools:layout_editor_absoluteX="185dp"
             tools:layout_editor_absoluteY="-7dp" />

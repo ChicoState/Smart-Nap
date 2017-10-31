@@ -100,6 +100,7 @@ public class AlarmEdit extends AppCompatActivity {
       userIsEditingExistingAlarm = true;
       id = data.getLong(getString(R.string.extraKey_alarm));
       alarmClock = AlarmClock.findById(AlarmClock.class,id);
+      Log.i("AlarmEdit","Found AlarmClock with id: " + id + "!");
       name = alarmClock.getName();
       time = alarmClock.getTime();
       calendar = Calendar.getInstance();
