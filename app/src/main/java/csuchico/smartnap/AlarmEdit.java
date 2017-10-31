@@ -183,16 +183,39 @@ public class AlarmEdit extends AppCompatActivity {
 
     alarmClock.save();
 
-    List<FlashCard> cards = buildCardList();
+    List<AlarmClockFlashCardLinker> links = buildCardLinks();
+    processLinkerTable(links);
     setAlarm(alarmTime);
 
     finish();
   } // saveAlarm()
 
-  private List<FlashCard> buildCardList() {
-    List<FlashCard> cards;
-    for ( int i = 0; i < alarmCardKeys.size(); i++ ) {
+  private List<AlarmClockFlashCardLinker> buildCardLinks() {
+    List<AlarmClockFlashCardLinker> cardLinks = new ArrayList<>();
+    for ( int i = 0; i < cardIdList.size(); i++ ) {
+      Long id = Long.valueOf(cardIdList.get(i));
+      FlashCard card = FlashCard.findById(FlashCard.class,id);
+      AlarmClockFlashCardLinker link = new AlarmClockFlashCardLinker(alarmClock,card);
+      cardLinks.add(link);
+    }
+    return cardLinks;
+  }
 
+  private void processLinkerTable(List<AlarmClockFlashCardLinker> receivedLinks) {
+    List<AlarmClockFlashCardLinker> currentLinks = AlarmClockFlashCardLinker.listAll(
+            AlarmClockFlashCardLinker.class);
+
+    int sizeOfReceived = receivedLinks.size();
+
+    for ( int i = 0; i < sizeOfReceived; i++ ) {
+      AlarmClockFlashCardLinker link = receivedLinks.get(i);
+      if ( currentLinks.indexOf(link) > 0 ) { // exists in currentLinks already
+        receivedLinks.remove(link);
+      }
+      else {
+        AlarmClockFlashCardLinker newLink = new AlarmClockFlashCardLinker(link.alarm,link.card);
+        newLink.save();
+      }
     }
   }
 
@@ -222,18 +245,6 @@ public class AlarmEdit extends AppCompatActivity {
     // sets the alarm up using our pendingIntent operation defined to retrieve broadcasts
     alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, servicePendingIntent);
     Log.d("AlarmEdit", "Setting alarm in AlarmManager.");
-  }
-
-  private void setupDatabaseLinksForCards() {
-
-    for ( int i = 0; i < alarmCardKeys.size(); i++ ) {
-      String cardKey = alarmCardKeys.get(i);
-      List<FlashCard> cards = FlashCard.find(FlashCard.class,"key = ?", cardKey);
-      for ( int j = 0; j < cards.size(); i++ ) {
-        AlarmClockFlashCardLinker link = new AlarmClockFlashCardLinker(alarmClock,cards.get(j));
-        link.save();
-      }
-    }
   }
 
   @Override

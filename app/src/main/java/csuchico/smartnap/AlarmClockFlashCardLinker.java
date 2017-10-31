@@ -22,5 +22,4 @@ public class AlarmClockFlashCardLinker extends SugarRecord<AlarmClockFlashCardLi
     this.alarm = alarm;
     this.card = card;
   }
-
 }
