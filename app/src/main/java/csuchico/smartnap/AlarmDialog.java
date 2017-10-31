@@ -1,29 +1,20 @@
 package csuchico.smartnap;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 // The following import statements would allow us to use simpler code below where only
 // the FLAG_* is necessary versus the full location.
@@ -84,32 +75,23 @@ public class AlarmDialog extends AppCompatActivity {
    */
 
   private void alarmInit() {
+    String question, answer;
     Intent alarmIntent = getIntent();
     Bundle alarmData = alarmIntent.getExtras();
-    alarmID = (long) alarmData.getInt(getString(R.string.key_alarmID));
+    alarmID = (long) alarmData.getInt(getString(R.string.extraKey_alarm));
     alarm = AlarmClock.findById(AlarmClock.class, alarmID);
     String name = alarm.getName();
-    ArrayList<Long> flashCardIDList = alarm.getListOfCardIDs();
-    if (flashCardIDList == null) {
-      Log.i("AlarmDialog", "FLASH CARD LIST IS NULL!");
-    }
-    else {
-
-      // parse all the ID's into flash cards for display
-      for ( int i = 0; i < flashCardIDList.size(); i++ ) {
-        FlashCard currentCard = FlashCard.findById(FlashCard.class, flashCardIDList.get(i));
-        cardsForDialog.add(currentCard);
-      }
-    }
-    if (cardsForDialog.size() > 0) {
-      FlashCard cur = cardsForDialog.get(0);
-      updateCurrentFlashCard(cur.m_question, cur.m_answer);
-    }
-    else {
-      updateCurrentFlashCard("This QUESTION is a dummy because our flash card didn't load!",
-              "This ANSWER is a dummy because of no flash card loading!");
-    }
     m_alarmNameText.setText(name);
+    List<AlarmClockFlashCardLinker> flashCards = alarm.getCards();
+    if(flashCards != null) {
+      question = flashCards.get(0).card.getQuestion();
+      answer = flashCards.get(0).card.getAnswer();
+    }
+    else {
+      question = "DUMMY QUESTION! FAILED TO LOAD!";
+      answer = "DUMMY ANSWER! FAILED TO LOAD!";
+    }
+    updateCurrentFlashCard(question,answer);
   } // alarmInit()
 
   private void updateCurrentFlashCard(String question, String answer) {

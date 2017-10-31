@@ -34,9 +34,8 @@ public class AlarmEdit extends AppCompatActivity {
   private TimePicker alarmTimePicker;
   EditText alarmNameText;
   Button saveAlarm, deleteAlarm, addFlashCard;
-  List<FlashCard> alarmCards;
   private ArrayList<String> returnedCardList;
-  private ArrayList<Long> cardIDList;
+  private ArrayList<String> cardIdList;
 
   private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
     @Override
@@ -59,32 +58,39 @@ public class AlarmEdit extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(activity_alarm_edit);
 
+    cardIdList = new ArrayList<>();
+
     alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
     alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     alarmNameText = (EditText) findViewById(R.id.alarmNameEdit);
     alarmNameText.setOnTouchListener(editAlarmNameListener);
+
     saveAlarm = (Button) findViewById(R.id.buttonCreateAlarm);
     deleteAlarm = (Button) findViewById(R.id.buttonDeleteAlarm);
+
     addFlashCard = (Button)findViewById(R.id.buttonAddFlashCard);
     addFlashCard.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        //startActivity(new Intent(AlarmEdit.this,fcpop.class));
-        // we need to startActivityForResult because we expect a return of flash cards
         Intent cardListView = new Intent(AlarmEdit.this, fcpop.class);
+        Bundle data = new Bundle();
+        data.putStringArrayList(getString(R.string.extraKey_cards),cardIdList);
         startActivityForResult(cardListView, ADD_FLASHCARD_REQUEST);
       }
     });
 
-    cardIDList = new ArrayList<>(); // initialize the cardIDList before processing intent
-
     Intent currentIntent = this.getIntent();
-    initActivityBasedOnIntent(currentIntent);
+    initActivity(currentIntent);
   }
 
-  private void initActivityBasedOnIntent(Intent intent) {
+  private void initActivity(Intent intent) {
+    cardIdList = new ArrayList<>();
     String actionBarTitle;
     Bundle data = intent.getExtras(); // grab any extras available
+    actionBarTitle = getString(R.string.header_createAlarm);
+    userIsEditingExistingAlarm = false;
+    deleteAlarm.setVisibility(View.GONE); // make delete alarm button invisible
+
     if (data != null) {
       Calendar calendar;
       long id, time;
@@ -92,7 +98,7 @@ public class AlarmEdit extends AppCompatActivity {
       int currentHour, currentMinute;
       actionBarTitle = getString(R.string.header_editAlarm);
       userIsEditingExistingAlarm = true;
-      id = data.getLong(getString(R.string.key_alarmID));
+      id = data.getLong(getString(R.string.extraKey_alarm));
       alarmClock = AlarmClock.findById(AlarmClock.class,id);
       name = alarmClock.getName();
       time = alarmClock.getTime();
@@ -104,12 +110,18 @@ public class AlarmEdit extends AppCompatActivity {
       alarmTimePicker.setHour(currentHour);
       alarmTimePicker.setMinute(currentMinute);
       deleteAlarm.setVisibility(View.VISIBLE); // make delete alarm button visible
+
+      // return a list of all linkedCards associated with this alarm
+      List<AlarmClockFlashCardLinker> linkedCards = alarmClock.getCards();
+
+      for (int i = 0; i < linkedCards.size(); i++ ) {
+        FlashCard currentCard = linkedCards.get(i).card; // grab the card from current link data
+        long cardId = currentCard.getId();
+        cardIdList.add(Long.toString(cardId)); // save the cards table row Id
+      }
+
     }
-    else {
-      actionBarTitle = getString(R.string.header_createAlarm);
-      userIsEditingExistingAlarm = false;
-      deleteAlarm.setVisibility(View.GONE); // make delete alarm button invisible
-    }
+
     try {
       if(getSupportActionBar() != null) {
         getSupportActionBar().setTitle(actionBarTitle);
@@ -127,47 +139,34 @@ public class AlarmEdit extends AppCompatActivity {
     // process a flashcard request
     if ( requestCode == ADD_FLASHCARD_REQUEST ) {
       if ( resultCode == RESULT_OK ) {
-        // Flashcard was chosen and added successfully
-        returnedCardList = data.getStringArrayListExtra( "cards" );
-        if ( returnedCardList != null ) {
-          for(int i = 0; i < returnedCardList.size(); i++ ) {
-            String theid = returnedCardList.get(i);
-            long ID = Long.parseLong(theid);
-            cardIDList.add(ID);
-            Log.i("AlarmEdit","onActivityResult processed another flash card!");
-          }
-        }
-        else {
-          // returnedCardList returned a null value
-          Log.w("AlarmEdit","onActivityResult has a null list of flash card ID");
-        }
+        // Flashcards were chosen and added successfully
+        cardIdList = data.getStringArrayListExtra(getString(R.string.extraKey_cards));
+        Log.i("AlarmEdit","onActivityResult processed another flash card!");
+      }
+      else {
+        // returnedCardList returned a null value
+        Log.w("AlarmEdit","onActivityResult has a null list of flash card ID");
       }
     } // ADD_FLASHCARD_REQUEST
   } // onActivityResult
 
   /*
-    Function:   createNewAlarm(View)
+    Function:   saveAlarm(View)
     Operation:  Takes the information provided by user on the AlarmEdit activity and creates
                 a new alarm with the AlarmEdit Manager.
     Called:     When user pushes the "Create AlarmEdit" button on the AlarmEdit activity
   */
-  public void createNewAlarm(View view) {
+  public void saveAlarm(View view) {
 
-    String alarmName = alarmNameText.getText().toString();
-
-    // Setup calendar based on the current time chosen by the user
     Calendar calendar = Calendar.getInstance();
-
     calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
     calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
 
-    // Make a new intent for the broadcast
-    // Intent d = new Intent("csuchico.smartnap.AlarmDialog");
-    // pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, d, Intent.FLAG_ACTIVITY_NEW_TASK);
     long alarmTime = calendar.getTimeInMillis();
+    String alarmName = alarmNameText.getText().toString();
 
-    if(!userIsEditingExistingAlarm) {       // user is creating a new alarm
-      alarmClock = new AlarmClock(alarmTime,alarmName,cardIDList);
+    if ( !userIsEditingExistingAlarm ) {       // user is creating a new alarm
+      alarmClock = new AlarmClock(alarmTime,alarmName);
       Log.i("AlarmEdit","Adding a new alarm clock!");
     }
     else {    // user is editing an existing alarm
@@ -175,7 +174,6 @@ public class AlarmEdit extends AppCompatActivity {
       try {
         alarmClock.setName(alarmName);
         alarmClock.setTime(alarmTime);
-        alarmClock.putListOfCardIDs(cardIDList);
       }
       catch (NullPointerException npe) {
         Log.w("AlarmEdit","There was a null pointer exception while setting the Alarm Clock!");
@@ -184,13 +182,57 @@ public class AlarmEdit extends AppCompatActivity {
     }
 
     alarmClock.save();
+
+    List<AlarmClockFlashCardLinker> links = buildCardLinks();
+    processLinkerTable(links);
+    setAlarm(alarmTime);
+
+    finish();
+  } // saveAlarm()
+
+  private List<AlarmClockFlashCardLinker> buildCardLinks() {
+    List<AlarmClockFlashCardLinker> cardLinks = new ArrayList<>();
+    for ( int i = 0; i < cardIdList.size(); i++ ) {
+      Long id = Long.valueOf(cardIdList.get(i));
+      FlashCard card = FlashCard.findById(FlashCard.class,id);
+      AlarmClockFlashCardLinker link = new AlarmClockFlashCardLinker(alarmClock,card);
+      cardLinks.add(link);
+    }
+    return cardLinks;
+  }
+
+  private void processLinkerTable(List<AlarmClockFlashCardLinker> receivedLinks) {
+    List<AlarmClockFlashCardLinker> currentLinks = AlarmClockFlashCardLinker.listAll(
+            AlarmClockFlashCardLinker.class);
+
+    int sizeOfReceived = receivedLinks.size();
+
+    for ( int i = 0; i < sizeOfReceived; i++ ) {
+      AlarmClockFlashCardLinker link = receivedLinks.get(i);
+      if ( currentLinks.indexOf(link) > 0 ) { // exists in currentLinks already
+        receivedLinks.remove(link);
+      }
+      else {
+        AlarmClockFlashCardLinker newLink = new AlarmClockFlashCardLinker(link.alarm,link.card);
+        newLink.save();
+      }
+    }
+  }
+
+  private void deleteAlarm() {
+
+  }
+
+  private void setAlarm(long time) {
+    // Process the Alarm data to be sent to the receiver and service
+
+    long alarmTime = time;
     long alarmID = alarmClock.getId();
     int requestCode = (int) alarmID;
 
     // create a new bundle to store the data of our alarm
     Bundle dataBundle = new Bundle();
-    dataBundle.putInt(getString(R.string.key_alarmID), (int) alarmID);
-    dataBundle.putString(getString(R.string.key_alarmName), alarmName);
+    dataBundle.putInt(getString(R.string.extraKey_alarm), (int) alarmID);
 
     // create intent for the alarm
     Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
@@ -203,12 +245,17 @@ public class AlarmEdit extends AppCompatActivity {
     // sets the alarm up using our pendingIntent operation defined to retrieve broadcasts
     alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, servicePendingIntent);
     Log.d("AlarmEdit", "Setting alarm in AlarmManager.");
-
-    finish();
-  } // createNewAlarm()
-
-  private void deleteAlarm() {
-
   }
 
+  @Override
+  public void onBackPressed() {
+    if ( userIsEditingExistingAlarm ) {
+      // we want to save whatever their data was at this the time of backing up
+      Log.i("AlarmEdit","User pressed back while editing an existing alarm");
+    }
+    else {
+      // user must have decided NOT to setup a new alarm
+      Log.i("AlarmEdit","User did not finish setting up new alarm before pressing back");
+    }
+  }
 }

@@ -22,56 +22,71 @@ import java.util.List;
 
 public class fcpop extends Activity{
 
-  ArrayList<String> selectedclasses;
-  ArrayList<String> selectedFlashCards;
+  ArrayList<String> selectedClasses;
+  ArrayList<String> selectedFlashCardId;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fc_pop);
-        DisplayMetrics screensize = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(screensize);
-        int width = screensize.widthPixels;
-        int height = screensize.heightPixels;
-        getWindow().setLayout((int) (width * .8), (int) (height * .8));
-        ListView listview = findViewById(R.id.fc_list);
-        listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        ArrayList<Long> list = new ArrayList<>();
-        List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
-        selectedclasses = new ArrayList<>();
-        selectedFlashCards = new ArrayList<>();
-        if(fc.size() == 0){
-            Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            long i = 1;
-            int size = fc.size();
-            while(size > 0) {
-                FlashCard newe = FlashCard.findById(FlashCard.class, i);
-                list.add(newe.getId());
-                i++;
-                size--;
-            }
-          ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, list);
-          listview.setAdapter(listAdapter);
-        }
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.fc_pop);
+    DisplayMetrics screenSize = new DisplayMetrics();
+    getWindowManager().getDefaultDisplay().getMetrics(screenSize);
+    int width = screenSize.widthPixels;
+    int height = screenSize.heightPixels;
+    getWindow().setLayout((int) (width * .8), (int) (height * .8));
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selected = ((TextView) view).getText().toString();
-                  if(selectedFlashCards.contains(selected))
-                    selectedFlashCards.remove(selected); //remove deselected item from the list of selected items
-                  else
-                    selectedFlashCards.add(selected); //add selected item to the list of selected items
-                }
-        });
+    ListView displayListView = findViewById(R.id.fc_list);
+    displayListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+    List<FlashCard> flashCards = FlashCard.listAll(FlashCard.class);
+    ArrayList<Long> displayList = new ArrayList<>();
+    selectedClasses = new ArrayList<>();
+    selectedFlashCardId = new ArrayList<>();
+
+    Intent intent = this.getIntent();
+    Bundle currentCardList = intent.getExtras();
+
+    if ( currentCardList != null ) {  // if user has already selected cards for this alarm
+      selectedFlashCardId = currentCardList.getStringArrayList(getString(R.string.extraKey_cards));
     }
+
+    if ( flashCards.size() == 0 ) {
+      Toast.makeText(fcpop.this,"No flash cards exist! Create one first!", Toast.LENGTH_SHORT).show();
+    }
+    else {
+      long i = 1;
+      int size = flashCards.size();
+      while(size >= 1) {
+        FlashCard currentCard = FlashCard.findById(FlashCard.class, i);
+        displayList.add(currentCard.getId());
+        i++;
+        size--;
+      }
+      ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, displayList);
+      displayListView.setAdapter(listAdapter);
+    }
+
+    displayListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        String selected = ((TextView) view).getText().toString();
+        long selectedId = Long.valueOf(selected);
+        String selectedKey = Long.toString(selectedId);
+
+        if(selectedFlashCardId.contains(selectedKey)) {
+          selectedFlashCardId.remove(selectedKey);
+        }
+        else {
+          selectedFlashCardId.add(selectedKey);
+        }
+      }
+    });
+  }
 
   public void onBackPresseda(View view) {
     //super.onBackPressed();
     Intent returnData = new Intent();
-    returnData.putStringArrayListExtra("cards", selectedFlashCards);
+    returnData.putStringArrayListExtra(getString(R.string.extraKey_cards), selectedFlashCardId);
     setResult(RESULT_OK, returnData);
     finish();
   }
