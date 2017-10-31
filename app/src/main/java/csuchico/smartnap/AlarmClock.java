@@ -18,7 +18,6 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
   private String key;
   private long time;
   private String name;
-  private AlarmClockFlashCardLinker link;
 
   @Ignore
   private static final String DEFAULT_TIME_FORMAT = "h:mm a";
@@ -74,11 +73,20 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
       format = DEFAULT_TIME_FORMAT;
     }
 
+    /*
+    If you are formatting multiple dates, it is more efficient to get the format and use
+    it multiple times so that the system doesn't have to fetch the information about the local
+    language and country conventions multiple times.
+     */
+
+    // this operation getDateInstance() is expensive operation
+    // we should try to call this as few times as possible
     DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
     Calendar calendar = df.getCalendar();
     calendar.setTimeInMillis(this.time);
     Date date = df.getCalendar().getTime();
 
+    // SimpleDateFormat may not work with certain locales, should place in a try block
     SimpleDateFormat sdf = (SimpleDateFormat) df;
     sdf.applyPattern(format);
     return sdf.format(date);

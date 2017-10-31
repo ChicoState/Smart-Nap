@@ -15,7 +15,6 @@ public class FlashCard extends SugarRecord<FlashCard>{
   private String className;
   private String question;
   private String answer;
-  private AlarmClockFlashCardLinker link;
 
   // Note: Please retain default constructor
   public FlashCard() {

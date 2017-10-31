@@ -143,7 +143,7 @@ public class AlarmEdit extends AppCompatActivity {
       if ( resultCode == RESULT_OK ) {
         // Flashcards were chosen and added successfully
         cardIdList = data.getStringArrayListExtra(getString(R.string.extraKey_cards));
-        Log.i("AlarmEdit","onActivityResult processed another flash card!");
+        Log.i("AlarmEdit","onActivityResult processed the returned list of cards");
       }
       else {
         // returnedCardList returned a null value
