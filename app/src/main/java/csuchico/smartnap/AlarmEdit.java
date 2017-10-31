@@ -233,7 +233,10 @@ public class AlarmEdit extends AppCompatActivity {
       links.get(i).delete();
     }
 
+
+    servicePendingIntent.cancel(); // cancel the alarm service that was setup
     alarmClock.delete();
+
     Toast.makeText(AlarmEdit.this,"Deleted alarm!", Toast.LENGTH_SHORT).show();
 
     finish();
