@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:fontFamily="sans-serif"
-            android:onClick="createNewAlarm"
+            android:onClick="saveAlarm"
             android:text="@string/label_setNewAlarm"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@android:color/black"

@@ -23,7 +23,7 @@ import java.util.List;
 public class fcpop extends Activity{
 
   ArrayList<String> selectedClasses;
-  ArrayList<String> selectedFlashCards;
+  ArrayList<String> selectedFlashCardId;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,15 +41,22 @@ public class fcpop extends Activity{
     List<FlashCard> flashCards = FlashCard.listAll(FlashCard.class);
     ArrayList<Long> displayList = new ArrayList<>();
     selectedClasses = new ArrayList<>();
-    selectedFlashCards = new ArrayList<>();
+    selectedFlashCardId = new ArrayList<>();
 
-    if(flashCards.size() == 0) {
-      Toast.makeText(fcpop.this,"Database is empty!", Toast.LENGTH_SHORT).show();
+    Intent intent = this.getIntent();
+    Bundle currentCardList = intent.getExtras();
+
+    if ( currentCardList != null ) {  // if user has already selected cards for this alarm
+      selectedFlashCardId = currentCardList.getStringArrayList(getString(R.string.extraKey_cards));
+    }
+
+    if ( flashCards.size() == 0 ) {
+      Toast.makeText(fcpop.this,"No flash cards exist! Create one first!", Toast.LENGTH_SHORT).show();
     }
     else {
       long i = 1;
       int size = flashCards.size();
-      while(size > 1) {
+      while(size >= 1) {
         FlashCard currentCard = FlashCard.findById(FlashCard.class, i);
         displayList.add(currentCard.getId());
         i++;
@@ -64,13 +71,13 @@ public class fcpop extends Activity{
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String selected = ((TextView) view).getText().toString();
         long selectedId = Long.valueOf(selected);
-        FlashCard card = FlashCard.findById(FlashCard.class,selectedId);
-        String selectedKey = card.getKey();
-        if(selectedFlashCards.contains(selectedKey)) {
-          selectedFlashCards.remove(selectedKey);
+        String selectedKey = Long.toString(selectedId);
+
+        if(selectedFlashCardId.contains(selectedKey)) {
+          selectedFlashCardId.remove(selectedKey);
         }
         else {
-          selectedFlashCards.add(selectedKey);
+          selectedFlashCardId.add(selectedKey);
         }
       }
     });
@@ -79,7 +86,7 @@ public class fcpop extends Activity{
   public void onBackPresseda(View view) {
     //super.onBackPressed();
     Intent returnData = new Intent();
-    returnData.putStringArrayListExtra(getString(R.string.extraKey_cards), selectedFlashCards);
+    returnData.putStringArrayListExtra(getString(R.string.extraKey_cards), selectedFlashCardId);
     setResult(RESULT_OK, returnData);
     finish();
   }
