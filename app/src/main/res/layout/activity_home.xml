@@ -21,19 +21,19 @@
             android:layout_height="54dp"
             android:layout_weight="1"
             android:onClick="alarmSetup"
-            android:text="Create New Alarm"
+            android:text="@string/label_addAlarm"
             tools:layout_editor_absoluteX="185dp"
             tools:layout_editor_absoluteY="-7dp" />
 
         <Button
-            android:id="@+id/EditAlarm"
+            android:id="@+id/AddFlashCard"
             android:layout_width="match_parent"
             android:layout_height="58dp"
             android:layout_weight="1"
             android:onClick="GotoQuestion"
-            android:text="Edit"
+            android:text="@string/label_addFlashCard"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="-10dp" />
+            tools:layout_editor_absoluteY="-10dp"/>
     </LinearLayout>
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"

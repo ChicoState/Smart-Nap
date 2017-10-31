@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.util.Log;
+import android.widget.Toast;
 
 
 // API-24 required for 'android.icu.util.Calendar', use 'java.util.Calendar' for older API
@@ -220,8 +221,22 @@ public class AlarmEdit extends AppCompatActivity {
     }
   }
 
-  private void deleteAlarm() {
+  public void deleteAlarm(View view) {
 
+    List<AlarmClockFlashCardLinker> links = AlarmClockFlashCardLinker.find(
+            AlarmClockFlashCardLinker.class,
+            "alarm = ?",
+            Long.toString(alarmClock.getId())
+    );
+
+    for ( int i = 0; i < links.size(); i++ ) {
+      links.get(i).delete();
+    }
+
+    alarmClock.delete();
+    Toast.makeText(AlarmEdit.this,"Deleted alarm!", Toast.LENGTH_SHORT).show();
+
+    finish();
   }
 
   private void setAlarm(long time) {

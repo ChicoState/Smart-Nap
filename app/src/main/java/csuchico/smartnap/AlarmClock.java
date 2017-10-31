@@ -48,6 +48,10 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     );
   }
 
+  public String getKey() {
+    return this.key;
+  }
+
   public String getName() {
     return name;
   }
