@@ -7,4 +7,6 @@
     <color name="colorLighterBlue">#0099ff</color>
     <color name="black_overlay">#66000000</color>
     <color name="colorLightBlue">#b8c6c6</color>
+    <color name="white">#ffff</color>
+    <color name="splashBackground">#414A5F</color>
 </resources>
