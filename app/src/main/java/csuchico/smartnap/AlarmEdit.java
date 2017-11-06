@@ -223,23 +223,31 @@ public class AlarmEdit extends AppCompatActivity {
 
   public void deleteAlarm(View view) {
 
+    // This code is replaced by the custom method getCards() in the AlarmClock class
+    /*
     List<AlarmClockFlashCardLinker> links = AlarmClockFlashCardLinker.find(
             AlarmClockFlashCardLinker.class,
             "alarm = ?",
             Long.toString(alarmClock.getId())
     );
+    */
 
+    // create a list of links currently tied to this alarm through our linker table
+    List<AlarmClockFlashCardLinker> links = alarmClock.getCards();
+    // delete each link in the linker table for this alarm clock
     for ( int i = 0; i < links.size(); i++ ) {
       links.get(i).delete();
     }
 
 
     servicePendingIntent.cancel(); // cancel the alarm service that was setup
-
+    long id = alarmClock.getId();
     alarmClock.delete();
-
+    AlarmClock testClock = AlarmClock.findById(AlarmClock.class,id);
+    if ( testClock == null ) {
+      Toast.makeText(AlarmEdit.this,"Alarm did not delete successfully!", Toast.LENGTH_SHORT).show();
+    }
     Toast.makeText(AlarmEdit.this,"Deleted alarm!", Toast.LENGTH_SHORT).show();
-
     finish();
   }
 
