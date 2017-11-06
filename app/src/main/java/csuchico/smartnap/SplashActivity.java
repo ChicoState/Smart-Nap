@@ -20,6 +20,7 @@ private ImageView iv;
         final Intent i = new Intent(this, Home.class);
         Thread timer = new Thread() {
             public void run() {
+                //Runs for 5 seconds
                 try {
                     sleep(5000);
                 } catch(InterruptedException e) {
