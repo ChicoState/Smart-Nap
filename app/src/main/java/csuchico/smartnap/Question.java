@@ -19,7 +19,7 @@ public class Question extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_questions);
         ListView listview = (ListView) findViewById(R.id.list);
-        ArrayList<Long> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
         if(fc.size() == 0){
             Toast.makeText(Question.this,"Database is empty!", Toast.LENGTH_SHORT).show();
@@ -29,7 +29,7 @@ public class Question extends AppCompatActivity {
             int size = fc.size();
             while(size > 0) {
                 FlashCard newe = FlashCard.findById(FlashCard.class, i);
-                list.add(newe.getId());
+                list.add(newe.getClassName());
                 i++;
                 size--;
             }
