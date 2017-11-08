@@ -37,7 +37,7 @@ public class fcpop extends Activity{
     displayListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
     List<FlashCard> flashCards = FlashCard.listAll(FlashCard.class);
-    //ArrayList<Long> displayList = new ArrayList<>();
+    //ArrayList<Long> list = new ArrayList<>();
     selectedClasses = new ArrayList<>();
     selectedFlashCardId = new ArrayList<>();
 
@@ -52,6 +52,16 @@ public class fcpop extends Activity{
       Toast.makeText(fcpop.this,"No flash cards exist! Create one first!", Toast.LENGTH_SHORT).show();
     }
     else {
+      /*long i = 1;
+      int size = flashCards.size();
+      while(size > 0) {
+        FlashCard newe = FlashCard.findById(FlashCard.class, i);
+        list.add(newe.getId());
+        i++;
+        size--;
+      }
+      ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, list);
+      displayListView.setAdapter(listAdapter);*/
       FlashCardAdapter listAdapter = new FlashCardAdapter(this, new ArrayList<>(flashCards));
       displayListView.setAdapter(listAdapter);
     }
