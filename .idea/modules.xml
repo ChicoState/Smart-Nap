@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Smart-Nap.iml" filepath="$PROJECT_DIR$/Smart-Nap.iml" />
-      <module fileurl="file://C:\Users\Justin\Documents\GitHub\Smart-Nap\Smart-Nap-develop.iml" filepath="C:\Users\Justin\Documents\GitHub\Smart-Nap\Smart-Nap-develop.iml" />
-      <module fileurl="file://C:\Users\Justin\Documents\GitHub\Smart-Nap\SmartNap.iml" filepath="C:\Users\Justin\Documents\GitHub\Smart-Nap\SmartNap.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
