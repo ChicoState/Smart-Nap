@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "csuchico.smartnap"
         minSdkVersion 21 // minimum 21 for AudioAttributes to make alarm tone work on silent

@@ -165,4 +165,29 @@ public class AlarmDialog extends AppCompatActivity {
     answer.setVisibility(View.GONE);
     question.setVisibility(View.VISIBLE);
   }
+
+  /**
+   *  onTouch listening for when user presses in a certain area, alarm is reset to 3 minutes
+   */
+
+ /* view.setOnTouchListener(new View.OnTouchListener(){
+      @Override*/
+ //need to figure out timing, dummy numbers for now
+  public boolean onTouch (View v, MotionEvent event){
+      for (int i = 0; i < 30000; i++) {
+          if (event.getAction() == R.id.flashCardBox) {
+              //3 minute delay for alarm
+              i = 0;
+
+          }
+          else if(i == 29000){
+              mAlarmTone.play(); //sound the alarm
+              i = 0;
+          }
+
+      }
+    return true;
+  }
+
+
 }
