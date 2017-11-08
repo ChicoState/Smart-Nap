@@ -23,15 +23,15 @@
         android:name="com.orm.SugarApp">
 
         <meta-data android:name="DATABASE" android:value="smartNapDB.db" />
-        <meta-data android:name="VERSION" android:value="3" />
+        <meta-data android:name="VERSION" android:value="6" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="csuchico.smartnap" />
 
         <activity android:name=".Home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".AlarmEdit"
             android:parentActivityName=".Home" />
@@ -51,7 +51,17 @@
         <activity android:name=".fcpop"
             android:theme="@style/AppTheme.popuptheme">
         </activity>
+        <activity android:name=".SplashActivity"
+            android:theme="@style/FullscreenActionNoLabel">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
+        </activity>
+
+        <activity android:name=".Question"
+            android:parentActivityName=".Home" />
     </application>
 
 </manifest>

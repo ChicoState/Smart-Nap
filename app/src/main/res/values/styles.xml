@@ -24,4 +24,7 @@
     <style name="AppTheme.popuptheme">
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <style name="FullscreenActionNoLabel" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
 </resources>
