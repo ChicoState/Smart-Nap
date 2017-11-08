@@ -19,7 +19,6 @@ public class FlashCardAdapter extends ArrayAdapter<FlashCard> {
     public FlashCardAdapter(Activity context, ArrayList<FlashCard> flashCards) {super(context, 0, flashCards);
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
@@ -27,15 +26,11 @@ public class FlashCardAdapter extends ArrayAdapter<FlashCard> {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.checkable_list, parent, false);
         }
-
         final FlashCard currentFlashCard = this.getItem(position);
-
         TextView flashcardTextView = listItemView.findViewById(R.id.flashCardBox);
         //Button alarmEdit = (Button) listItemView.findViewById(R.id.toggle_view);
-
         String FlashCardName = currentFlashCard.getClassName();
-
-        flashcardTextView.setOnClickListener(new View.OnClickListener() {
+        /*flashcardTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //String key = getString(R.string.extraKey_alarm);
@@ -46,10 +41,8 @@ public class FlashCardAdapter extends ArrayAdapter<FlashCard> {
                 intent.putExtras(data);
                 view.getContext().startActivity(intent);
             }
-        });
-
+        });*/
         flashcardTextView.setText(FlashCardName);
-
         return listItemView;
     }
 }
