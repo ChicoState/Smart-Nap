@@ -22,7 +22,7 @@ private ImageView iv;
             public void run() {
                 //Runs for 5 seconds
                 try {
-                    sleep(5000);
+                    sleep(3000);
                 } catch(InterruptedException e) {
                     e.printStackTrace();
                 }
