@@ -17,12 +17,13 @@ public class Question extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_questions);
         ListView listview = (ListView) findViewById(R.id.list);
+        listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
         if(fc.size() == 0){
             Toast.makeText(Question.this,"Database is empty!", Toast.LENGTH_SHORT).show();
         }
         else{
-            FlashCardAdapter listAdapter = new FlashCardAdapter(this, new ArrayList<>(fc));
+            FlashCardEditAdapter listAdapter = new FlashCardEditAdapter(this, new ArrayList<>(fc));
             listview.setAdapter(listAdapter);
         }
     }

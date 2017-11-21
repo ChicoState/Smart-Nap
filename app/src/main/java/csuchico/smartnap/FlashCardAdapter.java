@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,21 +28,8 @@ public class FlashCardAdapter extends ArrayAdapter<FlashCard> {
                     R.layout.checkable_list, parent, false);
         }
         final FlashCard currentFlashCard = this.getItem(position);
-        TextView flashcardTextView = listItemView.findViewById(R.id.flashCardBox);
-        //Button alarmEdit = (Button) listItemView.findViewById(R.id.toggle_view);
+        CheckedTextView flashcardTextView = (CheckedTextView)listItemView.findViewById(R.id.flashCardBox);
         String FlashCardName = currentFlashCard.getClassName();
-        /*flashcardTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //String key = getString(R.string.extraKey_alarm);
-                Intent intent = new Intent(getContext(),AlarmQuestions.class);
-                Bundle data = new Bundle();
-                long FlashCardId = currentFlashCard.getId();
-                data.putLong("extraKey_flashcard",FlashCardId);
-                intent.putExtras(data);
-                view.getContext().startActivity(intent);
-            }
-        });*/
         flashcardTextView.setText(FlashCardName);
         return listItemView;
     }
