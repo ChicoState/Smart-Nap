@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
  *Created by gerald on 11/20/2017.
  */
 
-public class FlashCardEditAdapter {
+public class FlashCardEditAdapter extends ArrayAdapter<FlashCard> {
     public FlashCardEditAdapter(Activity context, ArrayList<FlashCard> flashCards){super(context, 0, flashCards);
     }
 
@@ -25,24 +27,22 @@ public class FlashCardEditAdapter {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.editflashcard, parent, false);
         }
-
-        final FlashCard currentFC = this.getItem(position);
-
-        TextView fcTextView = (TextView) listItemView.findViewById(R.id.flashCardBox);
-        fcTextView.setOnClickListener(new View.OnClickListener() {
+        final FlashCard currentFlashCard = this.getItem(position);
+        CheckedTextView flashcardTextView = (CheckedTextView)listItemView.findViewById(R.id.flashCardBox);
+        String FlashCardName = currentFlashCard.getClassName();
+        flashcardTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),Question.class);
+                //String key = getString(R.string.extraKey_alarm);
+                Intent intent = new Intent(getContext(),AlarmQuestions.class);
                 Bundle data = new Bundle();
-                long flashcardId = currentFC.getId();
-                data.putLong("extraKey_flashcard",flashcardId);
+                long fcId = currentFlashCard.getId();
+                data.putLong("extraKey_alarm",fcId);
                 intent.putExtras(data);
                 view.getContext().startActivity(intent);
             }
         });
-        String FlashCardName = currentFC.getClassName();
-        fcTextView.setText(FlashCardName);
-
+        flashcardTextView.setText(FlashCardName);
         return listItemView;
     }
 }
