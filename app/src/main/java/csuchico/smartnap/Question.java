@@ -15,8 +15,8 @@ public class Question extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alarm_questions);
-        ListView listview = (ListView) findViewById(R.id.list);
+        setContentView(R.layout.activity_question);
+        ListView listview = findViewById(R.id.list);
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
         if(fc.size() == 0){

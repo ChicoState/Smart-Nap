@@ -10,15 +10,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class AlarmQuestions extends AppCompatActivity {
 
-    boolean userIsEditingExistingAlarm;
+    boolean userIsEditingExistingFlashCard;
     Button delete, save;
     EditText question, answer, classn;
     ArrayList<String> alarmIdList;
+    FlashCard FlashCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,28 +38,27 @@ public class AlarmQuestions extends AppCompatActivity {
         String actionBarTitle;
         Bundle data = intent.getExtras(); // grab any extras available
         actionBarTitle = getString(R.string.header_createFlashCard);
-        userIsEditingExistingAlarm = false;
+        userIsEditingExistingFlashCard = false;
         delete.setVisibility(View.GONE); // make delete alarm button invisible
 
         if (data != null) {
             long id;
-            FlashCard editable;
             String name, eanswer, equestion;
             actionBarTitle = getString(R.string.header_editFlashCard);
-            userIsEditingExistingAlarm = true;
+            userIsEditingExistingFlashCard = true;
             id = data.getLong(getString(R.string.extraKey_alarm));
-            editable = FlashCard.findById(FlashCard.class,id);
+            FlashCard = csuchico.smartnap.FlashCard.findById(FlashCard.class,id);
             Log.i("FlashCardEdit","Found FlashCard with id: " + id + "!");
-            name = editable.getClassName();
-            eanswer = editable.getAnswer();
-            equestion = editable.getQuestion();
+            name = FlashCard.getClassName();
+            eanswer = FlashCard.getAnswer();
+            equestion = FlashCard.getQuestion();
             classn.setText(name);
             question.setText(equestion);
             answer.setText(eanswer);
             delete.setVisibility(View.VISIBLE); // make delete alarm button visible
 
             // return a list of all linkedCards associated with this alarm
-            List<AlarmClockFlashCardLinker> linkedCards = editable.getAlarms();
+            List<AlarmClockFlashCardLinker> linkedCards = FlashCard.getAlarms();
 
             for (int i = 0; i < linkedCards.size(); i++ ) {
                 AlarmClock currentAlarm = linkedCards.get(i).alarm; // grab the card from current link data
@@ -80,17 +79,45 @@ public class AlarmQuestions extends AppCompatActivity {
     }
 
     public void savequestion(View view) {
-        EditText question = (EditText)findViewById(R.id.fc_question);
-        EditText answer = (EditText)findViewById(R.id.fc_answer);
-        EditText classn = (EditText) findViewById(R.id.classname);
-        if(question.length() != 0 && answer.length() != 0 && classn.length() != 0) {
-            FlashCard card = new FlashCard(classn.getText().toString(), question.getText().toString(), answer.getText().toString());
+        EditText question = findViewById(R.id.fc_question);
+        EditText answer = findViewById(R.id.fc_answer);
+        EditText classn = findViewById(R.id.classname);
+        if(question.length() != 0 && answer.length() != 0 && classn.length() != 0 && userIsEditingExistingFlashCard) {
+            try {
+                FlashCard.setClassName(classn.toString());
+                FlashCard.setQuestion(question.toString());
+                FlashCard.setAnswer(answer.toString());
+                FlashCard.save();
+            }
+            catch (NullPointerException npe) {
+                Log.w("FlashCardEdit","There was a null pointer exception while setting the Alarm Clock!");
+                npe.printStackTrace();
+            }
+        }
+        else if(question.length() != 0 && answer.length() != 0 && classn.length() != 0 && !userIsEditingExistingFlashCard) {
+            FlashCard = new FlashCard(classn.getText().toString(), question.getText().toString(), answer.getText().toString());
             Toast.makeText(AlarmQuestions.this, "FlashCard has been made!", Toast.LENGTH_SHORT).show();
-            card.save();
+            FlashCard.save();
         }
         else{
             Toast.makeText(AlarmQuestions.this, "ERROR: Can't save FlashCard!", Toast.LENGTH_SHORT).show();
         }
+        finish();
+    }
+
+    public void deletequestion(View view)  {
+        List<AlarmClockFlashCardLinker> links = FlashCard.getAlarms();
+        // delete each link in the linker table for this alarm clock
+        for ( int i = 0; i < links.size(); i++ ) {
+            links.get(i).delete();
+        }
+        long id = FlashCard.getId();
+        FlashCard.delete();
+        FlashCard test = csuchico.smartnap.FlashCard.findById(FlashCard.class,id);
+        if ( test == null ) {
+            Toast.makeText(AlarmQuestions.this,"FlashCard did not delete successfully!", Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(AlarmQuestions.this,"Deleted FlashCard!", Toast.LENGTH_SHORT).show();
         finish();
     }
 }
