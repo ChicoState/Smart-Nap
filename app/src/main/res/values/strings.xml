@@ -11,6 +11,8 @@
     <string name="label_currentCardList">Current Flash Cards:</string>
     <string name="header_editAlarm">Edit Alarm</string>
     <string name="header_createAlarm">Create Alarm</string>
+    <string name="header_editFlashCard">Edit FlashCard</string>
+    <string name="header_createFlashCard">Create FlashCard</string>
     <string name="inputAlarmName">Name</string>
     <string name="create_new_question">Create New Question</string>
     <string name="edit_myquestion">Edit MyQuestion</string>
@@ -36,4 +38,5 @@
     <string name="add_alarm">Add Alarm</string>
     <string name="questions">Questions</string>
     <string name="name">Name</string>
+    <string name="delete">Delete</string>
 </resources>
