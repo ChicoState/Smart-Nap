@@ -15,7 +15,6 @@
         android:text="@string/label_saveCardChoices"
         android:visibility="visible"/>
 
-
     <ListView
         android:id="@+id/fc_list"
         android:layout_width="match_parent"
