@@ -62,8 +62,9 @@ public class fcpop extends Activity{
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String selected = ((TextView) view).getText().toString();
-        FlashCard selectedcard = (FlashCard) FlashCard.find(FlashCard.class, "name=?",selected);
-        long selectedId = selectedcard.getId();
+        List<FlashCard> selectedCards = FlashCard.find(FlashCard.class,"class_name = ?", selected);
+        ListIterator<FlashCard> it = selectedCards.listIterator();
+        long selectedId = it.next().getId();
         String selectedKey = Long.toString(selectedId);
 
         if(selectedFlashCardId.contains(selectedKey)) {
