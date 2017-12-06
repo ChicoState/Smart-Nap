@@ -90,7 +90,6 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     SimpleDateFormat sdf = (SimpleDateFormat) df;
     sdf.applyPattern(format);
     return sdf.format(date);
-
   }
 
 } // AlarmClock
