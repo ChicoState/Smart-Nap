@@ -15,17 +15,10 @@
         android:text="@string/label_saveCardChoices"
         android:visibility="visible"/>
 
-    <ScrollView
+    <ListView
+        android:id="@+id/fc_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@+id/fc_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </ListView>
-
-    </ScrollView>
+        android:layout_height="wrap_content">
+    </ListView>
 
 </LinearLayout>
