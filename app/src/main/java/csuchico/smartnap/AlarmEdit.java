@@ -230,6 +230,16 @@ public class AlarmEdit extends AppCompatActivity {
     }
     */
 
+    long alarmID = alarmClock.getId();
+    int requestCode = (int) alarmID;
+
+    // create intent for the alarm
+    Intent receiverIntent = new Intent(AlarmEdit.this, AlarmReceiver.class);
+
+    servicePendingIntent = PendingIntent.getBroadcast(
+            AlarmEdit.this, requestCode, receiverIntent, 0);
+    alarmManager.cancel(servicePendingIntent);
+
     // This code is replaced by the custom method getCards() in the AlarmClock class
     /*
     List<AlarmClockFlashCardLinker> links = AlarmClockFlashCardLinker.find(
