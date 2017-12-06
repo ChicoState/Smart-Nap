@@ -32,6 +32,8 @@ import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
 public class AlarmDialog extends AppCompatActivity {
 
   //private final static long silenceDelay = 1000;
+  List<AlarmClockFlashCardLinker> flashCards;
+  ListIterator<AlarmClockFlashCardLinker> flashCardsIt;
   private final static long silenceDelay = 180000; // 3 minutes
   private long currentSystemTime;
   private Ringtone mAlarmTone;
@@ -89,19 +91,42 @@ public class AlarmDialog extends AppCompatActivity {
     alarm = AlarmClock.findById(AlarmClock.class, alarmID);
     String name = alarm.getName();
     m_alarmNameText.setText(name);
-    List<AlarmClockFlashCardLinker> flashCards = alarm.getCards();
-    ListIterator<AlarmClockFlashCardLinker> listOfCards = flashCards.listIterator();
-    if(listOfCards.hasNext()) {
-      question = listOfCards.next().card.getQuestion();
-      answer = listOfCards.next().card.getAnswer();
+    flashCards = alarm.getCards();
+    flashCardsIt = flashCards.listIterator();
+
+    if(flashCardsIt.hasNext()) {
+      AlarmClockFlashCardLinker link = flashCardsIt.next();
+      FlashCard currentCard = FlashCard.findById(FlashCard.class, link.card.getId());
+      question = currentCard.getQuestion();
+      answer = currentCard.getAnswer();
     }
     else {
       question = "DUMMY QUESTION! FAILED TO LOAD!";
       answer = "DUMMY ANSWER! FAILED TO LOAD!";
     }
     updateCurrentFlashCard(question,answer);
+
   } // alarmInit()
 
+  public void nextCard(View view) {
+    String question, answer;
+    if(flashCardsIt.hasNext()) {
+      AlarmClockFlashCardLinker link = flashCardsIt.next();
+      FlashCard currentCard = FlashCard.findById(FlashCard.class, link.card.getId());
+      question = currentCard.getQuestion();
+      answer = currentCard.getAnswer();
+    }
+    else {
+      while(flashCardsIt.hasPrevious()) {
+        flashCardsIt.previous();
+      }
+      AlarmClockFlashCardLinker link = flashCardsIt.next();
+      FlashCard currentCard = FlashCard.findById(FlashCard.class, link.card.getId());
+      question = currentCard.getQuestion();
+      answer = currentCard.getAnswer();
+    }
+    updateCurrentFlashCard(question,answer);
+  }
   private void updateCurrentFlashCard(String question, String answer) {
     m_cardQuestionText.setText(question);
     m_cardAnswerText.setText(answer);
@@ -149,7 +174,7 @@ public class AlarmDialog extends AppCompatActivity {
    */
   public void onSilenceAlarm(View view) {
     Log.i("AlarmDialog", "User has chosen to silence alarm");
-    alarm.delete(); // delete from db table
+    //alarm.delete(); // delete from db table
     mAlarmTone.stop();
     finish();
   }

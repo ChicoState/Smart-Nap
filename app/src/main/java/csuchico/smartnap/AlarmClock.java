@@ -15,7 +15,6 @@ import java.util.UUID;
 
 public class AlarmClock extends SugarRecord<AlarmClock> {
 
-  private String key;
   private long time;
   private String name;
 
@@ -28,15 +27,9 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
 
   // Constructor
   public AlarmClock(long time, String name) {
-    this.key = generateKey();
     this.time = time;
     this.name = name;
     //this.link = null;
-  }
-
-  private String generateKey() {
-    UUID uuid = UUID.randomUUID();
-    return uuid.toString();
   }
 
   public List<AlarmClockFlashCardLinker> getCards() {
@@ -45,10 +38,6 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
             "alarm = ?",
             Long.toString(this.getId())
     );
-  }
-
-  public String getKey() {
-    return this.key;
   }
 
   public String getName() {

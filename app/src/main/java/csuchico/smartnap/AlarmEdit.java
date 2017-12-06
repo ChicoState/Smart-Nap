@@ -223,6 +223,13 @@ public class AlarmEdit extends AppCompatActivity {
 
   public void deleteAlarm(View view) {
 
+
+    /*
+    if(servicePendingIntent == null) {
+      servicePendingIntent.cancel();
+    }
+    */
+
     // This code is replaced by the custom method getCards() in the AlarmClock class
     /*
     List<AlarmClockFlashCardLinker> links = AlarmClockFlashCardLinker.find(
@@ -240,7 +247,6 @@ public class AlarmEdit extends AppCompatActivity {
     }
 
 
-    servicePendingIntent.cancel(); // cancel the alarm service that was setup
     long id = alarmClock.getId();
     alarmClock.delete();
     AlarmClock testClock = AlarmClock.findById(AlarmClock.class,id);

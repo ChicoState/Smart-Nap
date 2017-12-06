@@ -91,7 +91,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.01"
-                android:text="@string/next_question" />
+                android:onClick="nextCard"
+                android:text="@string/next_question"/>
 
             <Button
                 android:id="@+id/button_silenceAlarm"

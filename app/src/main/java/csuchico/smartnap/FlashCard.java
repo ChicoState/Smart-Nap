@@ -11,7 +11,6 @@ import java.util.UUID;
 
 public class FlashCard extends SugarRecord<FlashCard>{
 
-  private String key;
   private String className;
   private String question;
   private String answer;
@@ -21,20 +20,10 @@ public class FlashCard extends SugarRecord<FlashCard>{
   }
 
   public FlashCard (String className, String question, String answer){
-      this.key = generateKey();
       this.question = question;
       this.answer = answer;
       this.className = className;
       //this.link = null;
-  }
-
-  private String generateKey() {
-      UUID uuid = UUID.randomUUID();
-      return uuid.toString();
-  }
-
-  public String getKey() {
-    return this.key;
   }
 
   public String getClassName() {
