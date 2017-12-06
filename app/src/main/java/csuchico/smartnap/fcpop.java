@@ -54,12 +54,7 @@ public class fcpop extends Activity{
       Toast.makeText(fcpop.this,"No flash cards exist! Create one first!", Toast.LENGTH_SHORT).show();
     }
     else {
-      ListIterator<FlashCard> listOfCards = flashCards.listIterator();
-      while(listOfCards.hasNext()) {
-        FlashCard currentCard = listOfCards.next();
-        selectedClasses.add(currentCard.getClassName());
-      }
-      ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, selectedClasses);
+      FlashCardAdapter listAdapter = new FlashCardAdapter(this, new ArrayList<>(flashCards));
       displayListView.setAdapter(listAdapter);
     }
 
@@ -67,7 +62,8 @@ public class fcpop extends Activity{
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String selected = ((TextView) view).getText().toString();
-        long selectedId = Long.valueOf(selected);
+        FlashCard selectedcard = (FlashCard) FlashCard.find(FlashCard.class, "name=?",selected);
+        long selectedId = selectedcard.getId();
         String selectedKey = Long.toString(selectedId);
 
         if(selectedFlashCardId.contains(selectedKey)) {
