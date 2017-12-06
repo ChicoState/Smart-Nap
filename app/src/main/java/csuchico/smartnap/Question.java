@@ -32,5 +32,19 @@ public class Question extends AppCompatActivity {
         Intent openAlarmpage = new Intent(this, AlarmQuestions.class);
         startActivity(openAlarmpage);
     }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ListView listview = findViewById(R.id.list);
+        listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
+        if(fc.size() == 0){
+            Toast.makeText(Question.this,"Database is empty!", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            FlashCardEditAdapter listAdapter = new FlashCardEditAdapter(this, new ArrayList<>(fc));
+            listview.setAdapter(listAdapter);
+        }
+    }
 
 }
