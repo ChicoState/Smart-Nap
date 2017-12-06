@@ -28,7 +28,9 @@ public class FlashCardEditAdapter extends ArrayAdapter<FlashCard> {
                     R.layout.editflashcard, parent, false);
         }
         final FlashCard currentFlashCard = this.getItem(position);
-        CheckedTextView flashcardTextView = (CheckedTextView)listItemView.findViewById(R.id.flashCardBox);
+        // java.lang.ClassCastException: android.support.v7.widget.AppCompatTextView cannot be cast to android.widget.CheckedTextView
+        // Cannot cast a TEXTVIEW into a CheckedTEXTVIEW
+        TextView flashcardTextView = (TextView)listItemView.findViewById(R.id.flashCardBox);
         String FlashCardName = currentFlashCard.getClassName();
         flashcardTextView.setOnClickListener(new View.OnClickListener() {
             @Override

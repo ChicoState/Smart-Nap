@@ -7,12 +7,15 @@ import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  *Created by gerald on 10/21/2017.
@@ -51,7 +54,12 @@ public class fcpop extends Activity{
       Toast.makeText(fcpop.this,"No flash cards exist! Create one first!", Toast.LENGTH_SHORT).show();
     }
     else {
-      FlashCardAdapter listAdapter = new FlashCardAdapter(this, new ArrayList<>(flashCards));
+      ListIterator<FlashCard> listOfCards = flashCards.listIterator();
+      while(listOfCards.hasNext()) {
+        FlashCard currentCard = listOfCards.next();
+        selectedClasses.add(currentCard.getClassName());
+      }
+      ListAdapter listAdapter = new ArrayAdapter<>(this, R.layout.checkable_list, selectedClasses);
       displayListView.setAdapter(listAdapter);
     }
 

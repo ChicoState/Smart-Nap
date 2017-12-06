@@ -25,7 +25,7 @@ public class FlashCardAdapter extends ArrayAdapter<FlashCard> {
                     R.layout.checkable_list, parent, false);
         }
         final FlashCard currentFlashCard = this.getItem(position);
-        CheckedTextView flashcardTextView = (CheckedTextView)listItemView.findViewById(R.id.flashCardBox);
+        CheckedTextView flashcardTextView = (CheckedTextView)listItemView.findViewById(R.id.txt_title);
         String FlashCardName = currentFlashCard.getClassName();
         flashcardTextView.setText(FlashCardName);
         return listItemView;
