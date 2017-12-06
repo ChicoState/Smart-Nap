@@ -48,7 +48,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginBottom="30dp"
-                android:layout_weight="0.16">
+                android:layout_weight="0.16"
+                android:clickable="false"
+                >
 
                 <TextView
                     android:id="@+id/fc_answer"
@@ -58,13 +60,13 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="40dp"
-                    android:padding="15dp"
                     android:background="@android:color/white"
                     android:clickable="true"
                     android:onClick="to_question"
+                    android:padding="15dp"
                     android:text="@string/DEFAULT_flashCardAnswerText"
                     android:textSize="22sp"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/fc_question"
@@ -74,13 +76,13 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="25dp"
-                    android:padding="15dp"
                     android:background="@android:color/white"
                     android:clickable="true"
                     android:onClick="to_answer"
+                    android:padding="15dp"
                     android:text="@string/DEFAULT_flashCardQuestionText"
                     android:textSize="22sp"
-                    android:visibility="visible" />
+                    android:visibility="visible"/>
 
             </FrameLayout>
 

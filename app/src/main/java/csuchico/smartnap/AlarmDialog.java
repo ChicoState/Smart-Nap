@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 // The following import statements would allow us to use simpler code below where only
 // the FLAG_* is necessary versus the full location.
@@ -30,6 +31,9 @@ import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
 
 public class AlarmDialog extends AppCompatActivity {
 
+  //private final static long silenceDelay = 1000;
+  private final static long silenceDelay = 180000; // 3 minutes
+  private long currentSystemTime;
   private Ringtone mAlarmTone;
   private TextView m_alarmNameText;
   private TextView m_cardQuestionText;
@@ -76,6 +80,8 @@ public class AlarmDialog extends AppCompatActivity {
    */
 
   private void alarmInit() {
+    currentSystemTime = System.currentTimeMillis();
+
     String question, answer;
     Intent alarmIntent = getIntent();
     Bundle alarmData = alarmIntent.getExtras();
@@ -84,9 +90,10 @@ public class AlarmDialog extends AppCompatActivity {
     String name = alarm.getName();
     m_alarmNameText.setText(name);
     List<AlarmClockFlashCardLinker> flashCards = alarm.getCards();
-    if(flashCards != null) {
-      question = flashCards.get(0).card.getQuestion();
-      answer = flashCards.get(0).card.getAnswer();
+    ListIterator<AlarmClockFlashCardLinker> listOfCards = flashCards.listIterator();
+    if(listOfCards.hasNext()) {
+      question = listOfCards.next().card.getQuestion();
+      answer = listOfCards.next().card.getAnswer();
     }
     else {
       question = "DUMMY QUESTION! FAILED TO LOAD!";
@@ -151,6 +158,7 @@ public class AlarmDialog extends AppCompatActivity {
    * set fcquestion TextView visibility to gone and set fcanswer TextView visibility to visible
    */
   public void to_answer(View view){
+    alarmSilenceDelay();
     TextView answer = (TextView) findViewById(R.id.fc_answer);
     TextView question = (TextView) findViewById(R.id.fc_question);
     question.setVisibility(View.GONE);
@@ -161,6 +169,7 @@ public class AlarmDialog extends AppCompatActivity {
    * set fcanswer TextView visibility to gone and set fcquestion TextView visibility to visible
    */
   public void to_question(View view){
+    alarmSilenceDelay();
     TextView answer = (TextView) findViewById(R.id.fc_answer);
     TextView question = (TextView) findViewById(R.id.fc_question);
     answer.setVisibility(View.GONE);
@@ -171,10 +180,20 @@ public class AlarmDialog extends AppCompatActivity {
    *  onTouch listening for when user presses in a certain area, alarm is reset to 3 minutes
    */
 
+  public void alarmSilenceDelay() {
+    mAlarmTone.stop();
+    long time = System.currentTimeMillis();
+    time -= currentSystemTime;
+    if ( time >= silenceDelay ) {
+      playTone();
+    }
+    currentSystemTime = System.currentTimeMillis();
+  }
+
  /* view.setOnTouchListener(new View.OnTouchListener(){
       @Override*/
  //need to figure out timing, dummy numbers for now
-  public boolean onTouch (View v, MotionEvent event){
+  public boolean onTouch(View v, MotionEvent event){
       for (int i = 0; i < 30000; i++) {
           if (event.getAction() == R.id.flashCardBox) {
               //3 minute delay for alarm
