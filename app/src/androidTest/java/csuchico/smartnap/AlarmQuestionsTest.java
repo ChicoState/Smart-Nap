@@ -16,10 +16,6 @@ import static org.junit.Assert.*;
  */
 public class AlarmQuestionsTest {
     @Test
-    public void onCreate() throws Exception {
-    }
-
-    @Test
     public void savequestionsuccess() throws Exception {
         onView(withId(R.id.fc_question)).perform(typeText("question"));
         onView(withId(R.id.fc_answer)).perform(typeText("answer"));
@@ -38,7 +34,5 @@ public class AlarmQuestionsTest {
 
     @Test
     public void deletequestion() throws Exception {
-
     }
-
 }
