@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AlarmQuestions extends AppCompatActivity {
 
-    boolean userIsEditingExistingFlashCard = false;
+    boolean userIsEditingExistingFlashCard;
     Button delete, save;
     EditText question, answer, classn;
     ArrayList<String> alarmIdList;

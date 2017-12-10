@@ -120,7 +120,7 @@ public class AlarmDialog extends AppCompatActivity {
       question = currentCard.getQuestion();
       answer = currentCard.getAnswer();
     }
-    else {
+    else if(flashCardsIt.hasPrevious()) {
       while(flashCardsIt.hasPrevious()) {
         flashCardsIt.previous();
       }
@@ -129,11 +129,15 @@ public class AlarmDialog extends AppCompatActivity {
       question = currentCard.getQuestion();
       answer = currentCard.getAnswer();
     }
+    else {
+      question = "No FlashCard Available!";
+      answer = "No FlashCard Available!";
+    }
     updateCurrentFlashCard(question,answer);
-    TextView answerView = (TextView) findViewById(R.id.fc_answer);
-    TextView questionView = (TextView) findViewById(R.id.fc_question);
-    answerView.setVisibility(View.GONE);
-    questionView.setVisibility(View.VISIBLE);
+    //TextView answerView = (TextView) findViewById(R.id.fc_answer);
+    //TextView questionView = (TextView) findViewById(R.id.fc_question);
+    m_cardAnswerText.setVisibility(View.GONE);
+    m_cardQuestionText.setVisibility(View.VISIBLE);
   }
   private void updateCurrentFlashCard(String question, String answer) {
     m_cardQuestionText.setText(question);
