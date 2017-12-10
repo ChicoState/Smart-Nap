@@ -39,4 +39,6 @@
     <string name="questions">Questions</string>
     <string name="name">Name</string>
     <string name="delete">Delete</string>
+    <string name="successsave">FlashCard has been made!</string>
+    <string name="failsave">ERROR: Can\'t save FlashCard!</string>
 </resources>

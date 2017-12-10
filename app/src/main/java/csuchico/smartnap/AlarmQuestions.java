@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AlarmQuestions extends AppCompatActivity {
 
-    boolean userIsEditingExistingFlashCard;
+    boolean userIsEditingExistingFlashCard = false;
     Button delete, save;
     EditText question, answer, classn;
     ArrayList<String> alarmIdList;
@@ -114,7 +114,7 @@ public class AlarmQuestions extends AppCompatActivity {
         long id = FlashCard.getId();
         FlashCard.delete();
         FlashCard test = csuchico.smartnap.FlashCard.findById(FlashCard.class,id);
-        if ( test == null ) {
+        if ( test != null ) {
             Toast.makeText(AlarmQuestions.this,"FlashCard did not delete successfully!", Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(AlarmQuestions.this,"Deleted FlashCard!", Toast.LENGTH_SHORT).show();

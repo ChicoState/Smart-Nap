@@ -23,7 +23,6 @@ public class FlashCard extends SugarRecord<FlashCard>{
       this.question = question;
       this.answer = answer;
       this.className = className;
-      //this.link = null;
   }
 
   public String getClassName() {
@@ -53,9 +52,7 @@ public class FlashCard extends SugarRecord<FlashCard>{
 
   public List<AlarmClockFlashCardLinker> getAlarms() {
       return AlarmClockFlashCardLinker.find(
-              AlarmClockFlashCardLinker.class,
-              "card = ?",
-              Long.toString(this.getId())
+              AlarmClockFlashCardLinker.class,"card = ?", Long.toString(this.getId())
       );
   }
 }
