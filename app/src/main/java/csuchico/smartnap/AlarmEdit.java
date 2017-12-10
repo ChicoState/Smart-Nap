@@ -260,7 +260,7 @@ public class AlarmEdit extends AppCompatActivity {
     long id = alarmClock.getId();
     alarmClock.delete();
     AlarmClock testClock = AlarmClock.findById(AlarmClock.class,id);
-    if ( testClock == null ) {
+    if ( testClock != null ) {
       Toast.makeText(AlarmEdit.this,"Alarm did not delete successfully!", Toast.LENGTH_SHORT).show();
     }
     Toast.makeText(AlarmEdit.this,"Deleted alarm!", Toast.LENGTH_SHORT).show();
