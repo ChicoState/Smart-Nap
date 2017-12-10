@@ -5,6 +5,7 @@ import android.media.AudioAttributes;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 // The following import statements would allow us to use simpler code below where only
 // the FLAG_* is necessary versus the full location.
@@ -31,10 +34,11 @@ import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
 
 public class AlarmDialog extends AppCompatActivity {
 
+  private Timer mSnoozeTimer;
   //private final static long silenceDelay = 1000;
   List<AlarmClockFlashCardLinker> flashCards;
   ListIterator<AlarmClockFlashCardLinker> flashCardsIt;
-  private final static long silenceDelay = 180000; // 3 minutes
+  private final static long silenceDelay = 180000; // 3 minutes = 180000 ms
   private long currentSystemTime;
   private Ringtone mAlarmTone;
   private TextView m_alarmNameText;
@@ -126,6 +130,10 @@ public class AlarmDialog extends AppCompatActivity {
       answer = currentCard.getAnswer();
     }
     updateCurrentFlashCard(question,answer);
+    TextView answerView = (TextView) findViewById(R.id.fc_answer);
+    TextView questionView = (TextView) findViewById(R.id.fc_question);
+    answerView.setVisibility(View.GONE);
+    questionView.setVisibility(View.VISIBLE);
   }
   private void updateCurrentFlashCard(String question, String answer) {
     m_cardQuestionText.setText(question);
@@ -173,6 +181,9 @@ public class AlarmDialog extends AppCompatActivity {
    * @desc        Called when a user interacts with the Silence AlarmEdit button
    */
   public void onSilenceAlarm(View view) {
+    if(mSnoozeTimer != null) {
+      mSnoozeTimer.cancel();
+    }
     Log.i("AlarmDialog", "User has chosen to silence alarm");
     //alarm.delete(); // delete from db table
     mAlarmTone.stop();
@@ -183,6 +194,9 @@ public class AlarmDialog extends AppCompatActivity {
    * set fcquestion TextView visibility to gone and set fcanswer TextView visibility to visible
    */
   public void to_answer(View view){
+    if(mSnoozeTimer != null) {
+      mSnoozeTimer.cancel();
+    }
     alarmSilenceDelay();
     TextView answer = (TextView) findViewById(R.id.fc_answer);
     TextView question = (TextView) findViewById(R.id.fc_question);
@@ -194,6 +208,9 @@ public class AlarmDialog extends AppCompatActivity {
    * set fcanswer TextView visibility to gone and set fcquestion TextView visibility to visible
    */
   public void to_question(View view){
+    if(mSnoozeTimer != null) {
+      mSnoozeTimer.cancel();
+    }
     alarmSilenceDelay();
     TextView answer = (TextView) findViewById(R.id.fc_answer);
     TextView question = (TextView) findViewById(R.id.fc_question);
@@ -201,38 +218,14 @@ public class AlarmDialog extends AppCompatActivity {
     question.setVisibility(View.VISIBLE);
   }
 
-  /**
-   *  onTouch listening for when user presses in a certain area, alarm is reset to 3 minutes
-   */
-
   public void alarmSilenceDelay() {
     mAlarmTone.stop();
-    long time = System.currentTimeMillis();
-    time -= currentSystemTime;
-    if ( time >= silenceDelay ) {
-      playTone();
-    }
-    currentSystemTime = System.currentTimeMillis();
-  }
-
- /* view.setOnTouchListener(new View.OnTouchListener(){
-      @Override*/
- //need to figure out timing, dummy numbers for now
-  public boolean onTouch(View v, MotionEvent event){
-      for (int i = 0; i < 30000; i++) {
-          if (event.getAction() == R.id.flashCardBox) {
-              //3 minute delay for alarm
-              i = 0;
-
-          }
-          else if(i == 29000){
-              mAlarmTone.play(); //sound the alarm
-              i = 0;
-          }
-
+    mSnoozeTimer = new Timer();
+    mSnoozeTimer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        playTone();
       }
-    return true;
+    }, silenceDelay);
   }
-
-
 }
