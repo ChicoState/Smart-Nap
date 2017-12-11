@@ -37,7 +37,7 @@ public class AlarmAdapter extends ArrayAdapter<AlarmClock> {
     TextView alarmTextView = (TextView) listItemView.findViewById(R.id.alarm_text_view);
     Button alarmEdit = (Button) listItemView.findViewById(R.id.toggle_view);
 
-    String formattedAlarmTime = currentAlarm.getTimeFormatted("h:mm a");
+    String formattedAlarmTime = currentAlarm.getTimeFormatted();
 
     alarmTextView.setOnClickListener(new View.OnClickListener() {
       @Override

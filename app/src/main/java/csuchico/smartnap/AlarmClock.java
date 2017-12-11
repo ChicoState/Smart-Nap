@@ -41,27 +41,20 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
     );
   }
 
-  public String getName() {
-    return name;
+  public void updateAlarm(long time, String name) {
+    this.time = time;
+    this.name = name;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public String getName() {
+    return name;
   }
 
   public long getTime() {
     return time;
   }
 
-  public void setTime(long time) {
-    this.time = time;
-  }
-
-  public String getTimeFormatted(String format) {
-
-    if ( format.isEmpty() ) {
-      format = DEFAULT_TIME_FORMAT;
-    }
+  public String getTimeFormatted() {
 
     /*
     If you are formatting multiple dates, it is more efficient to get the format and use
@@ -78,7 +71,7 @@ public class AlarmClock extends SugarRecord<AlarmClock> {
 
     // SimpleDateFormat may not work with certain locales, should place in a try block
     SimpleDateFormat sdf = (SimpleDateFormat) df;
-    sdf.applyPattern(format);
+    sdf.applyPattern(DEFAULT_TIME_FORMAT);
     return sdf.format(date);
   }
 

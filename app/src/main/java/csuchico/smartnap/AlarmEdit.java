@@ -42,6 +42,7 @@ public class AlarmEdit extends AppCompatActivity {
   private final EditText.OnTouchListener editAlarmNameListener = new EditText.OnTouchListener() {
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
+      view.performClick();
       if (!alarmNameIsNotDefault) {
         alarmNameIsNotDefault = true;
         alarmNameText.getText().clear();
@@ -183,8 +184,7 @@ public class AlarmEdit extends AppCompatActivity {
     else {    // user is editing an existing alarm
       // we want to update the AlarmClock fields
       try {
-        alarmClock.setName(alarmName);
-        alarmClock.setTime(alarmTime);
+        alarmClock.updateAlarm(alarmTime,alarmName);
       }
       catch (NullPointerException npe) {
         Log.w("AlarmEdit","There was a null pointer exception while setting the Alarm Clock!");
