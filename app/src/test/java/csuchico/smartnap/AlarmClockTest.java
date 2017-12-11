@@ -94,5 +94,21 @@ public class AlarmClockTest {
         assertEquals(12953,test.getTime());
     }
 
+    @Test
+    public void getTimeFormattedTest1() throws Exception {
+        long time = 1512976620;
+        AlarmClock alarm = new AlarmClock(time,"test alarm");
+        String timeFormatted = alarm.getTimeFormatted("h:mm a");
+        assertEquals("4:16 AM",timeFormatted);
+    }
+
+    @Test
+    public void getTimeFormattedTest2() throws Exception {
+        long time = 1512934;
+        AlarmClock alarm = new AlarmClock(time,"test alarm");
+        String timeFormatted = alarm.getTimeFormatted("h:mm a");
+        assertEquals("4:25 PM",timeFormatted);
+    }
+
 
 }
