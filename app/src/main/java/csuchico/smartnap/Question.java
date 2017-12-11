@@ -16,16 +16,7 @@ public class Question extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        ListView listview = findViewById(R.id.list);
-        listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
-        if(fc.size() == 0){
-            Toast.makeText(Question.this,"Database is empty!", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            FlashCardEditAdapter listAdapter = new FlashCardEditAdapter(this, new ArrayList<>(fc));
-            listview.setAdapter(listAdapter);
-        }
+        ListInit();
     }
 
     public void AddQuestion(View view){
@@ -35,6 +26,10 @@ public class Question extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
+        ListInit();
+    }
+
+    public void ListInit(){
         ListView listview = findViewById(R.id.list);
         listview.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         List<FlashCard> fc = FlashCard.listAll(FlashCard.class);
@@ -46,5 +41,4 @@ public class Question extends AppCompatActivity {
             listview.setAdapter(listAdapter);
         }
     }
-
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AlarmQuestions extends AppCompatActivity {
 
-    boolean userIsEditingExistingFlashCard = false;
+    boolean userIsEditingExistingFlashCard;
     Button delete, save;
     EditText question, answer, classn;
     ArrayList<String> alarmIdList;
@@ -82,22 +82,21 @@ public class AlarmQuestions extends AppCompatActivity {
         EditText question = findViewById(R.id.fc_question);
         EditText answer = findViewById(R.id.fc_answer);
         EditText classn = findViewById(R.id.classname);
-        if(question.length() != 0 && answer.length() != 0 && classn.length() != 0 && userIsEditingExistingFlashCard) {
-            try {
-                FlashCard.setClassName(classn.toString());
-                FlashCard.setQuestion(question.toString());
-                FlashCard.setAnswer(answer.toString());
-                //FlashCard.save();
+        if(question.length() != 0 && answer.length() != 0 && classn.length() != 0) {
+            if (userIsEditingExistingFlashCard) {
+                try {
+                    FlashCard.setClassName(classn.toString());
+                    FlashCard.setQuestion(question.toString());
+                    FlashCard.setAnswer(answer.toString());
+                } catch (NullPointerException npe) {
+                    Log.w("FlashCardEdit", "There was a null pointer exception while setting the Alarm Clock!");
+                    npe.printStackTrace();
+                }
+            } else {
+                FlashCard = new FlashCard(classn.getText().toString(), question.getText().toString(), answer.getText().toString());
+                Toast.makeText(AlarmQuestions.this, "FlashCard has been made!", Toast.LENGTH_SHORT).show();
+                FlashCard.save();
             }
-            catch (NullPointerException npe) {
-                Log.w("FlashCardEdit","There was a null pointer exception while setting the Alarm Clock!");
-                npe.printStackTrace();
-            }
-        }
-        else if(question.length() != 0 && answer.length() != 0 && classn.length() != 0 && !userIsEditingExistingFlashCard) {
-            FlashCard = new FlashCard(classn.getText().toString(), question.getText().toString(), answer.getText().toString());
-            Toast.makeText(AlarmQuestions.this, "FlashCard has been made!", Toast.LENGTH_SHORT).show();
-            FlashCard.save();
         }
         else{
             Toast.makeText(AlarmQuestions.this, "ERROR: Can't save FlashCard!", Toast.LENGTH_SHORT).show();

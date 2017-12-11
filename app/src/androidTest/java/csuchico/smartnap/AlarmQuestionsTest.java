@@ -25,8 +25,24 @@ public class AlarmQuestionsTest {
     }
 
     @Test
-    public void savequestionfail() throws Exception {
+    public void savequestionfail1() throws Exception {
         onView(withId(R.id.fc_question)).perform(typeText("question"));
+        onView(withId(R.id.fc_answer)).perform(typeText("answer"));
+        onView(withId(R.id.save_fc)).perform(click());
+        onView(withText(R.string.failsave)).inRoot(new ToastMatcher()).check(matches(withText("ERROR: Can't save FlashCard!")));
+    }
+
+    @Test
+    public void savequestionfail2() throws Exception {
+        onView(withId(R.id.fc_question)).perform(typeText("question"));
+        onView(withId(R.id.classname)).perform(typeText("class name"));
+        onView(withId(R.id.save_fc)).perform(click());
+        onView(withText(R.string.failsave)).inRoot(new ToastMatcher()).check(matches(withText("ERROR: Can't save FlashCard!")));
+    }
+
+    @Test
+    public void savequestionfail3() throws Exception {
+        onView(withId(R.id.classname)).perform(typeText("class name"));
         onView(withId(R.id.fc_answer)).perform(typeText("answer"));
         onView(withId(R.id.save_fc)).perform(click());
         onView(withText(R.string.failsave)).inRoot(new ToastMatcher()).check(matches(withText("ERROR: Can't save FlashCard!")));
