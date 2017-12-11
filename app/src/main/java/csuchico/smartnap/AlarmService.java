@@ -16,14 +16,10 @@ import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class AlarmService extends IntentService {
 
-    private NotificationManager alarmNotificationManager;
-    private AlertDialog alarmDialog;
-
     public AlarmService() {
         super("AlarmService");
     }
 
-    static final int ALARM_SILENCE_REQUEST = 1;
     @Override
     public void onHandleIntent(Intent intent) {
 

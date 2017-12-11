@@ -18,6 +18,7 @@ import android.widget.Toast;
 //import android.icu.util.Calendar;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static csuchico.smartnap.R.layout.activity_alarm_edit;
@@ -160,10 +161,18 @@ public class AlarmEdit extends AppCompatActivity {
   */
   public void saveAlarm(View view) {
 
+    // CURRENT BUG LOOKING INTO:
+    // Setting an alarm with a time PREVIOUS to the current time will cause alarm to trigger
+    // without delay.
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
     calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
 
+    if(calendar.before(Calendar.getInstance())) {
+      // if the currently desired alarm time is set before the current time of day
+      // then increment the calendar's date by 1 to ensure the alarm triggers next day
+      calendar.add(Calendar.DATE,1);
+    }
     long alarmTime = calendar.getTimeInMillis();
     String alarmName = alarmNameText.getText().toString();
 
