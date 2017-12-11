@@ -85,9 +85,7 @@ public class AlarmQuestions extends AppCompatActivity {
         if(question.length() != 0 && answer.length() != 0 && classn.length() != 0) {
             if (userIsEditingExistingFlashCard) {
                 try {
-                    FlashCard.setClassName(classn.toString());
-                    FlashCard.setQuestion(question.toString());
-                    FlashCard.setAnswer(answer.toString());
+                    FlashCard.updatefc(classn.toString(),question.toString(),answer.toString());
                 } catch (NullPointerException npe) {
                     Log.w("FlashCardEdit", "There was a null pointer exception while setting the Alarm Clock!");
                     npe.printStackTrace();
