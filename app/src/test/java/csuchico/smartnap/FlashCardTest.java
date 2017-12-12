@@ -23,7 +23,7 @@ public class FlashCardTest {
     @Test
     public void setClassName() throws Exception {
         FlashCard test = new FlashCard("classtest", "classquestion", "classanswer");
-        test.setClassName("newclassname");
+        test.updatefc("newclassname", "classquestion", "classanswer");
         assertEquals("newclassname", test.getClassName());
     }
 
@@ -36,7 +36,7 @@ public class FlashCardTest {
     @Test
     public void setQuestion() throws Exception {
         FlashCard test = new FlashCard("classtest", "classquestion", "classanswer");
-        test.setQuestion("newquestion");
+        test.updatefc("classtest","newquestion","classanswer");
         assertEquals("newquestion", test.getQuestion());
     }
 
@@ -49,7 +49,7 @@ public class FlashCardTest {
     @Test
     public void setAnswer() throws Exception {
         FlashCard test = new FlashCard("classtest", "classquestion", "classanswer");
-        test.setAnswer("newanswer");
+        test.updatefc("classtests", "classquestion","newanswer");
         assertEquals("newanswer", test.getAnswer());
     }
 
