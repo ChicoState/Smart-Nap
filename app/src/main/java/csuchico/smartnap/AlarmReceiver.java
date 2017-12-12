@@ -1,13 +1,9 @@
 package csuchico.smartnap;
 
 import android.app.Activity;
-import android.app.KeyguardManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 

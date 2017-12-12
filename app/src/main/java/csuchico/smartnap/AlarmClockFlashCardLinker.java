@@ -2,8 +2,6 @@ package csuchico.smartnap;
 
 import com.orm.SugarRecord;
 
-import java.util.List;
-
 /**
  * Created by caleb on 10/30/17.
  */

@@ -3,7 +3,6 @@ package csuchico.smartnap;
 import com.orm.SugarRecord;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  *Created by gerald on 10/13/17.

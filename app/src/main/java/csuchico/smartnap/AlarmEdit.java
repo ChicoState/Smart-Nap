@@ -16,9 +16,8 @@ import android.widget.Toast;
 
 // API-24 required for 'android.icu.util.Calendar', use 'java.util.Calendar' for older API
 //import android.icu.util.Calendar;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import static csuchico.smartnap.R.layout.activity_alarm_edit;
@@ -162,9 +161,6 @@ public class AlarmEdit extends AppCompatActivity {
   */
   public void saveAlarm(View view) {
 
-    // CURRENT BUG LOOKING INTO:
-    // Setting an alarm with a time PREVIOUS to the current time will cause alarm to trigger
-    // without delay.
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
     calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());

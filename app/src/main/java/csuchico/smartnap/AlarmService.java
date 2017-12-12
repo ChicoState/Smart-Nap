@@ -1,18 +1,8 @@
 package csuchico.smartnap;
 
-import android.app.Activity;
 import android.app.IntentService;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 public class AlarmService extends IntentService {
 
